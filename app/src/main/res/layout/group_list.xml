@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="65dp"
+    android:layout_height="60dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="4dp"
     android:background="@drawable/list_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -10,52 +13,101 @@
         android:scaleType="centerCrop"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="16dp"
         android:layout_centerVertical="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="20dp"
         android:layout_toEndOf="@id/group_picture"
         android:layout_centerVertical="true">
 
         <TextView
             android:id="@+id/group_name"
+            android:text="장미희"
             android:textColor="#000000"
             android:textSize="18sp"
+            android:layout_marginBottom="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/group_current"
-            android:textColor="#4C4C4C"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp">
 
-        <RelativeLayout
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/group_current_km"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="#4C4C4C" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="KM   |"
+                android:textColor="#4C4C4C" />
+
+            <TextView
+                android:id="@+id/group_current_step"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="600000"
+                android:textColor="#4C4C4C" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="걸음"
+                android:textColor="#4C4C4C" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="선택코스 : "
+                android:textColor="#596466"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/group_course"
-                android:textColor="#596466"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"/>
+                android:layout_marginEnd="20dp"
+                android:text="불암산길"
+                android:textColor="#596466"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/group_km"
-                android:textColor="#E0E0E0"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="9.79"
+                android:textColor="#999"
+                android:textSize="12sp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"/>
+                android:text="km"
+                android:textColor="#999"
+                android:textSize="12sp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
+
 
     <ImageView
         android:id="@+id/groups_cock"
@@ -65,6 +117,6 @@
         android:layout_height="24dp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="25dp"/>
 
 </RelativeLayout>
