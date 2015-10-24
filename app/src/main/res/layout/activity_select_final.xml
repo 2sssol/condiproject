@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff8ed">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:src="@drawable/background_sub_city"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:background="@null"/>
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true">
+
+            <!-- 버튼 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="92.5dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_alignParentTop="true">
+
+                    <ImageButton
+                        android:id="@+id/btnSelectedCourseName6"
+                        android:src="@drawable/course_button_grey"
+                        android:scaleType="fitXY"
+                        android:layout_width="125dp"
+                        android:layout_height="62.5dp"
+                        android:background="@null"
+                        android:rotation="-30"
+                        android:layout_marginEnd="-17.5dp"
+                        android:clickable="false"/>
+                    <ImageButton
+                        android:id="@+id/btnSelectedCourseName1"
+                        android:src="@drawable/course_button_grey"
+                        android:scaleType="fitXY"
+                        android:layout_width="125dp"
+                        android:layout_height="62.5dp"
+                        android:background="@null"
+                        android:rotation="30"
+                        android:layout_marginStart="-17.5dp"
+                        android:clickable="false"/>
+
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnSelectedCourseName2"
+                    android:src="@drawable/course_button_grey"
+                    android:scaleType="fitXY"
+                    android:layout_width="125dp"
+                    android:layout_height="62.5dp"
+                    android:background="@null"
+                    android:rotation="90"
+                    android:layout_marginEnd="-27.5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="false"/>
+
+                <ImageButton
+                    android:id="@+id/btnSelectedCourseName5"
+                    android:src="@drawable/course_button_grey"
+                    android:scaleType="fitXY"
+                    android:layout_width="125dp"
+                    android:layout_height="62.5dp"
+                    android:background="@null"
+                    android:rotation="-90"
+                    android:layout_marginStart="-27.5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:clickable="false"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="92.5dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_alignParentBottom="true">
+
+                    <ImageButton
+                        android:id="@+id/btnSelectedCourseName4"
+                        android:src="@drawable/course_button_grey"
+                        android:scaleType="fitXY"
+                        android:layout_width="125dp"
+                        android:layout_height="62.5dp"
+                        android:background="@null"
+                        android:rotation="-150"
+                        android:layout_marginEnd="-17.5dp"
+                        android:clickable="false"/>
+                    <ImageButton
+                        android:id="@+id/btnSelectedCourseName3"
+                        android:src="@drawable/course_button_grey"
+                        android:scaleType="fitXY"
+                        android:layout_width="125dp"
+                        android:layout_height="62.5dp"
+                        android:background="@null"
+                        android:rotation="150"
+                        android:layout_marginStart="-17.5dp"
+                        android:clickable="false"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <!-- 원 라인 -->
+            <ImageView
+                android:src="@drawable/course_oval"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"/>
+            <ImageView
+                android:src="@drawable/course_oval"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"/>
+
+            <!-- 코스 이름 -->
+            <RelativeLayout
+                android:layout_width="210dp"
+                android:layout_height="210dp"
+                android:layout_centerInParent="true" >
+
+                <!-- text -->
+                <condi.kr.ac.swu.condiproject.view.CurvTextView
+                    android:id="@+id/txtSelectedCourseArray"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
+            <!-- 지역구 표시 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgSelectedLandmark"
+                    android:src="@drawable/landmark_nowon"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/txtSelectedRegionName"
+                    android:text="노원구"
+                    android:textSize="24sp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- 말풍선 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:gravity="center"
+                android:layout_alignParentTop="true">
+
+                <TextView
+                    android:id="@+id/txtSelectedSpeechBox6"
+                    android:text="현재 선택한 길"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/speechbubble_pink"
+                    android:rotation="-30"
+                    />
+                <TextView
+                    android:id="@+id/txtSelectedSpeechBox1"
+                    android:text="현재 선택한 길"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/speechbubble_pink"
+                    android:rotation="30"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtSelectedSpeechBox5"
+                android:text="현재 선택한 길"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/speechbubble_pink"
+                android:rotation="-90"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="-45dp"
+                />
+            <TextView
+                android:id="@+id/txtSelectedSpeechBox2"
+                android:text="현재 선택한 길"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@drawable/speechbubble_pink"
+                android:rotation="90"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="-45dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:gravity="center"
+                android:layout_alignParentBottom="true">
+
+                <TextView
+                    android:id="@+id/txtSelectedSpeechBox4"
+                    android:text="현재 선택한 길"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/speechbubble_pink"
+                    android:rotation="-150"
+                    />
+                <TextView
+                    android:id="@+id/txtSelectedSpeechBox3"
+                    android:text="현재 선택한 길"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/speechbubble_pink"
+                    android:rotation="150" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffecd0"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp">
+
+            <Button
+                android:id="@+id/btnGoBackChoice"
+                android:text="코스변경"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/button_mint"/>
+
+            <Button
+                android:id="@+id/btnGoTutorial"
+                android:text="시작하기"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/button_mint"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/push_list_background">
+
+            <TextView
+                android:id="@+id/txtPushUserName1"
+                android:text="장미희"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:background="@drawable/push_list_name"/>
+            <TextView
+                android:id="@+id/txtPushCourseName1"
+                android:text="불암산나들길"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:id="@+id/txtPushCourseKm1"
+                android:text="9.79 km"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginEnd="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/pushList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e6e6e6"
+            android:divider="#00000000"/>
+
+    </LinearLayout>
+
+</LinearLayout>
