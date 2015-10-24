@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/slide"
     android:layout_width="300dp"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="#e9e4de"
     android:orientation="vertical"
     android:clickable="true">
@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="148dp"
-        android:background="#fff"
+        android:background="#ffffff"
         android:orientation="vertical">
 
         <ImageButton
@@ -68,12 +68,12 @@
         </LinearLayout>
 
         <Button
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="코스 정보 보기"
+            android:textColor="#fff"
             android:id="@+id/btn_about_courses_list"
-            android:background="#00c6c1"
-            android:clickable="true" />
+            android:background="@drawable/interaction_main_button_mint"/>
 
     </LinearLayout>
 
@@ -106,9 +106,9 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/icon_sidemenu"
+            android:src="@drawable/icon_setting"
             android:layout_marginLeft="170dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp" />
 
         <TextView
 			android:id="@+id/btnGoSetting"
