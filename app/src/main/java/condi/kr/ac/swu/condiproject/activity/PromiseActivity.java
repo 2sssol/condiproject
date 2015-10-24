@@ -50,7 +50,7 @@ public class PromiseActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddPromiseActivity.class);
                 i.putExtra("mode", 1);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
             }
@@ -104,10 +104,10 @@ public class PromiseActivity extends BaseActivity {
                                 promise_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        printErrorMsg("i => "+ i);
+                                        printErrorMsg("i => " + i);
                                         Intent intent = new Intent(getApplicationContext(), PromiseDetailActivity.class);
-                                        intent.putExtra("pid", promiseList.get(i-1).getProperty("id"));
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        intent.putExtra("pid", promiseList.get(i - 1).getProperty("id"));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
 
                                     }
