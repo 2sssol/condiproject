@@ -52,6 +52,7 @@
 						android:id="@+id/slideName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="20sp"
                         android:text="사용자 이름" />
 
                     <TextView
@@ -74,6 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="코스 정보 보기"
+        android:textSize="26sp"
         android:textColor="#fff"
         android:id="@+id/btn_about_courses_list"
         android:background="@drawable/interaction_main_button_mint"/>
@@ -83,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:id="@+id/see_more_msg"
-        android:text="더보기> "
+        android:text="더보기"
 		android:clickable="true"
         android:textColor="#4f4b48"
         android:layout_gravity="end"/>
@@ -92,15 +94,15 @@
     <ListView
 		android:id="@+id/lvMsg"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:divider="#fff"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="61dp"
+        android:layout_height="50dp"
         android:background="#fff"
         android:orientation="horizontal"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/btn_goto_setting">
 
         <ImageView
@@ -108,7 +110,7 @@
             android:layout_height="30dp"
             android:src="@drawable/icon_setting"
             android:layout_marginLeft="170dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="12dp" />
 
         <TextView
 			android:id="@+id/btnGoSetting"
@@ -117,13 +119,13 @@
             android:text="환경설정"
             android:textSize="22sp"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="12dp"/>
 </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="6dp"
         android:textSize="9sp"
         android:textColor="#c1bcb8"
