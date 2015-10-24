@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -30,13 +33,24 @@ import java.util.TimeZone;
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
+import condi.kr.ac.swu.condiproject.view.CircularNetworkImageView;
 import condi.kr.ac.swu.condiproject.view.CustomCircularRingView;
+import condi.kr.ac.swu.condiproject.view.CustomCircularRingView2;
 import condi.kr.ac.swu.condiproject.view.PatchPointView;
 
 public class MyActivity extends BaseActivity {
 
-    private CustomCircularRingView myView;
+    private CustomCircularRingView2 myView;
     private PatchPointView patchPointView;
+
+    private TextView txtTotalDate, txtTotalKM ; // 전체 일수, km
+    private TextView txtPercent, txtCurrentDate, txtCurrentKM;
+
+    private TextView myStep;
+
+    // 경로
+    private TextView txtCourseName1, txtCourseName2, txtCourseName3, txtCourseName4;   // 나머지 코스 이름
+    private float courseKm1, courseKm2, courseKm3, courseKm4;
 
     private static String GRAY = "#FF777777";
     private static String BLUE = "#ff30c9ff";
@@ -45,24 +59,230 @@ public class MyActivity extends BaseActivity {
     private List<Properties> walks;
     private LinearLayout barChart, barDate;
 
-    private int walk;
+    private int walk = 0;
+    private int period = 0;
+    private float totalKM;
+
+    // thread
+    private Handler graphHandler = new Handler();
+    int percent = 0;
+    int currentStep = 0;
+    long currentKM = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         initActionBar("나의 걸음");
-        iniView();
+        initView();
         initGraph();
     }
 
-    private void iniView() {
-        myView = (CustomCircularRingView) findViewById(R.id.customCircularRingView2);
+    /*
+    * ============================================================================================================================================
+    * */
+    private void initView() {
+        // graph
+        myView = (CustomCircularRingView2) findViewById(R.id.customCircularRingView2);
         myView.changePercentage(0);
         myView.invalidate();
 
         patchPointView = (PatchPointView) findViewById(R.id.patchPointView2);
+        txtPercent = (TextView) findViewById(R.id.txtPercent2);
+        txtCurrentKM = (TextView) findViewById(R.id.txtCurrentKM2);
+
+        myStep = (TextView) findViewById(R.id.myStep);
+
+        // 경로
+        txtCourseName1 = (TextView) findViewById(R.id.txtCourseName12);
+        txtCourseName2 = (TextView) findViewById(R.id.txtCourseName22);
+        txtCourseName3 = (TextView) findViewById(R.id.txtCourseName32);
+        txtCourseName4 = (TextView) findViewById(R.id.txtCourseName42);
+
+        // date
+        txtTotalDate = (TextView) findViewById(R.id.txtTotalDate2);
+        txtTotalKM = (TextView) findViewById(R.id.txtTotalKM2);
+        txtCurrentDate = (TextView) findViewById(R.id.txtCurrentDate2);
+        setDateKM();
+        setMy();
+        setMyView();
     }
+
+    private void setDateKM () {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                String dml = "select goaldays, goalkm, date_format(startdate,'%y%m%d') as startdate " +
+                        "from groups " +
+                        "where id="+ Session.GROUPS;
+                return NetworkAction.sendDataToServer("goaldayskm.php",dml);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                String[] results;
+                if(o.equals("error"))
+                    printErrorMsg("error : cannot select goaldays, goalkm");
+                else {
+                    results = o.toString().split("/");
+                    txtTotalDate.setText(results[0]);
+                    txtTotalKM.setText(results[1]);
+                    totalKM = Float.parseFloat(results[1]);
+
+                    printErrorMsg("totalKM : " + totalKM);
+                    /*
+                    * current date
+                    * */
+                    try {
+                        Date startDate = new SimpleDateFormat("yyMMdd").parse(results[2]);       // startdate
+                        Date today = new Date();
+
+                        period = startDate.compareTo(today);
+                        txtCurrentDate.setText(Integer.toString(period));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    private void setMy() {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                String dml = "select * from course where id in (select course from member where groups="+Session.GROUPS+")";
+                return NetworkAction.sendDataToServer("course.php", dml);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+
+                if(!o.equals("error")) {
+                    new AsyncTask() {
+                        List<Properties> list;
+                        @Override
+                        protected Object doInBackground(Object[] objects) {
+                            try {
+                                list = NetworkAction.parse("course.xml", "course");
+                            } catch (XmlPullParserException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+
+                            double[] km = new double[list.size()];
+                            int cnt = 0;
+                            int sum = 0;
+                            List<Integer> points = new ArrayList<Integer>();
+                            for(Properties p : list) {
+                                points.add(sum);
+                                km[cnt] = Double.parseDouble(p.getProperty("km"));
+                                sum +=(int)(km[cnt]/totalKM*100);
+
+                                switch (cnt) {
+                                    case 0 :
+                                        txtCourseName1.setText(p.getProperty("name"));
+                                        courseKm1 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                    case 1 :
+                                        txtCourseName2.setText(p.getProperty("name"));
+                                        courseKm2 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                    case 2 :
+                                        txtCourseName3.setText(p.getProperty("name"));
+                                        courseKm3 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                    case 3 :
+                                        txtCourseName4.setText(p.getProperty("name"));
+                                        courseKm4 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                }
+                                cnt++;
+                            }
+                            patchPointView.setPercentToPoint(points);
+                            patchPointView.invalidate();
+
+                        }
+                    }.execute();
+                } else {
+                    printErrorMsg("myView 에서 error 입니다.");
+                }
+            }
+        }.execute();
+
+    }
+
+    private void setMyView() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (percent < 100) {
+                    String dml = "select sum(currentwalk) as count " +
+                            "from walk " +
+                            "where user='"+Session.ID+"'";
+                    currentStep = Integer.parseInt(NetworkAction.sendDataToServer("sum.php", dml));
+                    currentKM = Math.round(currentStep * 0.011559 * 100)/100;
+                    percent = (int)((float) currentKM / totalKM *100);
+
+                    graphHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            myView.changePercentage(percent);
+                            myView.invalidate();
+
+                            txtPercent.setText(Integer.toString(percent));
+                            txtCurrentKM.setText(Float.toString(currentKM));
+
+                            if(currentKM > courseKm1) {
+                                if(currentKM > courseKm1+courseKm2) {
+                                    if(currentKM > courseKm1+courseKm2+courseKm3) {
+                                        if(currentKM > courseKm1+courseKm2+courseKm3+courseKm4) {
+                                            toastErrorMsg("목표에 도달하셨습니다.");
+                                        } else {
+                                            txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName2.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName3.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName4.setBackgroundResource(R.drawable.road_nametag_on);
+                                        }
+                                    } else {
+                                        txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                        txtCourseName2.setBackgroundResource(R.drawable.route_blank);
+                                        txtCourseName3.setBackgroundResource(R.drawable.road_nametag_on);
+                                    }
+                                } else {
+                                    txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                    txtCourseName2.setBackgroundResource(R.drawable.road_nametag_on);
+                                }
+                            } else {
+                                txtCourseName1.setBackgroundResource(R.drawable.road_nametag_on);
+                            }
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+
+    /*
+    * ==============================================================================================================================================
+    * */
 
     /*
     * init메소드
@@ -319,7 +539,7 @@ public class MyActivity extends BaseActivity {
             walk = Integer.parseInt(intent.getStringExtra("walk"));
            // pcurrent1_km.setText(String.format("%s", ( Math.round(walk * 0.011559 * 100)/100)));
            // pcurrent1_step.setText(String.format("%s",walk));
-
+            myStep.setText(String.format("%s",walk));
         }
     };
 
