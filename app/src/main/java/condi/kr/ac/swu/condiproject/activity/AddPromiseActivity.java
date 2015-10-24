@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,9 +22,13 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.Course;
 
 public class AddPromiseActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener, TimePicker.OnTimeChangedListener {
 
@@ -33,6 +38,9 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
     private MaterialCalendarView calendarView;
     private TextView newSchDate, newSchTime;
     private TimePicker timePicker;
+    private Spinner spinner_location;
+
+    private ArrayList<String> courseNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
