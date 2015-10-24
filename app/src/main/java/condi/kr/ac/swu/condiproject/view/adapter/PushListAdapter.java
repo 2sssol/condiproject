@@ -46,7 +46,7 @@ public class PushListAdapter extends BaseAdapter {
     }
 
     /*
-    * 오버라이드
+    *
     * */
     @Override
     public int getCount() {
@@ -70,13 +70,13 @@ public class PushListAdapter extends BaseAdapter {
         if(convertView == null)
             convertView = inflater.inflate(R.layout.push_list, null);
 
-        // 리소스와 연결
-        TextView txtPushUserName = (TextView) convertView.findViewById(R.id.txtPushUserName);     // 이름
-        TextView txtPushCourseName = (TextView) convertView.findViewById(R.id.txtPushCourseName);    // 선택코스
+
+        TextView txtPushUserName = (TextView) convertView.findViewById(R.id.txtPushUserName);
+        TextView txtPushCourseName = (TextView) convertView.findViewById(R.id.txtPushCourseName);
         TextView txtPushCourseKm = (TextView) convertView.findViewById(R.id.txtPushCourseKm);   // km
         Button btnPush = (Button) convertView.findViewById(R.id.btnPush);
 
-        //텍스트 세팅
+
         txtPushUserName.setText(data.get(position).get("mname"));
         txtPushCourseKm.setText(data.get(position).get("ckm"));
 
@@ -89,7 +89,7 @@ public class PushListAdapter extends BaseAdapter {
 
     public void setCourseName(final TextView courseName, final String course) {
         if(course.equals(""))
-            courseName.setText("선택 중입니다.");
+            courseName.setText("korean error");
         else
             courseName.setText(course);
     }
