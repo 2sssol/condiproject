@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +43,8 @@ public class GroupActivity extends BaseActivity {
     private TextView txtTotalDate, txtTotalKM ; // 전체 일수, km
     private TextView txtPercent, txtCurrentDate, txtCurrentKM;
 
+    private Button btnMap, btnTodolist;
+
     // 경로
     private TextView txtCourseName1, txtCourseName2, txtCourseName3, txtCourseName4;   // 나머지 코스 이름
     private float courseKm1, courseKm2, courseKm3, courseKm4;
@@ -55,7 +58,7 @@ public class GroupActivity extends BaseActivity {
 
     // my
     private CircularNetworkImageView p1;
-    private TextView pname1, pcurrent1, pkm1, pcourse1;
+    private TextView pname1, pcurrent1_km, pcurrent1_step, pkm1, pcourse1;
 
     // thread
     private Handler graphHandler = new Handler();
@@ -87,6 +90,10 @@ public class GroupActivity extends BaseActivity {
         txtCourseName3 = (TextView) findViewById(R.id.txtCourseName3);
         txtCourseName4 = (TextView) findViewById(R.id.txtCourseName4);
 
+        // 버튼
+        btnMap = (Button) findViewById(R.id.btnMap);
+        btnTodolist = (Button) findViewById(R.id.btnTodolist);
+
         // date
         txtTotalDate = (TextView) findViewById(R.id.txtTotalDate);
         txtTotalKM = (TextView) findViewById(R.id.txtTotalKM);
@@ -96,13 +103,22 @@ public class GroupActivity extends BaseActivity {
         // my
         p1 = (CircularNetworkImageView) findViewById(R.id.p1);
         pname1 = (TextView) findViewById(R.id.pname1);
-        pcurrent1 = (TextView) findViewById(R.id.pcurrent1_km);
+        pcurrent1_km = (TextView) findViewById(R.id.pcurrent1_km);
+        pcurrent1_step = (TextView) findViewById(R.id.pcurrent1_step);
         pcourse1 = (TextView) findViewById(R.id.pcourse1);
         pkm1 = (TextView) findViewById(R.id.pkm1);
         setMy();
         setOther();
 
         setMyView();
+
+        btnTodolist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), PromiseActivity.class));
+                finish();
+            }
+        });
     }
 
     private void setDateKM () {
@@ -124,7 +140,7 @@ public class GroupActivity extends BaseActivity {
                 else {
                     results = o.toString().split("/");
                     txtTotalDate.setText(results[0]);
-                    txtTotalKM.setText(results[1]+"KM");
+                    txtTotalKM.setText(results[1]);
                     totalKM = Float.parseFloat(results[1]);
 
                     printErrorMsg("totalKM : " + totalKM);
@@ -294,7 +310,7 @@ public class GroupActivity extends BaseActivity {
                 String dml = "select m.id as mid, m.nickname as mname, m.profile as mprofile, " +
                         "c.id as cid, c.name as cname, c.km as ckm " +
                         "from member m, course c " +
-                        "where m.course = c.id and m.groups="+Session.GROUPS;
+                        "where m.course = c.id and m.groups="+Session.GROUPS+" and m.id!='"+Session.ID+"'";
                 return NetworkAction.sendDataToServer("coursemember.php",dml);
             }
 
@@ -342,7 +358,8 @@ public class GroupActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             walk = Integer.parseInt(intent.getStringExtra("walk"));
-            pcurrent1.setText(String.format("%s KM | %s 걸음", ( Math.round(walk * 0.011559 * 100)/100), walk));
+            pcurrent1_km.setText(String.format("%s", ( Math.round(walk * 0.011559 * 100)/100)));
+            pcurrent1_step.setText(String.format("%s",walk));
 
             new Thread(new Runnable() {
                 @Override

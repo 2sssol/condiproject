@@ -106,6 +106,10 @@
             android:name=".activity.GroupActivity"
             android:label="@string/title_activity_group" >
         </activity>
+        <activity
+            android:name=".activity.PromiseActivity"
+            android:label="@string/title_activity_promise" >
+        </activity>
     </application>
 
 </manifest>
