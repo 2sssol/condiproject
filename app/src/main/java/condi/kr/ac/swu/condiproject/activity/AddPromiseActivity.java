@@ -1,13 +1,20 @@
 package condi.kr.ac.swu.condiproject.activity;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import condi.kr.ac.swu.condiproject.R;
 
 public class AddPromiseActivity extends AppCompatActivity {
+
+    private ImageButton addPromise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,25 +22,17 @@ public class AddPromiseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_promise);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_promise, menu);
-        return true;
-    }
+    protected void initActionBar(String title) {
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
+        ((TextView)findViewById(R.id.titleText)).setText(title);
+        addPromise = (ImageButton) findViewById(R.id.sidemenu);
+        addPromise.setImageResource(R.drawable.icon_promise_ok);
+        addPromise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+            }
+        });
     }
 }
