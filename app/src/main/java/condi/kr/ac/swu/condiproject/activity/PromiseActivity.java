@@ -52,7 +52,7 @@ public class PromiseActivity extends BaseActivity {
                 i.putExtra("mode", 1);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
-                finish();
+
             }
         });
         setPromiseList();
@@ -109,7 +109,7 @@ public class PromiseActivity extends BaseActivity {
                                         intent.putExtra("pid", promiseList.get(i-1).getProperty("id"));
                                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         startActivity(intent);
-                                        finish();
+
                                     }
                                 });
                             }

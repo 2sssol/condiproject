@@ -118,7 +118,7 @@ public class GroupActivity extends BaseActivity {
                 Intent intent = new Intent(getApplicationContext(), PromiseActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-                finish();
+
             }
         });
     }

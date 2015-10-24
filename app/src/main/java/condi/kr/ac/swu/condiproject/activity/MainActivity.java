@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
                 Intent i = new Intent(getApplicationContext(), GroupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(new Intent(getApplicationContext(), GroupActivity.class));
-                finish();
+
             }
         });
     }
