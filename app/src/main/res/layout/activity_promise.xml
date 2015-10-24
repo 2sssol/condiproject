@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:padding="16dp"
+    android:padding="12dp"
     tools:context="condi.kr.ac.swu.condiproject.activity.PromiseActivity">
 
     <ScrollView
@@ -18,13 +18,13 @@
                 android:id="@+id/promise_list"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:layout_alignTop="@+id/addpromise" />
+                android:layout_alignTop="@+id/addpromise"
+                android:dividerHeight="6dp"/>
 
             <RelativeLayout
                 android:id="@+id/addpromise"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                android:layout_marginBottom="6dp"
                 android:background="@drawable/list_background">
 
                 <ImageButton
@@ -48,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-
         android:layout_centerVertical="true"
         android:gravity="center|center_horizontal"
         android:text="아직 약속된 일정이 없네요.\n친구들과 함께할 일정을 만들어 보세요!"
