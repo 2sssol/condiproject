@@ -65,6 +65,8 @@ public class MainActivity extends BaseActivity {
         btnGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), GroupActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(new Intent(getApplicationContext(), GroupActivity.class));
                 finish();
             }

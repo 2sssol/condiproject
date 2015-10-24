@@ -115,7 +115,9 @@ public class GroupActivity extends BaseActivity {
         btnTodolist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), PromiseActivity.class));
+                Intent intent = new Intent(getApplicationContext(), PromiseActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
                 finish();
             }
         });

@@ -35,7 +35,7 @@ public class PromiseDetailActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_promise_detail);
         initActionBar("약속보기");
 
-        System.out.println("pid : "+ (pid = Integer.parseInt(getIntent().getStringExtra("pid"))));
+        System.out.println("pid : " + (pid = Integer.parseInt(getIntent().getStringExtra("pid"))));
         initView();
     }
 
@@ -47,6 +47,9 @@ public class PromiseDetailActivity extends BaseActivity implements View.OnClickL
 
         btn_delete_promise = (Button) findViewById(R.id.btn_delete_promise);
         btn_edit_promise = (Button) findViewById(R.id.btn_edit_promise);
+
+        btn_delete_promise.setOnClickListener(this);
+        btn_edit_promise.setOnClickListener(this);
 
         setInfo();
     }

@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="246dp"
+            android:layout_height="260dp"
             android:gravity="center_horizontal" >
 
             <!-- 그래프 배경 -->
@@ -21,9 +21,8 @@
                 android:id="@+id/imgGraphBackground"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="246dp"
-                android:contentDescription="@string/abc_search_hint"
-                android:src="@drawable/background2"/>
+                android:layout_height="260dp"
+                android:contentDescription="@string/abc_search_hint"/>
 
 
             <!-- 그래프 -->
@@ -32,7 +31,6 @@
                 android:layout_height="200dp"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="4dp"
                 android:layout_alignParentTop="true">
 
 
@@ -168,11 +166,11 @@
             <!-- 코스 이름 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="4dp"
-                android:gravity="center_horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="6dp">
+                android:layout_marginEnd="4dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_alignParentBottom="true">
 
                 <!-- 현재 코스 -->
                 <TextView
@@ -227,10 +225,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="6dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="3dp">
+            android:layout_marginBottom="6dp">
 
             <!-- 지도보기 -->
             <RelativeLayout
@@ -256,8 +254,7 @@
                         android:scaleType="fitCenter"
                         android:layout_marginEnd="6dp"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/icon_locate"/>
+                        android:layout_height="20dp"/>
 
                     <TextView
                         android:text="완주지역"
@@ -293,8 +290,7 @@
                         android:scaleType="fitCenter"
                         android:layout_marginEnd="6dp"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/icon_schedule"/>
+                        android:layout_height="20dp"/>
                     <TextView
                         android:text="약속잡기"
                         android:textSize="20sp"
@@ -418,11 +414,7 @@
         <ListView
             android:id="@+id/groups_lv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dividerHeight="4dp"
-            android:divider="#E0E0E0"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

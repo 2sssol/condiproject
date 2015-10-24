@@ -151,10 +151,10 @@
                     android:layout_toEndOf="@+id/sch_contents_icon" />
 
                 <EditText
+                    android:id="@+id/sch_contents_new"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:inputType="text|textMultiLine"
-                    android:id="@+id/sch_contents_new"
                     android:layout_marginStart="5dp"
                     android:maxLength="50"
                     android:layout_marginTop="25dp"
