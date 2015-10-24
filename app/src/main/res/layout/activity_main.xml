@@ -12,10 +12,10 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:fitsSystemWindows="true"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
     <ImageView
         android:id="@+id/imgCourseBackground"
         android:layout_width="match_parent"
