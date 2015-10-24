@@ -96,6 +96,70 @@
                 android:id="@+id/timePicker"
                 android:layout_gravity="center_horizontal" />
 
+            <!--장소-->
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/sch_location_icon"
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/sch_location_icon"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장소"
+                    android:textSize="18sp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/location_txt"
+                    android:layout_toEndOf="@+id/sch_location_icon" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_location"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/location_txt" />
+            </RelativeLayout>
+
+            <!--약속내용-->
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/sch_contents_icon"
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/sch_contents_icon"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="약속내용"
+                    android:textSize="18sp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/sch_contents_txt"
+                    android:layout_toEndOf="@+id/sch_contents_icon" />
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textMultiLine"
+                    android:layout_marginLeft="5dp"
+                    android:maxLength="50"
+                    android:layout_marginTop="25dp"
+                    android:hint="상세 내용을 입력해 주세요."/>
+            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 
