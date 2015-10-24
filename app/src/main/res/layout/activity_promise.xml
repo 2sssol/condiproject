@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/addpromise"
                 android:divider="#fff"
-                android:dividerHeight="12dp"/>
+                android:dividerHeight="16dp"/>
 
             <RelativeLayout
                 android:id="@+id/addpromise"
