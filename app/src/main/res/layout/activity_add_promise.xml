@@ -25,7 +25,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/sch_date_icon"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/sch_date_icon" />
 
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:text="날짜"
                     android:textSize="18sp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:id="@+id/textView"
                     android:layout_toEndOf="@id/sch_date_icon" />
 
@@ -66,7 +66,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/sch_time_icon"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/sch_time_icon"
                     android:layout_alignParentLeft="true"/>
 
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="시간"
                     android:textSize="18sp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:id="@+id/time_txt"
                     android:layout_toEndOf="@id/sch_time_icon" />
 
@@ -106,7 +106,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/sch_location_icon"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/sch_location_icon"
                     android:layout_alignParentLeft="true"/>
 
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="장소"
                     android:textSize="18sp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:id="@+id/location_txt"
                     android:layout_toEndOf="@+id/sch_location_icon" />
 
@@ -137,7 +137,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/sch_contents_icon"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/sch_contents_icon"
                     android:layout_alignParentLeft="true"/>
 
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:text="약속내용"
                     android:textSize="18sp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:id="@+id/sch_contents_txt"
                     android:layout_toEndOf="@+id/sch_contents_icon" />
 
@@ -154,7 +154,7 @@
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:inputType="text|textMultiLine"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:maxLength="50"
                     android:layout_marginTop="25dp"
                     android:hint="상세 내용을 입력해 주세요."/>
@@ -170,49 +170,51 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/sch_alarm_icon"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/sch_alarm_icon"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="알림설정"
                     android:textSize="18sp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:id="@+id/sch_alarm_txt"
                     android:layout_toEndOf="@+id/sch_alarm_icon" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitCenter"
                     android:id="@+id/set_alarm_true"
-                    android:layout_marginLeft="5dp"
+                    android:background="null"
+                    android:src="@drawable/promise_checked"
+                    android:layout_marginStart="20dp"
+                    android:layout_below="@+id/sch_alarm_icon"/>
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitCenter"
+                    android:background="null"
+                    android:id="@+id/set_alarm_false"
+                    android:src="@drawable/promise_unchecked"
+                    android:visibility="visible"
+                    android:layout_marginStart="20dp"
                     android:layout_below="@+id/sch_alarm_icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="있음"
-                    android:layout_marginTop="5dp"
+                    android:text="설정하기"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:textSize="16sp"
                     android:layout_toEndOf="@+id/set_alarm_true"
                     android:layout_below="@+id/sch_alarm_icon"/>
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/set_alarm_false"
-                    android:layout_marginLeft="5dp"
-                    android:layout_below="@+id/set_alarm_true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="없음"
-                    android:layout_marginTop="5dp"
-                    android:layout_toEndOf="@+id/set_alarm_false"
-                    android:layout_below="@+id/set_alarm_true"/>
 
 
             </RelativeLayout>
@@ -232,7 +234,7 @@
                     android:textSize="18sp"
                     android:id="@+id/btn_sch_new"
                     android:onClick="goToShow"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_marginStart="30dp"/>
 
                 <Button
                     android:layout_width="100dp"
@@ -242,7 +244,7 @@
                     android:onClick="goToInfo"
                     android:textColor="#fff"
                     android:textSize="18sp"
-                    android:layout_marginLeft="50dp"/>
+                    android:layout_marginStart="50dp"/>
 
 
             </LinearLayout>
