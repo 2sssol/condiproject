@@ -18,7 +18,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,6 +37,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private SlidingMenu slidingMenu;
 
     private TextView btnGoSetting, see_more_msg;
+    private Button btn_about_courses_list;
 
 
     @Override
@@ -74,22 +74,29 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
         see_more_msg = (TextView) slidingMenu.findViewById(R.id.see_more_msg);
         see_more_msg.setOnClickListener(this);
+
+        btn_about_courses_list = (Button) slidingMenu.findViewById(R.id.btn_about_courses_list);
+        btn_about_courses_list.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.btn_about_courses_list :
-                startActivity(new Intent(getApplicationContext(), CourseListActivity.class));
-                finish();
+                intent = new Intent(getApplicationContext(), CourseThisActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.see_more_msg :
-                startActivity(new Intent(getApplicationContext(), MyMsgActivity.class));
-                finish();
+                intent = new Intent(getApplicationContext(), MyMsgActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.btnGoSetting :
-                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
-                finish();
+                intent = new Intent(getApplicationContext(), SettingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
     }

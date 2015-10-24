@@ -84,7 +84,7 @@
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".activity.CourseListActivity"
+            android:name=".activity.CourseThisActivity"
             android:label="@string/title_activity_course_list" >
         </activity>
         <activity
@@ -117,6 +117,10 @@
         <activity
             android:name=".activity.PromiseDetailActivity"
             android:label="@string/title_activity_promise_detail" >
+        </activity>
+        <activity
+            android:name=".activity.CourseDetailActivity"
+            android:label="@string/title_activity_course_info" >
         </activity>
     </application>
 
