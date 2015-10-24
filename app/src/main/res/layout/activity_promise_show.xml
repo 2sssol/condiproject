@@ -4,12 +4,13 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_margin="16dp"
-    android:background="@drawable/course_dropshadow">
+    android:background="@drawable/promise_dropshadow">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:layout_width="24dp"
@@ -19,8 +20,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="2015. 09. 06. (일)"
+            android:textSize="18sp"
+            android:textColor="#444"
             android:id="@+id/txt_sch_show_date"/>
 
     </LinearLayout>
@@ -39,8 +42,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
             android:text="오후 5시 30분"
+            android:textColor="#444"
             android:id="@+id/txt_sch_show_time"/>
     </LinearLayout>
 
@@ -58,18 +63,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
             android:text="불암산길"
+            android:textColor="#444"
             android:id="@+id/txt_sch_show_location"/>
     </LinearLayout>
 
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txt_shc_show_contents"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:textSize="16sp"
         android:text="자연별곡갔다가 불암산길가자"
+        android:textColor="#888"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="16dp"/>
 
     <!--버튼영역-->
