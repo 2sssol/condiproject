@@ -67,10 +67,18 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), GroupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(new Intent(getApplicationContext(), GroupActivity.class));
-
+                startActivity(i);
             }
         });
+        btnMyWalk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MyActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
+            }
+        });
+
     }
 
     private void initVideo() {
