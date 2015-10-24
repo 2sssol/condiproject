@@ -313,7 +313,7 @@ public class TutorialActivity extends RootActivity {
                     }.execute();
 
                 } else {
-                    toastErrorMsg("�ڽ� ������ �ε����� ���߽��ϴ�.");
+                    toastErrorMsg("안녕안녕");
                 }
             }
         }.execute();
