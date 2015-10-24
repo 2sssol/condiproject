@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -41,6 +42,10 @@ public class GroupActivity extends BaseActivity {
     private TextView txtTotalDate, txtTotalKM ; // 전체 일수, km
     private TextView txtPercent, txtCurrentDate, txtCurrentKM;
 
+    // 경로
+    private TextView txtCourseName1, txtCourseName2, txtCourseName3, txtCourseName4;   // 나머지 코스 이름
+    private float courseKm1, courseKm2, courseKm3, courseKm4;
+
     private ListView grouplv;
     private GroupListAdapter adapter;
 
@@ -55,7 +60,8 @@ public class GroupActivity extends BaseActivity {
     // thread
     private Handler graphHandler = new Handler();
     int percent = 0;
-    int totalStep = 0;
+    int currentStep = 0;
+    long currentKM = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,12 @@ public class GroupActivity extends BaseActivity {
         txtPercent = (TextView) findViewById(R.id.txtPercent);
         txtCurrentKM = (TextView) findViewById(R.id.txtCurrentKM);
 
+        // 경로
+        txtCourseName1 = (TextView) findViewById(R.id.txtCourseName1);
+        txtCourseName2 = (TextView) findViewById(R.id.txtCourseName2);
+        txtCourseName3 = (TextView) findViewById(R.id.txtCourseName3);
+        txtCourseName4 = (TextView) findViewById(R.id.txtCourseName4);
+
         // date
         txtTotalDate = (TextView) findViewById(R.id.txtTotalDate);
         txtTotalKM = (TextView) findViewById(R.id.txtTotalKM);
@@ -88,7 +100,6 @@ public class GroupActivity extends BaseActivity {
         pcourse1 = (TextView) findViewById(R.id.pcourse1);
         pkm1 = (TextView) findViewById(R.id.pkm1);
         setMy();
-
 
         setMyView();
     }
@@ -175,7 +186,37 @@ public class GroupActivity extends BaseActivity {
                                 }
                             }
 
+                            double[] km = new double[list.size()];
+                            int cnt = 0;
+                            int sum = 0;
+                            List<Integer> points = new ArrayList<Integer>();
+                            for(Properties p : list) {
+                                points.add(sum);
+                                km[cnt] = Double.parseDouble(p.getProperty("km"));
+                                sum +=(int)(km[cnt]/totalKM*100);
 
+                                switch (cnt) {
+                                    case 0 :
+                                        txtCourseName1.setText(p.getProperty("name"));
+                                        courseKm1 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                    case 1 :
+                                        txtCourseName2.setText(p.getProperty("name"));
+                                        courseKm2 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                    case 2 :
+                                        txtCourseName3.setText(p.getProperty("name"));
+                                        courseKm3 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                    case 3 :
+                                        txtCourseName4.setText(p.getProperty("name"));
+                                        courseKm4 = Float.parseFloat(p.getProperty("km"));
+                                        break;
+                                }
+                                cnt++;
+                            }
+                            patchPointView.setPercentToPoint(points);
+                            patchPointView.invalidate();
 
                         }
                     }.execute();
@@ -184,11 +225,6 @@ public class GroupActivity extends BaseActivity {
                 }
             }
         }.execute();
-
-    }
-
-    private void setPatchPointView() {
-
 
     }
 
@@ -201,9 +237,9 @@ public class GroupActivity extends BaseActivity {
                     String dml = "select sum(currentwalk) as count " +
                             "from walk " +
                             "where user in (select id from member where groups=" + Session.GROUPS + ")";
-                    totalStep = Integer.parseInt(NetworkAction.sendDataToServer("sum.php", dml));
-                    printErrorMsg("totalStep : "+totalStep);
-                    percent = (int)((float) Math.round(totalStep * 0.011559 * 100)/100 / totalKM *100); //(int)((float) Math.round(totalStep * 0.011559 * 100)/100 / totalKM *100)
+                    currentStep = Integer.parseInt(NetworkAction.sendDataToServer("sum.php", dml));
+                    currentKM = Math.round(currentStep * 0.011559 * 100)/100;
+                    percent = (int)((float) currentKM / totalKM *100);
 
                     graphHandler.post(new Runnable() {
                         @Override
@@ -212,7 +248,31 @@ public class GroupActivity extends BaseActivity {
                             myView.invalidate();
 
                             txtPercent.setText(Integer.toString(percent));
-                            txtCurrentKM.setText(Long.toString(Math.round(totalStep * 0.011559 * 100) / 100));
+                            txtCurrentKM.setText(Float.toString(currentKM));
+
+                            if(currentKM > courseKm1) {
+                                if(currentKM > courseKm1+courseKm2) {
+                                    if(currentKM > courseKm1+courseKm2+courseKm3) {
+                                        if(currentKM > courseKm1+courseKm2+courseKm3+courseKm4) {
+                                            toastErrorMsg("목표에 도달하셨습니다.");
+                                        } else {
+                                            txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName2.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName3.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName4.setBackgroundResource(R.drawable.route_blank_filled);
+                                        }
+                                    } else {
+                                        txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                        txtCourseName2.setBackgroundResource(R.drawable.route_blank);
+                                        txtCourseName3.setBackgroundResource(R.drawable.route_blank_filled);
+                                    }
+                                } else {
+                                    txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                    txtCourseName2.setBackgroundResource(R.drawable.route_blank_filled);
+                                }
+                            } else {
+                                txtCourseName1.setBackgroundResource(R.drawable.route_blank_filled);
+                            }
                         }
                     });
 

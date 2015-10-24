@@ -174,7 +174,7 @@
 
                 <!-- 현재 코스 -->
                 <TextView
-                    android:id="@+id/txtCurrentCourse"
+                    android:id="@+id/txtCourseName1"
                     android:text="불암산길"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
@@ -186,7 +186,7 @@
 
                 <!-- 나머지 코스 -->
                 <TextView
-                    android:id="@+id/txtCourseName1"
+                    android:id="@+id/txtCourseName2"
                     android:text="당현천길"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
@@ -197,7 +197,7 @@
                     android:background="@drawable/route_blank"/>
 
                 <TextView
-                    android:id="@+id/txtCourseName2"
+                    android:id="@+id/txtCourseName3"
                     android:text="묵동천길"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
@@ -208,7 +208,7 @@
                     android:background="@drawable/route_blank"/>
 
                 <TextView
-                    android:id="@+id/txtCourseName3"
+                    android:id="@+id/txtCourseName4"
                     android:text="초안산길"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
