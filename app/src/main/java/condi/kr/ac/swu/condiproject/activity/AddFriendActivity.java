@@ -39,7 +39,7 @@ public class AddFriendActivity extends RootActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
-        initActionBar("초대하기");
+        initActionBar("초대하기ddwjyegqwurgqwlaoir");
         btnInviteFinish = (Button) findViewById(R.id.btnInviteFinish);
         btnInviteFinish.setOnClickListener(new View.OnClickListener() {
             @Override
