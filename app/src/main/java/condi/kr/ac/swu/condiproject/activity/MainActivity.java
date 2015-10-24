@@ -114,4 +114,11 @@ public class MainActivity extends BaseActivity {
             txtWalkCount.setText(String.format("%s 걸음",walk));
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(sensorReceiver);
+    }
+
 }

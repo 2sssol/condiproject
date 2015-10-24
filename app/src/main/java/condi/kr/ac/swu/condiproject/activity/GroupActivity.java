@@ -37,7 +37,6 @@ public class GroupActivity extends BaseActivity {
 
     private CustomCircularRingView myView;
     private PatchPointView patchPointView;
-    private View imgGraphBackground;
 
     private TextView txtTotalDate, txtTotalKM ; // 전체 일수, km
     private TextView txtPercent, txtCurrentDate, txtCurrentKM;
@@ -46,7 +45,7 @@ public class GroupActivity extends BaseActivity {
     private GroupListAdapter adapter;
 
     private int walk = 0;
-    private int period;
+    private int period = 0;
     private float totalKM;
 
     // my
@@ -54,7 +53,7 @@ public class GroupActivity extends BaseActivity {
     private TextView pname1, pcurrent1, pkm1, pcourse1;
 
     // thread
-    private Handler graphHandler;
+    private Handler graphHandler = new Handler();
     int percent = 0;
     int totalStep = 0;
 
@@ -72,8 +71,6 @@ public class GroupActivity extends BaseActivity {
         myView.changePercentage(0);
         myView.invalidate();
 
-        imgGraphBackground = (View) findViewById(R.id.imgGraphBackground);
-        imgGraphBackground.setBackgroundResource(R.drawable.background2);
         patchPointView = (PatchPointView) findViewById(R.id.patchPointView);
         txtPercent = (TextView) findViewById(R.id.txtPercent);
         txtCurrentKM = (TextView) findViewById(R.id.txtCurrentKM);
@@ -117,15 +114,17 @@ public class GroupActivity extends BaseActivity {
                     txtTotalDate.setText(results[0]);
                     txtTotalKM.setText(results[1]+"KM");
                     totalKM = Float.parseFloat(results[1]);
+
+                    printErrorMsg("totalKM : " + totalKM);
                     /*
                     * current date
                     * */
                     try {
-                        Date startDate = new SimpleDateFormat("yyMMdd").parse(results[3]);       // startdate
+                        Date startDate = new SimpleDateFormat("yyMMdd").parse(results[2]);       // startdate
                         Date today = new Date();
 
-                        period = today.compareTo(startDate);
-                        txtCurrentDate.setText(period);
+                        period = startDate.compareTo(today);
+                        txtCurrentDate.setText(Integer.toString(period));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -142,7 +141,7 @@ public class GroupActivity extends BaseActivity {
         new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                String dml = "select * from course where id="+Session.COURSE;
+                String dml = "select * from course where id in (select course from member where groups="+Session.GROUPS+")";
                 return NetworkAction.sendDataToServer("course.php", dml);
             }
 
@@ -152,11 +151,11 @@ public class GroupActivity extends BaseActivity {
 
                 if(!o.equals("error")) {
                     new AsyncTask() {
-                        List<Properties> my;
+                        List<Properties> list;
                         @Override
                         protected Object doInBackground(Object[] objects) {
                             try {
-                                my = NetworkAction.parse("course.php", "course");
+                                list = NetworkAction.parse("course.xml", "course");
                             } catch (XmlPullParserException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -168,10 +167,20 @@ public class GroupActivity extends BaseActivity {
                         @Override
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
-                            pcourse1.setText(my.get(0).getProperty("name"));
-                            pkm1.setText(my.get(0).getProperty("km"));
+
+                            for(Properties p : list) {
+                                if(p.getProperty("id").equals(Session.COURSE)) {
+                                    pcourse1.setText(p.getProperty("name"));
+                                    pkm1.setText(p.getProperty("km"));
+                                }
+                            }
+
+
+
                         }
                     }.execute();
+                } else {
+                    printErrorMsg("myView 에서 error 입니다.");
                 }
             }
         }.execute();
@@ -193,7 +202,8 @@ public class GroupActivity extends BaseActivity {
                             "from walk " +
                             "where user in (select id from member where groups=" + Session.GROUPS + ")";
                     totalStep = Integer.parseInt(NetworkAction.sendDataToServer("sum.php", dml));
-                    percent = (int) ((Math.round(totalStep * 0.011559 * 100) / 100) / totalKM);
+                    printErrorMsg("totalStep : "+totalStep);
+                    percent = (int)((float) Math.round(totalStep * 0.011559 * 100)/100 / totalKM *100); //(int)((float) Math.round(totalStep * 0.011559 * 100)/100 / totalKM *100)
 
                     graphHandler.post(new Runnable() {
                         @Override
@@ -201,7 +211,7 @@ public class GroupActivity extends BaseActivity {
                             myView.changePercentage(percent);
                             myView.invalidate();
 
-                            txtPercent.setText(percent);
+                            txtPercent.setText(Integer.toString(percent));
                             txtCurrentKM.setText(Long.toString(Math.round(totalStep * 0.011559 * 100) / 100));
                         }
                     });
@@ -260,5 +270,12 @@ public class GroupActivity extends BaseActivity {
         } else  {
             profile.setImageUrl("http://condi.swu.ac.kr:80/condi2/profile/thumb_story.png", ((GlobalApplication) app).getImageLoader());
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(broadcastReceiver);
     }
 }

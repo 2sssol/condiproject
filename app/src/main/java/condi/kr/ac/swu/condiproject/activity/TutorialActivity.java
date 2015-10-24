@@ -337,7 +337,7 @@ public class TutorialActivity extends RootActivity {
         new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                String dml = String.format("insert into walk values('%s',%s, now())", Session.ID, 0);
+                String dml = String.format("insert into walk values('%s',%s, date_add(now(), interval -9 hour))", Session.ID, 0);
                 return NetworkAction.sendDataToServer(dml);
             }
 
