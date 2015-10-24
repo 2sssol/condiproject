@@ -112,4 +112,8 @@ public class GroupListAdapter extends BaseAdapter {
     public void setCock(String receiver) {
 
     }
+
+    private void setCurrent(TextView step, TextView km, String id) {
+
+    }
 }
