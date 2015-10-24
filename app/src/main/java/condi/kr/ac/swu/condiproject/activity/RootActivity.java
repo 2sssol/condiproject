@@ -11,14 +11,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.BackPressCloseHandler;
 
 
 public class RootActivity extends ActionBarActivity {
+
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     protected void initActionBar(String title) {
@@ -36,5 +40,11 @@ public class RootActivity extends ActionBarActivity {
 
     protected void printErrorMsg(String msg) {
         System.out.println(String.format("** error!! : %s\n", msg));
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }

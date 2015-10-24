@@ -395,10 +395,4 @@ public class GroupActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        unregisterReceiver(broadcastReceiver);
-    }
 }

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.BackPressCloseHandler;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
@@ -39,11 +40,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private TextView btnGoSetting, see_more_msg;
     private Button btn_about_courses_list;
 
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initMenu();
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     /*
@@ -170,5 +174,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void printErrorMsg(String msg) {
         System.out.println(String.format("** error!! : %s\n", msg));
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }
