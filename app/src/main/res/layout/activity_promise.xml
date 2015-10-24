@@ -19,7 +19,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:layout_alignTop="@+id/addpromise"
-                android:dividerHeight="6dp"/>
+                android:dividerHeight="6dp"
+                android:divider="@android:color/transparent"/>
 
             <RelativeLayout
                 android:id="@+id/addpromise"
