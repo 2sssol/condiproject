@@ -94,17 +94,16 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setSensor() {
-        IntentFilter mainFilter = new IntentFilter("condi.kr.ac.swu.walkprojectdemo.step");
-        registerReceiver(sensorReceiver, mainFilter);
+        registerReceiver(sensorReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.step"));
     }
 
     private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
 
-        private String serviceData ;
-
         @Override
         public void onReceive(Context context, Intent intent) {
-            txtWalkCount.setText(intent.getStringExtra("walk")+" 걸음");
+            int walk = Integer.parseInt(intent.getStringExtra("walk"));
+            txtCourseWalkKM.setText(String.format("%s KM | ",( Math.round(walk * 0.011559 * 100)/100)));
+            txtWalkCount.setText(String.format("%s 걸음",walk));
         }
     };
 }

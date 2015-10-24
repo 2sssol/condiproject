@@ -46,7 +46,7 @@ public class PushListAdapter extends BaseAdapter {
     }
 
     /*
-    *
+    * �������̵�
     * */
     @Override
     public int getCount() {
@@ -70,13 +70,13 @@ public class PushListAdapter extends BaseAdapter {
         if(convertView == null)
             convertView = inflater.inflate(R.layout.push_list, null);
 
-
-        TextView txtPushUserName = (TextView) convertView.findViewById(R.id.txtPushUserName);
-        TextView txtPushCourseName = (TextView) convertView.findViewById(R.id.txtPushCourseName);
+        // ���ҽ��� ����
+        TextView txtPushUserName = (TextView) convertView.findViewById(R.id.txtPushUserName);     // �̸�
+        TextView txtPushCourseName = (TextView) convertView.findViewById(R.id.txtPushCourseName);    // �����ڽ�
         TextView txtPushCourseKm = (TextView) convertView.findViewById(R.id.txtPushCourseKm);   // km
         Button btnPush = (Button) convertView.findViewById(R.id.btnPush);
 
-
+        //�ؽ�Ʈ ����
         txtPushUserName.setText(data.get(position).get("mname"));
         txtPushCourseKm.setText(data.get(position).get("ckm"));
 
@@ -89,7 +89,7 @@ public class PushListAdapter extends BaseAdapter {
 
     public void setCourseName(final TextView courseName, final String course) {
         if(course.equals(""))
-            courseName.setText("korean error");
+            courseName.setText("���� ���Դϴ�.");
         else
             courseName.setText(course);
     }

@@ -35,9 +35,9 @@ public class TutorialActivity extends RootActivity {
 
     private Course[] courses = new Course[6];
 
-    private ImageView imgTotalGoalShot;                            // ���� ���õ� ������ ���
-    private TextView txtTutorialCourseSum, txtTutorialDaysSum, txtTutorialName1, txtTutorialName2, txtTutorialName3, txtTutorialName4;    // ��� ����, ��¥ ����
-    private Button btnMain;                                          // �������� ����
+    private ImageView imgTotalGoalShot;
+    private TextView txtTutorialCourseSum, txtTutorialDaysSum, txtTutorialName1, txtTutorialName2, txtTutorialName3, txtTutorialName4;
+    private Button btnMain;
 
     private List<Properties> list;      // ��� �ڽ���
     private List<Properties> members;   // �����
@@ -120,7 +120,6 @@ public class TutorialActivity extends RootActivity {
             }
         });
 
-        // Ʃ�丮�� ����
         txtTutorialCourseSum = (TextView) findViewById(R.id.txtTutorialCourseSum);
         txtTutorialDaysSum = (TextView) findViewById(R.id.txtTutorialDaysSum);
         txtTutorialName1 = (TextView) findViewById(R.id.txtTutorialName1);
@@ -247,10 +246,6 @@ public class TutorialActivity extends RootActivity {
 
                                             int cnt = 0;
 
-                                            /*
-                                            * ���õ� �ڽ� ������ ����
-                                            * �� �ڽ��� ������ ��� ������ ����
-                                            * */
                                             for (Properties p : members) {
                                                 mc = new Properties();
 
@@ -345,18 +340,24 @@ public class TutorialActivity extends RootActivity {
 
 
     private void startSensor() {
-        IntentFilter mainFilter = new IntentFilter("condi.kr.ac.swu.condiproject.step");
-        registerReceiver(sensorReceiver, mainFilter);
-        startService(new Intent(getApplicationContext(), AccSensor.class));
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                String dml = String.format("insert into walk values('%s',%s, now())", Session.ID, 0);
+                return NetworkAction.sendDataToServer(dml);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if(o.equals("success")) {
+                    startService(new Intent(getApplicationContext(), AccSensor.class));
+                } else {
+                    toastErrorMsg("error : cannot start step!");
+                }
+            }
+        }.execute();
+
     }
 
-    private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
-
-        private String serviceData ;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            serviceData = intent.getStringExtra("walk");
-        }
-    };
 }
