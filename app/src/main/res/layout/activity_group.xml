@@ -2,8 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="condi.kr.ac.swu.condiproject.activity.GroupActivity">
+    android:layout_height="match_parent" >
 
     <!--  그래프 영역(높이 임의 지정) -->
     <LinearLayout
@@ -14,16 +13,17 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="260dp"
             android:gravity="center_horizontal" >
 
             <!-- 그래프 배경 -->
-            <ImageView
+            <View
                 android:id="@+id/imgGraphBackground"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
-                android:src="@drawable/background2"/>
+                android:contentDescription="@string/abc_search_hint"/>
+
 
             <!-- 그래프 -->
             <RelativeLayout
@@ -248,6 +248,7 @@
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
                     android:gravity="center">
+
                     <ImageView
                         android:src="@drawable/icon_locate"
                         android:id="@+id/ic_locate"
@@ -255,6 +256,7 @@
                         android:layout_marginEnd="6dp"
                         android:layout_width="20dp"
                         android:layout_height="20dp"/>
+
                     <TextView
                         android:text="완주지역"
                         android:textSize="20sp"

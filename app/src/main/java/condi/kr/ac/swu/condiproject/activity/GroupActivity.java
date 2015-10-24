@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class GroupActivity extends BaseActivity {
 
     private CustomCircularRingView myView;
     private PatchPointView patchPointView;
+    private View imgGraphBackground;
 
     private TextView txtTotalDate, txtTotalKM ; // 전체 일수, km
     private TextView txtPercent, txtCurrentDate, txtCurrentKM;
@@ -67,6 +69,11 @@ public class GroupActivity extends BaseActivity {
     private void initView() {
         // graph
         myView = (CustomCircularRingView) findViewById(R.id.customCircularRingView);
+        myView.changePercentage(0);
+        myView.invalidate();
+
+        imgGraphBackground = (View) findViewById(R.id.imgGraphBackground);
+        imgGraphBackground.setBackgroundResource(R.drawable.background2);
         patchPointView = (PatchPointView) findViewById(R.id.patchPointView);
         txtPercent = (TextView) findViewById(R.id.txtPercent);
         txtCurrentKM = (TextView) findViewById(R.id.txtCurrentKM);

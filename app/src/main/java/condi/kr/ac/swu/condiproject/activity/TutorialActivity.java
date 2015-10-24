@@ -206,9 +206,6 @@ public class TutorialActivity extends RootActivity {
                                         @Override
                                         protected void onPreExecute() {
                                             super.onPreExecute();
-                                            /*
-                                            * �ڽ� �̸� ����
-                                            * */
                                             String[] names = new String[6];
 
                                             int i = 0;
@@ -291,9 +288,6 @@ public class TutorialActivity extends RootActivity {
                                                 setSelectedCourse(mc);
                                             }
 
-                                            /*
-                                            * ��ǳ���̶� �信 �ݿ�
-                                            * */
                                             curvTextView.selectedCourse(selected);
 
                                             txtTutorialDaysSum.setText(Integer.toString(days));
