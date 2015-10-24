@@ -2,23 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:background="#fff8ed">
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <!--이번 여정 코스-->
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이번 여정 코스"
                 android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
                 android:textSize="18sp"
                 android:textColor="#000"/>
+
+
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -28,16 +34,18 @@
                 android:gravity="center">
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="180dp">
+                    android:layout_width="170dp"
+                    android:layout_height="210dp">
+
                     <ImageView
-                        android:layout_width="158dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/course_back"/>
+                        android:layout_width="170dp"
+                        android:layout_height="210dp"
+                        android:background="@drawable/course_dropshadow"/>
 
                     <com.android.volley.toolbox.NetworkImageView
-                        android:layout_width="138dp"
-                        android:layout_height="138dp"
+                        android:layout_width="150dp"
+                        android:layout_height="160dp"
+                        android:scaleType="centerCrop"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
@@ -63,18 +71,18 @@
 
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="180dp"
-                    android:layout_marginLeft="16dp">
-
+                    android:layout_width="170dp"
+                    android:layout_height="210dp"
+                    android:layout_marginStart="6dp">
                     <ImageView
-                        android:layout_width="158dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/course_back"/>
+                        android:layout_width="170dp"
+                        android:layout_height="210dp"
+                        android:background="@drawable/course_dropshadow"/>
 
                     <com.android.volley.toolbox.NetworkImageView
-                        android:layout_width="138dp"
-                        android:layout_height="138dp"
+                        android:layout_width="150dp"
+                        android:layout_height="160dp"
+                        android:scaleType="centerCrop"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
@@ -99,24 +107,29 @@
                 </RelativeLayout>
             </LinearLayout>
 
+
+
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
                 android:gravity="center">
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="180dp">
+                    android:layout_width="170dp"
+                    android:layout_height="210dp">
+
                     <ImageView
-                        android:layout_width="158dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/course_back"/>
+                        android:layout_width="170dp"
+                        android:layout_height="210dp"
+                        android:background="@drawable/course_dropshadow"/>
 
                     <com.android.volley.toolbox.NetworkImageView
-                        android:layout_width="138dp"
-                        android:layout_height="138dp"
+                        android:layout_width="150dp"
+                        android:layout_height="160dp"
+                        android:scaleType="centerCrop"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
@@ -142,18 +155,19 @@
 
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="180dp"
-                    android:layout_marginLeft="16dp">
+                    android:layout_width="170dp"
+                    android:layout_height="210dp"
+                    android:layout_marginStart="6dp">
 
                     <ImageView
-                        android:layout_width="158dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/course_back"/>
+                        android:layout_width="170dp"
+                        android:layout_height="210dp"
+                        android:background="@drawable/course_dropshadow"/>
 
                     <com.android.volley.toolbox.NetworkImageView
-                        android:layout_width="138dp"
-                        android:layout_height="138dp"
+                        android:layout_width="150dp"
+                        android:layout_height="160dp"
+                        android:scaleType="centerCrop"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
@@ -185,6 +199,7 @@
                 android:layout_height="wrap_content"
                 android:text="다른 코스 보기"
                 android:textStyle="bold"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:textSize="18sp"
                 android:textColor="#000"/>
@@ -205,19 +220,22 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/mark_seongdong"
-                    android:id="@+id/course_this_other2"/>
+                    android:id="@+id/course_this_other2"
+                    android:layout_marginStart="16dp"/>
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/mark_gwanak"
-                    android:id="@+id/course_this_other3"/>
+                    android:id="@+id/course_this_other3"
+                    android:layout_marginStart="16dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_marginTop="16dp">
 
                 <ImageView
                     android:layout_width="100dp"
@@ -228,12 +246,14 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/mark_seongbuk"
-                    android:id="@+id/course_this_other5"/>
+                    android:id="@+id/course_this_other5"
+                    android:layout_marginStart="16dp"/>
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/mark_joongrang"
-                    android:id="@+id/course_this_other6"/>
+                    android:id="@+id/course_this_other6"
+                    android:layout_marginStart="16dp"/>
             </LinearLayout>
 
         </LinearLayout>
