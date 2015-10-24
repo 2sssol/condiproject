@@ -85,12 +85,14 @@ public class PromiseActivity extends BaseActivity {
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
 
-                            if(promiseList.size() == 0) {
-                                promise_tutorial.setVisibility(View.INVISIBLE);
+                            printErrorMsg(Integer.toString(promiseList.size()));
+                            if(promiseList.size() <= 0) {
+                                promise_tutorial.setVisibility(View.VISIBLE);
                             } else {
                                 /*
                                 * set listView
                                 * */
+                                promise_tutorial.setVisibility(View.INVISIBLE);
                                 View header = getLayoutInflater().inflate(R.layout.promise_list_header, null, false);
                                 promise_list = (ListView) findViewById(R.id.promise_list);
                                 adapter = new PromiseListAdapter(getApplicationContext(), promiseList);
