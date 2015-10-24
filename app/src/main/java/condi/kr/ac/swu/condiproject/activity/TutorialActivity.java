@@ -351,8 +351,6 @@ public class TutorialActivity extends RootActivity {
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
                 if(o.equals("success")) {
-                    IntentFilter mainFilter = new IntentFilter("condi.kr.ac.swu.condiproject.step");
-                    registerReceiver(sensorReceiver, mainFilter);
                     startService(new Intent(getApplicationContext(), AccSensor.class));
                 } else {
                     toastErrorMsg("error : cannot start step");
@@ -362,13 +360,4 @@ public class TutorialActivity extends RootActivity {
 
     }
 
-    private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
-
-        private String serviceData ;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            serviceData = intent.getStringExtra("walk");
-        }
-    };
 }
