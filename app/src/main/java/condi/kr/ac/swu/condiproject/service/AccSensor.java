@@ -8,24 +8,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import condi.kr.ac.swu.condiproject.data.NetworkAction;
-import condi.kr.ac.swu.condiproject.data.Session;
-
 public class AccSensor extends Service implements SensorEventListener {
 
     private SensorManager sm;
     private Sensor accSensor;
-    private String dml;
-    private String today;
-    private String user = Session.ID;
 
     public int MY_WALK_COUNT = 0;
 
@@ -36,28 +22,7 @@ public class AccSensor extends Service implements SensorEventListener {
         sm = (SensorManager)getSystemService(SENSOR_SERVICE);
         accSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        /*
-        * date
-        * */
-        DateFormat df = new SimpleDateFormat("yyMMdd");
-        df.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-        today = df.format(new Date());
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    dml = "update walk set currentwalk="+ MY_WALK_COUNT +" where user='"+ user+"' and date_format(today,'%y%m%d')=str_to_date('"+ today +"','%y%m%d')";
-                    System.out.println("걸음 : "+ dml + "\n ==> "+NetworkAction.sendDataToServer(dml)+" : "+MY_WALK_COUNT);
-
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
     }
 
     @Override

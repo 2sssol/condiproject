@@ -15,11 +15,13 @@ import android.widget.TextView;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
@@ -51,6 +53,8 @@ public class GroupActivity extends BaseActivity {
 
     // thread
     private Handler graphHandler;
+    int percent = 0;
+    int totalStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +80,13 @@ public class GroupActivity extends BaseActivity {
         // my
         p1 = (CircularNetworkImageView) findViewById(R.id.p1);
         pname1 = (TextView) findViewById(R.id.pname1);
-        pcurrent1 = (TextView) findViewById(R.id.pcurrent1);
+        pcurrent1 = (TextView) findViewById(R.id.pcurrent1_km);
         pcourse1 = (TextView) findViewById(R.id.pcourse1);
         pkm1 = (TextView) findViewById(R.id.pkm1);
         setMy();
+
+
+        setMyView();
     }
 
     private void setDateKM () {
@@ -173,37 +180,33 @@ public class GroupActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int percent = 0;
-                int totalStep = 0;
-                while (percent<100) {
+
+                while (percent < 100) {
                     String dml = "select sum(currentwalk) as count " +
                             "from walk " +
-                            "where user in (select id from member where groups="+Session.GROUPS+")";
+                            "where user in (select id from member where groups=" + Session.GROUPS + ")";
                     totalStep = Integer.parseInt(NetworkAction.sendDataToServer("sum.php", dml));
-                    percent = (int) ((Math.round(totalStep * 0.011559 * 100)/100)/totalKM);
+                    percent = (int) ((Math.round(totalStep * 0.011559 * 100) / 100) / totalKM);
+
+                    graphHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            myView.changePercentage(percent);
+                            myView.invalidate();
+
+                            txtPercent.setText(percent);
+                            txtCurrentKM.setText(Long.toString(Math.round(totalStep * 0.011559 * 100) / 100));
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }).start();
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                String dml = "select sum(currentwalk) as count " +
-                        "from walk " +
-                        "where user in (select id from member where groups="+Session.GROUPS+")";
-                return NetworkAction.sendDataToServer("sum.php", dml);
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-
-                /*
-                * percent, graph
-                * */
-
-
-            }
-        }.execute();
     }
 
     /*
@@ -219,6 +222,20 @@ public class GroupActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             walk = Integer.parseInt(intent.getStringExtra("walk"));
             pcurrent1.setText(String.format("%s KM | %s 걸음", ( Math.round(walk * 0.011559 * 100)/100), walk));
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DateFormat df = new SimpleDateFormat("yyMMdd");
+                    df.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+                    String today = df.format(new Date());
+
+                    String dml = "update walk set currentwalk="+ walk +" where user='"+ Session.ID+"' and date_format(today,'%y%m%d')=str_to_date('"+ today +"','%y%m%d')";
+                    System.out.println("걸음 : "+ dml + "\n ==> "+NetworkAction.sendDataToServer(dml)+" : "+walk);
+
+                }
+            }).start();
         }
     };
 
