@@ -100,8 +100,8 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
         else
             ampm = "오전";
 
-        if(hourOfDay-12 < 10)
-            hour = String.format("0%s",hourOfDay-12);
+        if(hourOfDay < 10)
+            hour = String.format("0%s",hourOfDay);
         else
             hour = Integer.toString(hourOfDay);
 
