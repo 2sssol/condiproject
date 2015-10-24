@@ -102,12 +102,6 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".receiver.SensorReceiver">
-            <intent-filter>
-                <action android:name="condi.kr.ac.swu.condiproject.step" />
-            </intent-filter>
-        </receiver>
-
     </application>
 
 </manifest>

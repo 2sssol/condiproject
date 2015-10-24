@@ -1,5 +1,7 @@
 package condi.kr.ac.swu.condiproject.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
@@ -16,8 +18,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import condi.kr.ac.swu.condiproject.R;
-import condi.kr.ac.swu.condiproject.receiver.SensorReceiver;
-import condi.kr.ac.swu.condiproject.service.AccSensor;
 
 public class MainActivity extends BaseActivity {
 
@@ -94,10 +94,17 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setSensor() {
-        SensorReceiver receiver = new SensorReceiver();
         IntentFilter mainFilter = new IntentFilter("condi.kr.ac.swu.walkprojectdemo.step");
-        registerReceiver(receiver, mainFilter);
-
-        receiver.setWalk(txtWalkCount, "걸음");
+        registerReceiver(sensorReceiver, mainFilter);
     }
+
+    private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
+
+        private String serviceData ;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            txtWalkCount.setText(intent.getStringExtra("walk")+" 걸음");
+        }
+    };
 }

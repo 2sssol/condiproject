@@ -1,5 +1,7 @@
 package condi.kr.ac.swu.condiproject.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
@@ -25,7 +27,6 @@ import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.Course;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
-import condi.kr.ac.swu.condiproject.receiver.SensorReceiver;
 import condi.kr.ac.swu.condiproject.service.AccSensor;
 import condi.kr.ac.swu.condiproject.view.CurvTextView;
 import condi.kr.ac.swu.condiproject.view.adapter.PushListAdapter;
@@ -34,15 +35,15 @@ public class TutorialActivity extends RootActivity {
 
     private Course[] courses = new Course[6];
 
-    private ImageView imgTotalGoalShot;                            // ÃÖÁ¾ ¼±ÅÃµÈ ÁöµµÀÇ ¸ğ½À
-    private TextView txtTutorialCourseSum, txtTutorialDaysSum, txtTutorialName1, txtTutorialName2, txtTutorialName3, txtTutorialName4;    // °æ·Î ¼³¸í, ³¯Â¥ ¼³¸í
-    private Button btnMain;                                          // ¸ŞÀÎÀ¸·Î °¡±â
+    private ImageView imgTotalGoalShot;                            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    private TextView txtTutorialCourseSum, txtTutorialDaysSum, txtTutorialName1, txtTutorialName2, txtTutorialName3, txtTutorialName4;    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Â¥ ï¿½ï¿½ï¿½ï¿½
+    private Button btnMain;                                          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    private List<Properties> list;      // ¸ğµç ÄÚ½ºµé
-    private List<Properties> members;   // ¸â¹öµé
+    private List<Properties> list;      // ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½
+    private List<Properties> members;   // ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    private ArrayList<String> selected = new ArrayList<String>();   // ¼±ÅÃµÈ ÄÚ½ºµé ÀÌ¸§
-    private ArrayList<String> selectedMembers = new ArrayList<String>();    //¼±ÅÃÇÑ ¸â¹öµé ÀÌ¸§
+    private ArrayList<String> selected = new ArrayList<String>();   // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+    private ArrayList<String> selectedMembers = new ArrayList<String>();    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 
     private ArrayList<ImageButton> imageButtons;
     private ImageButton
@@ -64,7 +65,7 @@ public class TutorialActivity extends RootActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
-        initActionBar("ÄÚ½º¼±ÅÃ");
+        initActionBar("ì–´ìš¸ë¦¼ ì‹œì‘í•˜ê¸°");
         initView();
         setCourses();
     }
@@ -72,7 +73,7 @@ public class TutorialActivity extends RootActivity {
     private void initView() {
         curvTextView = (CurvTextView) findViewById(R.id.txtTutorialCourseArray);
 
-        // ¸»Ç³¼±
+        // ï¿½ï¿½Ç³ï¿½ï¿½
         txtTutorialSpeechBox1 = (TextView) findViewById(R.id.txtTutorialSpeechBox1);
         txtTutorialSpeechBox2 = (TextView) findViewById(R.id.txtTutorialSpeechBox2);
         txtTutorialSpeechBox3 = (TextView) findViewById(R.id.txtTutorialSpeechBox3);
@@ -95,7 +96,7 @@ public class TutorialActivity extends RootActivity {
         textViews.add(txtTutorialSpeechBox5);
         textViews.add(txtTutorialSpeechBox6);
 
-        // ÀÌ¹ÌÁö ¹öÆ°
+        // ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
         btnTutorialCourseName1 = (ImageButton) findViewById(R.id.btnTutorialCourseName1);
         btnTutorialCourseName2 = (ImageButton) findViewById(R.id.btnTutorialCourseName2);
         btnTutorialCourseName3 = (ImageButton) findViewById(R.id.btnTutorialCourseName3);
@@ -119,7 +120,7 @@ public class TutorialActivity extends RootActivity {
             }
         });
 
-        // Æ©Åä¸®¾ó ¼¼ÆÃ
+        // Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         txtTutorialCourseSum = (TextView) findViewById(R.id.txtTutorialCourseSum);
         txtTutorialDaysSum = (TextView) findViewById(R.id.txtTutorialDaysSum);
         txtTutorialName1 = (TextView) findViewById(R.id.txtTutorialName1);
@@ -142,11 +143,11 @@ public class TutorialActivity extends RootActivity {
 
         textViews.get(id).setVisibility(View.VISIBLE);
         textViews.get(id).setBackgroundResource(R.drawable.speechbubble_pink);
-        textViews.get(id).setText(prop.getProperty("mname") + "´Ô ¼±ÅÃ");
+        textViews.get(id).setText(prop.getProperty("mname") + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
     }
 
     /*
-    * ÄÚ½º ·Îµå
+    * ï¿½Ú½ï¿½ ï¿½Îµï¿½
     * */
     private void setCourses() {
         new AsyncTask() {
@@ -166,7 +167,7 @@ public class TutorialActivity extends RootActivity {
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
                 /*
-                * ¸ğµç ÄÚ½º ·Îµå
+                * ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½Îµï¿½
                 * */
                 if (!o.equals("error")) {
 
@@ -188,7 +189,7 @@ public class TutorialActivity extends RootActivity {
                             super.onPostExecute(o);
 
                             /*
-                            * ¼±ÅÃµÈ ÄÚ½ºÀÎÁö È®ÀÎÇÏ°í ¼¼ÆÃ
+                            * ï¿½ï¿½ï¿½Ãµï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
                             * */
                             new AsyncTask() {
                                 @Override
@@ -207,7 +208,7 @@ public class TutorialActivity extends RootActivity {
                                         protected void onPreExecute() {
                                             super.onPreExecute();
                                             /*
-                                            * ÄÚ½º ÀÌ¸§ ¼¼ÆÃ
+                                            * ï¿½Ú½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
                                             * */
                                             String[] names = new String[6];
 
@@ -247,8 +248,8 @@ public class TutorialActivity extends RootActivity {
                                             int cnt = 0;
 
                                             /*
-                                            * ¼±ÅÃµÈ ÄÚ½º ¾ò¾î¿À±â ¼º°ø
-                                            * ±× ÄÚ½º¸¦ ¼±ÅÃÇÑ »ç¶÷ ¾ò¾î¿À±â ¼º°ø
+                                            * ï¿½ï¿½ï¿½Ãµï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                                            * ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                             * */
                                             for (Properties p : members) {
                                                 mc = new Properties();
@@ -296,7 +297,7 @@ public class TutorialActivity extends RootActivity {
                                             }
 
                                             /*
-                                            * ¸»Ç³¼±ÀÌ¶û ºä¿¡ ¹İ¿µ
+                                            * ï¿½ï¿½Ç³ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ä¿¡ ï¿½İ¿ï¿½
                                             * */
                                             curvTextView.selectedCourse(selected);
 
@@ -312,7 +313,7 @@ public class TutorialActivity extends RootActivity {
                     }.execute();
 
                 } else {
-                    toastErrorMsg("ÄÚ½º Á¤º¸¸¦ ·ÎµåÇÏÁö ¸øÇß½À´Ï´Ù.");
+                    toastErrorMsg("ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
                 }
             }
         }.execute();
@@ -330,12 +331,12 @@ public class TutorialActivity extends RootActivity {
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
                 if(o.equals("success")) {
-                    toastErrorMsg("¾î¿ï¸²ÀÌ ½ÃÀÛµË´Ï´Ù.");
+                    toastErrorMsg("ì–´ìš¸ë¦¼ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
                     startSensor();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 } else {
-                    toastErrorMsg("mainÀ¸·Î ³Ñ¾î°¥ ¼ö ¾ø½À´Ï´Ù.");
+                    toastErrorMsg("ë©”ì¸ìœ¼ë¡œ ë„˜ì–´ê°ˆ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 }
             }
         }.execute();
@@ -344,9 +345,18 @@ public class TutorialActivity extends RootActivity {
 
 
     private void startSensor() {
-        SensorReceiver sensorReceiver = new SensorReceiver();
         IntentFilter mainFilter = new IntentFilter("condi.kr.ac.swu.condiproject.step");
         registerReceiver(sensorReceiver, mainFilter);
         startService(new Intent(getApplicationContext(), AccSensor.class));
     }
+
+    private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
+
+        private String serviceData ;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            serviceData = intent.getStringExtra("walk");
+        }
+    };
 }
