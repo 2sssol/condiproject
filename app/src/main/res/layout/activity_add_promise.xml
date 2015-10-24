@@ -60,6 +60,7 @@
 
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
                 android:layout_width="330dp"
                 android:layout_height="250dp"
                 app:mcv_showOtherDates="all"
