@@ -353,7 +353,7 @@ public class TutorialActivity extends RootActivity {
                 if(o.equals("success")) {
                     startService(new Intent(getApplicationContext(), AccSensor.class));
                 } else {
-                    toastErrorMsg("error : cannot start step");
+                    toastErrorMsg("error : cannot start step!");
                 }
             }
         }.execute();
