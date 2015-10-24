@@ -24,7 +24,7 @@
             android:text="2015. 09. 06. (일)"
             android:textSize="18sp"
             android:textColor="#444"
-            android:id="@+id/txt_sch_show_date"/>
+            android:id="@+id/txt_sch_detail_date"/>
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
             android:textSize="18sp"
             android:text="오후 5시 30분"
             android:textColor="#444"
-            android:id="@+id/txt_sch_show_time"/>
+            android:id="@+id/txt_sch_detail_time"/>
     </LinearLayout>
 
     <LinearLayout
@@ -67,14 +67,14 @@
             android:textSize="18sp"
             android:text="불암산길"
             android:textColor="#444"
-            android:id="@+id/txt_sch_show_location"/>
+            android:id="@+id/txt_sch_detail_location"/>
     </LinearLayout>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_shc_show_contents"
+        android:id="@+id/txt_shc_detail_contents"
         android:layout_marginStart="32dp"
         android:textSize="16sp"
         android:text="자연별곡갔다가 불암산길가자"

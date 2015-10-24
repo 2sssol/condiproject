@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -98,6 +99,21 @@ public class PromiseActivity extends BaseActivity {
                                 adapter = new PromiseListAdapter(getApplicationContext(), promiseList);
                                 promise_list.addHeaderView(header);
                                 promise_list.setAdapter(adapter);
+
+                                promise_list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l_position) {
+                                        Intent intent = new Intent(getApplicationContext(), PromiseDetailActivity.class);
+                                        intent.putExtra("pid", promiseList.get(position).getProperty("id"));
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                    }
+                                });
                             }
                         }
                     }.execute();

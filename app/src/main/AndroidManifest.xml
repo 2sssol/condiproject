@@ -114,6 +114,10 @@
             android:name=".activity.AddPromiseActivity"
             android:label="@string/title_activity_add_promise" >
         </activity>
+        <activity
+            android:name=".activity.PromiseDetailActivity"
+            android:label="@string/title_activity_promise_detail" >
+        </activity>
     </application>
 
 </manifest>

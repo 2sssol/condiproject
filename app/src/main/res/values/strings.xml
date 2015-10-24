@@ -22,4 +22,5 @@
     <string name="title_activity_group">GroupActivity</string>
     <string name="title_activity_promise">PromiseActivity</string>
     <string name="title_activity_add_promise">AddPromiseActivity</string>
+    <string name="title_activity_promise_detail">PromiseDetailActivity</string>
 </resources>
