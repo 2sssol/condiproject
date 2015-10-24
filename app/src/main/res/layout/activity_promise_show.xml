@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="fill_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_margin="16dp"
     android:background="@drawable/course_dropshadow">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -19,14 +19,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:text="2015. 09. 06. (일)"
             android:id="@+id/txt_sch_show_date"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
@@ -45,7 +45,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="16dp">
@@ -65,11 +65,36 @@
 
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txt_shc_show_contents"
         android:layout_marginLeft="32dp"
         android:text="자연별곡갔다가 불암산길가자"
         android:layout_marginTop="16dp"/>
 
+    <!--버튼영역-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center_horizontal">
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:id="@+id/btn_delete_promise"
+            android:background="@drawable/button_pink"
+            android:text="삭  제"
+            android:textColor="#fff"/>
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:id="@+id/btn_edit_promise"
+            android:background="@drawable/button_pink"
+            android:text="수  정"
+            android:textColor="#fff"
+            android:layout_marginStart="60dp"/>
+
+    </LinearLayout>
 </LinearLayout>
