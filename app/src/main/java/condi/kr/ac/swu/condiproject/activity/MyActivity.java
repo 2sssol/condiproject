@@ -65,6 +65,8 @@ public class MyActivity extends BaseActivity {
 
     // thread
     private Handler graphHandler = new Handler();
+    private Thread th;
+
     int percent = 0;
     int currentStep = 0;
     long currentKM = 0;
@@ -76,6 +78,7 @@ public class MyActivity extends BaseActivity {
         initActionBar("나의 걸음");
         initView();
         initGraph();
+        setSensor();
     }
 
     /*
@@ -365,7 +368,7 @@ public class MyActivity extends BaseActivity {
                 maxValue = toKMFloat(p);
         }
 
-        int barWidth = (int) (129*scaleFactor);
+        int barWidth = (int) (30*scaleFactor);
         int barHeight;
         System.out.println("barWidth : " + barWidth);
 
@@ -406,7 +409,7 @@ public class MyActivity extends BaseActivity {
             linearLayout.addView(view);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
-            params.setMargins(25*(int)scaleFactor, 25*(int)scaleFactor, 0, 0);
+            params.setMargins(5*(int)scaleFactor, 5*(int)scaleFactor, 0, 0);
             linearLayout.setLayoutParams(params);
             barChart.addView(linearLayout);
 
@@ -421,7 +424,7 @@ public class MyActivity extends BaseActivity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         scaleFactor = metrics.density;
 
-        int barWidth = (int) (129*scaleFactor);
+        int barWidth = (int) (30*scaleFactor);
 
         String[] dates = new String[2];
         String color1 = GRAY;
@@ -475,7 +478,7 @@ public class MyActivity extends BaseActivity {
             linearLayout.addView(view2, linearLayoutlp);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
-            params.setMargins(25*(int)scaleFactor, 25*(int)scaleFactor, 0, 0);
+            params.setMargins(5*(int)scaleFactor, 5*(int)scaleFactor, 0, 0);
             linearLayout.setLayoutParams(params);
             barDate.addView(linearLayout);
 
@@ -527,7 +530,7 @@ public class MyActivity extends BaseActivity {
         return ((walk.equals("")) ? true  : false);
     }
 
-    /*----------------- sesder --------------------------*/
+    /*----------------------------------------------------- senser -------------------------------------------------------------*/
     private void setSensor() {
         registerReceiver(broadcastReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.step"));
     }
@@ -537,9 +540,29 @@ public class MyActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             walk = Integer.parseInt(intent.getStringExtra("walk"));
-           txtCurrentKM.setText(String.format("%s", ( Math.round(walk * 0.011559 * 100)/100)));
             myStep.setText(String.format("%s",walk));
+
+            th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DateFormat df = new SimpleDateFormat("yyMMdd");
+                    df.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+                    String today = df.format(new Date());
+
+                    String dml = "update walk set currentwalk="+ walk +" where user='"+ Session.ID+"' and date_format(today,'%y%m%d')=str_to_date('"+ today +"','%y%m%d')";
+                    System.out.println("걸음 : "+ dml + "\n ==> "+NetworkAction.sendDataToServer(dml)+" : "+walk);
+
+                }
+            });
+            th.start();
         }
     };
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+        th.stop();
+    }
 }

@@ -62,6 +62,7 @@ public class GroupActivity extends BaseActivity {
 
     // thread
     private Handler graphHandler = new Handler();
+    private Thread th;
     int percent = 0;
     int currentStep = 0;
     long currentKM = 0;
@@ -363,7 +364,7 @@ public class GroupActivity extends BaseActivity {
             pcurrent1_km.setText(String.format("%s", ( Math.round(walk * 0.011559 * 100)/100)));
             pcurrent1_step.setText(String.format("%s",walk));
 
-            new Thread(new Runnable() {
+            th = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     DateFormat df = new SimpleDateFormat("yyMMdd");
@@ -375,7 +376,8 @@ public class GroupActivity extends BaseActivity {
                     System.out.println("걸음 : "+ dml + "\n ==> "+NetworkAction.sendDataToServer(dml)+" : "+walk);
 
                 }
-            }).start();
+            });
+            th.start();
         }
     };
 
@@ -395,4 +397,9 @@ public class GroupActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        th.stop();
+    }
 }
