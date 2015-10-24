@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,7 +47,9 @@ public class PromiseActivity extends BaseActivity {
         btn_add_promise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddPromiseActivity.class));
+                Intent i = new Intent(getApplicationContext(), AddPromiseActivity.class);
+                i.putExtra("mode", 1);
+                startActivity(i);
                 finish();
             }
         });
@@ -88,8 +91,10 @@ public class PromiseActivity extends BaseActivity {
                                 /*
                                 * set listView
                                 * */
+                                View header = getLayoutInflater().inflate(R.layout.promise_list_header, null, false);
                                 promise_list = (ListView) findViewById(R.id.promise_list);
                                 adapter = new PromiseListAdapter(getApplicationContext(), promiseList);
+                                promise_list.addHeaderView(header);
                                 promise_list.setAdapter(adapter);
                             }
                         }

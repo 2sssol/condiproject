@@ -77,7 +77,7 @@
                     android:textSize="18sp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/time_txt"
-                    android:layout_toEndOf="@+id/sch_time_icon" />
+                    android:layout_toEndOf="@id/sch_time_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,17 +86,8 @@
                     android:text="오후 5시 30분"
                     android:textColor="#222"
                     android:textSize="18sp"
-                    android:layout_toEndOf="@+id/time_txt" />
+                    android:layout_toEndOf="@id/time_txt" />
 
-                <Button
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:text="저장"
-                    android:id="@+id/sch_set_time"
-                    android:onClick="setTime"
-                    android:textSize="14sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
             <TimePicker

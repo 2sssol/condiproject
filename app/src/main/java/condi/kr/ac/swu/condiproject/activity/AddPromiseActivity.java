@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewDebug;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -23,13 +25,14 @@ import java.util.Date;
 
 import condi.kr.ac.swu.condiproject.R;
 
-public class AddPromiseActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener {
+public class AddPromiseActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener, TimePicker.OnTimeChangedListener {
 
     private final DateFormat FORMATTER = new SimpleDateFormat("yyyy.MM.dd (E)");
 
     private ImageButton addPromise;
     private MaterialCalendarView calendarView;
-    private TextView newSchDate;
+    private TextView newSchDate, newSchTime;
+    private TimePicker timePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,10 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         newSchDate = (TextView) findViewById(R.id.new_sch_date);
 
+        timePicker = (TimePicker) findViewById(R.id.timePicker);
+        newSchTime = (TextView) findViewById(R.id.new_sch_time);
+        timePicker.setOnTimeChangedListener(this);
+
         calendarView.setLeftArrowMask(getResources().getDrawable(R.drawable.icon_date_left));
         calendarView.setRightArrowMask(getResources().getDrawable(R.drawable.icon_date_right));
         calendarView.setOnDateChangedListener(this);
@@ -49,10 +56,10 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
     }
 
 
-    protected void initActionBar(String title) {
+    protected void initActionBar() {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
-        ((TextView)findViewById(R.id.titleText)).setText(title);
+        ((TextView)findViewById(R.id.titleText)).setText("약속");
         addPromise = (ImageButton) findViewById(R.id.sidemenu);
         addPromise.setImageResource(R.drawable.icon_promise_ok);
         addPromise.setOnClickListener(new View.OnClickListener() {
@@ -79,5 +86,30 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
             return FORMATTER.format(new Date());
         }
         return FORMATTER.format(date.getDate());
+    }
+
+    @Override
+    public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
+        String ampm = "";
+        String hour = "";
+        String min = "";
+        if(hourOfDay>12) {
+            ampm = "오후";
+
+            if(hourOfDay-12 < 10)
+                hour = String.format("0%s",hourOfDay);
+            else
+                hour = Integer.toString(hourOfDay);
+        }
+        else {
+            ampm = "오전";
+        }
+
+        if(minute < 10)
+            min = String.format("0%s",minute);
+        else
+            min = Integer.toString(minute);
+
+        newSchTime.setText(String.format("%s %s시 %s분", ampm, hour, min));
     }
 }
