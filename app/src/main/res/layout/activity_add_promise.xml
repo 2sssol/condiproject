@@ -36,7 +36,7 @@
                     android:textSize="18sp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/textView"
-                    android:layout_toEndOf="@+id/sch_date_icon" />
+                    android:layout_toEndOf="@id/sch_date_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,27 +45,65 @@
                     android:text="2015. 09. 06. (일)"
                     android:textColor="#222"
                     android:textSize="18sp"
-                    android:layout_toEndOf="@+id/textView" />
+                    android:layout_toEndOf="@id/textView" />
+
+            </RelativeLayout>
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mcv_showOtherDates="all"
+                app:mcv_selectionColor="#fc5151" />
+
+            <!--시간-->
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/sch_time_icon"
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/sch_time_icon"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시간"
+                    android:textSize="18sp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/time_txt"
+                    android:layout_toEndOf="@+id/sch_time_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_sch_time"
+                    android:text="오후 5시 30분"
+                    android:textColor="#222"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@+id/time_txt" />
 
                 <Button
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:text="저장"
-                    android:id="@+id/sch_set_date"
+                    android:id="@+id/sch_set_time"
                     android:onClick="setTime"
                     android:textSize="14sp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
-
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="330dp"
-                android:layout_height="250dp"
-                app:mcv_showOtherDates="all"
-                app:mcv_selectionColor="#00F" />
-
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timePicker"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>
