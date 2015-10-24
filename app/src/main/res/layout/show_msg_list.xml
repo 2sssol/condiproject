@@ -29,7 +29,7 @@
 			android:text="유호정 님이 '쿡' 찌르셧어요."
 			android:layout_marginTop="12dp"
 			android:textSize="16sp"
-			android:layout_gravity="right"/>
+			android:layout_gravity="end"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:id="@+id/msgDate"
 			android:textSize="12sp"
             android:text="2015년 11월 05일 18:43"
-            android:layout_gravity="right"/>
+            android:layout_gravity="end"/>
 
 	</LinearLayout>
 
