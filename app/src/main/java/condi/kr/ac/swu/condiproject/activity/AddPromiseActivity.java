@@ -38,6 +38,7 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_promise);
+        initActionBar();
         initView();
     }
 
@@ -93,17 +94,16 @@ public class AddPromiseActivity extends AppCompatActivity implements OnDateSelec
         String ampm = "";
         String hour = "";
         String min = "";
-        if(hourOfDay>12) {
-            ampm = "오후";
 
-            if(hourOfDay-12 < 10)
-                hour = String.format("0%s",hourOfDay);
-            else
-                hour = Integer.toString(hourOfDay);
-        }
-        else {
+        if(hourOfDay>12)
+            ampm = "오후";
+        else
             ampm = "오전";
-        }
+
+        if(hourOfDay-12 < 10)
+            hour = String.format("0%s",hourOfDay-12);
+        else
+            hour = Integer.toString(hourOfDay);
 
         if(minute < 10)
             min = String.format("0%s",minute);
