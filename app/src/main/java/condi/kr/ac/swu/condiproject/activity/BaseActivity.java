@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -154,5 +155,13 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 throw new UnsupportedOperationException("needs com.kakao.GlobalApplication in order to use ImageLoader");
             myProfile.setImageUrl("http://condi.swu.ac.kr:80/condi2/profile/"+profileImageURL, ((GlobalApplication) app).getImageLoader());
         }
+    }
+
+    protected void toastErrorMsg(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void printErrorMsg(String msg) {
+        System.out.println(String.format("** error!! : %s\n", msg));
     }
 }
