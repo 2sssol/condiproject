@@ -122,6 +122,10 @@
             android:name=".activity.CourseDetailActivity"
             android:label="@string/title_activity_course_info" >
         </activity>
+        <activity
+            android:name=".activity.CourseEtcActivity"
+            android:label="@string/title_activity_course_etc" >
+        </activity>
     </application>
 
 </manifest>

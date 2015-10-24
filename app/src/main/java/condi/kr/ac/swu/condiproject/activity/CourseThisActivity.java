@@ -29,6 +29,8 @@ public class CourseThisActivity extends BaseActivity implements View.OnClickList
 
     private ImageView[] regions = new ImageView[6];
 
+    private int local;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class CourseThisActivity extends BaseActivity implements View.OnClickList
         new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                String dml = "select * from course where local in (select course from member where groups="+ Session.GROUPS+")";
+                String dml = "select * from course where id in (select course from member where groups="+ Session.GROUPS+")";
                 return NetworkAction.sendDataToServer("course.php", dml);
             }
 
@@ -103,6 +105,17 @@ public class CourseThisActivity extends BaseActivity implements View.OnClickList
         kms[1] = (TextView) findViewById(R.id.info_km_course2);
         kms[2] = (TextView) findViewById(R.id.info_km_course3);
         kms[3] = (TextView) findViewById(R.id.info_km_course4);
+
+        regions[0] = (ImageView) findViewById(R.id.course_this_other1);
+        regions[1] = (ImageView) findViewById(R.id.course_this_other2);
+        regions[2] = (ImageView) findViewById(R.id.course_this_other3);
+        regions[3] = (ImageView) findViewById(R.id.course_this_other4);
+        regions[4] = (ImageView) findViewById(R.id.course_this_other5);
+        regions[5] = (ImageView) findViewById(R.id.course_this_other6);
+
+        for(ImageView i : regions) {
+            i.setOnClickListener(this);
+        }
     }
 
     public void setCourseImageURL(final NetworkImageView imageView, final String imageURL) {
@@ -128,6 +141,34 @@ public class CourseThisActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.course_this_other1 :
+                local = 0;
+                break;
+            case R.id.course_this_other2 :
+                local = 1;
+                break;
+            case R.id.course_this_other3 :
+                local = 2;
+                break;
+            case R.id.course_this_other4:
+                local = 3;
+                break;
+            case R.id.course_this_other5 :
+                local = 4;
+                break;
+            case R.id.course_this_other6 :
+                local = 5;
+                break;
+        }
 
+        redirectEtcCourseListActivity(local);
+    }
+
+    private void redirectEtcCourseListActivity(int local) {
+        Intent i = new Intent(getApplicationContext(), CourseEtcActivity.class);
+        i.putExtra("local", local);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }

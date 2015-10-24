@@ -24,4 +24,5 @@
     <string name="title_activity_add_promise">AddPromiseActivity</string>
     <string name="title_activity_promise_detail">PromiseDetailActivity</string>
     <string name="title_activity_course_info">CourseInfoActivity</string>
+    <string name="title_activity_course_etc">CourseEtcActivity</string>
 </resources>
