@@ -13,16 +13,17 @@
 		android:gravity="center">
 
 	<condi.kr.ac.swu.condiproject.view.CircularNetworkImageView
-		android:id="@+id/msgProfile"
+		android:id="@+id/my_msgProfile"
 		android:layout_width="60dp"
 		android:layout_height="60dp"
 		android:scaleType="centerCrop"
 		android:focusable="false"
 		android:src="@drawable/thumb_story"/>
+		
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/msg_userName"
+		android:id="@+id/my_msg_userName"
 		android:text="유호정"
 		android:textSize="16sp"
 		android:layout_marginTop="2dp"/>
@@ -38,7 +39,7 @@
 		android:background="@drawable/background_msg">
 
 		<TextView
-			android:id="@+id/msgText"
+			android:id="@+id/my_msgText"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="유호정 님이 '쿡' 찌르셧어요."
@@ -47,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/msgDate"
+            android:id="@+id/my_msgDate"
 			android:textSize="12sp"
             android:text="2015년 11월 05일 18:43"/>
 

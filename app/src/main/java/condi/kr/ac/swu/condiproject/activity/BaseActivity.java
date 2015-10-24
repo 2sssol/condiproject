@@ -127,13 +127,17 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                     "from message msg, member mem " +
                     "where msg.sender=mem.id and " +
                     "msg.receiver='"+ Session.ID+"' limit 4";
+            printErrorMsg(dml);
             return NetworkAction.sendDataToServer("mymsg.php", dml);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            new ReadMsg().execute();
+            if(s.equals("success"))
+                new ReadMsg().execute();
+            else
+                printErrorMsg("메시지를 불러올 수 없습니다.");
         }
     }
 
