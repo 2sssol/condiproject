@@ -19,4 +19,5 @@
     <string name="title_activity_course_list">CourseListActivity</string>
     <string name="title_activity_my_msg">MyMsgActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_group">GroupActivity</string>
 </resources>

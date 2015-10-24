@@ -96,13 +96,16 @@
             android:label="@string/title_activity_setting" >
         </activity>
 
-        <service android:name=".service.AccSensor">
+        <service android:name=".service.AccSensor" >
             <intent-filter>
-                <action android:name="condi.kr.ac.swu.condiproject.step"/>
+                <action android:name="condi.kr.ac.swu.condiproject.step" />
             </intent-filter>
         </service>
 
-
+        <activity
+            android:name=".activity.GroupActivity"
+            android:label="@string/title_activity_group" >
+        </activity>
     </application>
 
 </manifest>
