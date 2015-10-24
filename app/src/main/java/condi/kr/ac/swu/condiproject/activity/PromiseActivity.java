@@ -61,7 +61,7 @@ public class PromiseActivity extends BaseActivity {
         new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                String dml = "select * from promise where groups="+ Session.GROUPS;
+                String dml = "select * from promise where groups="+ Session.GROUPS+" order by pdate desc";
                 return NetworkAction.sendDataToServer("promise.php", dml);
             }
 
@@ -100,18 +100,14 @@ public class PromiseActivity extends BaseActivity {
                                 promise_list.addHeaderView(header);
                                 promise_list.setAdapter(adapter);
 
-                                promise_list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                promise_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
-                                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l_position) {
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        printErrorMsg("i => "+ i);
                                         Intent intent = new Intent(getApplicationContext(), PromiseDetailActivity.class);
-                                        intent.putExtra("pid", promiseList.get(position).getProperty("id"));
+                                        intent.putExtra("pid", promiseList.get(i-1).getProperty("id"));
                                         startActivity(intent);
                                         finish();
-                                    }
-
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> adapterView) {
-
                                     }
                                 });
                             }

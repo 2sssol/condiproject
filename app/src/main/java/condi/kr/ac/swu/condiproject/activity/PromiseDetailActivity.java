@@ -35,7 +35,7 @@ public class PromiseDetailActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_promise_detail);
         initActionBar("약속보기");
 
-        pid = Integer.parseInt(getIntent().getStringExtra("pid"));
+        System.out.println("pid : "+ (pid = Integer.parseInt(getIntent().getStringExtra("pid"))));
         initView();
     }
 
@@ -70,7 +70,7 @@ public class PromiseDetailActivity extends BaseActivity implements View.OnClickL
                         @Override
                         protected Object doInBackground(Object[] objects) {
                             try {
-                                list = NetworkAction.parse("promise.dml", "promise");
+                                list = NetworkAction.parse("promise.xml", "promise");
                             } catch (XmlPullParserException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
