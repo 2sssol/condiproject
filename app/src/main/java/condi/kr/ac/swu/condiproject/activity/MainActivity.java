@@ -61,6 +61,14 @@ public class MainActivity extends BaseActivity {
         btnMyWalk = (Button) findViewById(R.id.btnMyWalk);
         btnGroup = (Button) findViewById(R.id.btnGroup);
         btnCoursePicture = (TextView) findViewById(R.id.btnCoursePicture);
+
+        btnGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), GroupActivity.class));
+                finish();
+            }
+        });
     }
 
     private void initVideo() {

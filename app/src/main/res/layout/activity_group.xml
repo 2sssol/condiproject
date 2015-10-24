@@ -1,0 +1,556 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--  그래프 영역(높이 임의 지정) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#E0E0E0">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:gravity="center_horizontal" >
+
+            <!-- 그래프 배경 -->
+            <ImageView
+                android:id="@+id/imgGraphBackground"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:src="@drawable/background2"/>
+
+            <!-- 그래프 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center_horizontal"
+                android:layout_alignParentTop="true">
+
+
+                <!-- 파이 그래프 -->
+                <condi.kr.ac.swu.condiproject.view.CustomCircularRingView
+                    android:id="@+id/customCircularRingView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true" >
+                </condi.kr.ac.swu.condiproject.view.CustomCircularRingView>
+
+                <condi.kr.ac.swu.condiproject.view.PatchPointView
+                    android:id="@+id/patchPointView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true">
+                </condi.kr.ac.swu.condiproject.view.PatchPointView>
+
+                <!-- 그래프 가운데의 반투명 원 -->
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:background="@drawable/circular_background"
+                    android:layout_centerInParent="true"/>
+
+                <!-- 자세한 정보들 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true">
+
+                    <!-- 총 진행 날짜(텍스트 크기가 같다면 레이아웃 제거) -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <!-- 현재까지 날짜 -->
+                        <TextView
+                            android:id="@+id/txtCurrentDate"
+                            android:text="1일 째/"
+                            android:textSize="18sp"
+                            android:textColor="#fafafa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <!-- 총 날짜 -->
+                        <TextView
+                            android:id="@+id/txtTotalDate"
+                            android:text="4일"
+                            android:textSize="16sp"
+                            android:textColor="#fafafa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <!-- 진행 퍼센티지 -->
+                    <TextView
+                        android:id="@+id/txtPercent"
+                        android:textColor="#fafafa"
+                        android:textSize="50sp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <!-- 총 진행 정도(텍스트 크기가 같다면 레이아웃 제거) -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <!-- 현재까지 KM -->
+                        <TextView
+                            android:id="@+id/txtCurrentKM"
+                            android:textColor="#fafafa"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <!-- 전체 KM -->
+                        <TextView
+                            android:id="@+id/txtTotalKM"
+                            android:text="21.4KM"
+                            android:textSize="12sp"
+                            android:textColor="#fafafa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- 코스 이름 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true">
+
+                <!-- 현재 코스 -->
+                <TextView
+                    android:id="@+id/txtCurrentCourse"
+                    android:text="불암산나들길"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/route_blank_filled"/>
+
+                <!-- 나머지 코스 -->
+                <TextView
+                    android:id="@+id/txtCourseName1"
+                    android:text="당현천길"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/route_blank"/>
+
+                <TextView
+                    android:id="@+id/txtCourseName2"
+                    android:text="묵동천길"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/route_blank"/>
+
+                <TextView
+                    android:id="@+id/txtCourseName3"
+                    android:text="초안산길"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:background="@drawable/route_blank"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- 버튼 영역 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="6dp">
+
+            <!-- 지도보기 -->
+            <RelativeLayout
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                android:layout_alignParentStart="true">
+
+                <Button
+                    android:id="@+id/btnMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_group"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/icon_locate"
+                        android:id="@+id/ic_locate"
+                        android:scaleType="fitCenter"
+                        android:layout_marginEnd="6dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                    <TextView
+                        android:text="완주지역"
+                        android:textSize="20sp"
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <!-- 약속잡기 -->
+            <RelativeLayout
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="4dp"
+                android:layout_alignParentEnd="true">
+
+                <Button
+                    android:id="@+id/btnTodolist"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_group"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/icon_schedule"
+                        android:scaleType="fitCenter"
+                        android:layout_marginEnd="6dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                    <TextView
+                        android:text="약속잡기"
+                        android:textSize="20sp"
+                        android:textColor="#ffffff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <!-- 친구 목록 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/list_background">
+
+            <condi.kr.ac.swu.condiproject.view.CustomCircularRingView
+                android:id="@+id/p1"
+                android:scaleType="centerCrop"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/p1"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/pname1"
+                    android:text="장미희"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/pcurrent1"
+                    android:textColor="#4C4C4C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/pcourse1"
+                        android:text="선택코스 : 불암산나들길"
+                        android:textColor="#596466"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/pkm1"
+                        android:text="9.79km"
+                        android:textColor="#E0E0E0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/list_background">
+
+            <condi.kr.ac.swu.condiproject.view.CustomCircularRingView
+                android:id="@+id/p2"
+                android:scaleType="centerCrop"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/p2"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/pname2"
+                    android:text="미숙이"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/pcurrent2"
+                    android:textColor="#4C4C4C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/pcourse2"
+                        android:textColor="#596466"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/pkm2"
+                        android:textColor="#E0E0E0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/pcock1"
+                android:src="@drawable/icon_cock"
+                android:scaleType="fitCenter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/list_background">
+
+            <condi.kr.ac.swu.condiproject.view.CircularNetworkImageView
+                android:id="@+id/p3"
+                android:scaleType="centerCrop"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/p3"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/pname3"
+                    android:text="유호정"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/pcurrent3"
+                    android:textColor="#4C4C4C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/pcourse3"
+                        android:textColor="#596466"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/pkm3"
+                        android:textColor="#E0E0E0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/pcock2"
+                android:src="@drawable/icon_cock"
+                android:scaleType="fitCenter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/list_background">
+
+            <condi.kr.ac.swu.condiproject.view.CustomCircularRingView
+                android:id="@+id/p4"
+                android:scaleType="centerCrop"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/p4"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/pname4"
+                    android:text="희숙"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/pcurrent4"
+                    android:textColor="#4C4C4C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/pcourse4"
+                        android:textColor="#596466"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/pkm4"
+                        android:textColor="#E0E0E0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/pcock3"
+                android:src="@drawable/icon_cock"
+                android:scaleType="fitCenter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/fanfare"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</FrameLayout>
