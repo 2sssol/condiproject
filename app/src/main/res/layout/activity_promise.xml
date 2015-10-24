@@ -6,33 +6,50 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="condi.kr.ac.swu.condiproject.activity.PromiseActivity">
 
-    <ListView
-        android:id="@+id/promise_list"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/list_background" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:scaleType="centerCrop"
-            android:focusable="false"
-            android:id="@+id/btn_add_promise"
-            android:src="@drawable/btn_add_item"
-            android:background="@null"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/list_background" >
+
+                <ImageButton
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:scaleType="centerCrop"
+                    android:focusable="false"
+                    android:id="@+id/btn_add_promise"
+                    android:src="@drawable/btn_add_item"
+                    android:background="@null"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/promise_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <TextView
         android:id="@+id/promise_tutorial"
         android:text="아직 약속된 일정이 없네요.\n친구들과 함께할 일정을 만들어 보세요!"
+        android:gravity="center"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

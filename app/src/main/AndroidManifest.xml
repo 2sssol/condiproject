@@ -110,6 +110,10 @@
             android:name=".activity.PromiseActivity"
             android:label="@string/title_activity_promise" >
         </activity>
+        <activity
+            android:name=".activity.AddPromiseActivity"
+            android:label="@string/title_activity_add_promise" >
+        </activity>
     </application>
 
 </manifest>
