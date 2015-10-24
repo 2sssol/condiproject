@@ -1,58 +1,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:padding="16dp"
     tools:context="condi.kr.ac.swu.condiproject.activity.PromiseActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="fill_parent">
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/list_background" >
-
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"
-                    android:focusable="false"
-                    android:id="@+id/btn_add_promise"
-                    android:src="@drawable/group_s_addplan"
-                    android:background="@null"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
-
-            </RelativeLayout>
 
             <ListView
                 android:id="@+id/promise_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/addpromise" />
 
-        </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/addpromise"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/list_background">
+
+                <ImageButton
+                    android:id="@+id/btn_add_promise"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/group_s_addplan" />
+            </RelativeLayout>
 
 
+        </RelativeLayout>
     </ScrollView>
 
     <TextView
         android:id="@+id/promise_tutorial"
-        android:text="아직 약속된 일정이 없네요.\n친구들과 함께할 일정을 만들어 보세요!"
-        android:gravity="center"
-        android:visibility="visible"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
 
-
-
+        android:layout_centerVertical="true"
+        android:gravity="center|center_horizontal"
+        android:text="아직 약속된 일정이 없네요.\n친구들과 함께할 일정을 만들어 보세요!"
+        android:visibility="visible" />
 </RelativeLayout>

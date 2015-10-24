@@ -120,7 +120,7 @@
                     android:layout_toEndOf="@+id/sch_location_icon" />
 
                 <Spinner
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner_location"
                     android:layout_centerVertical="true"
@@ -154,6 +154,7 @@
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:inputType="text|textMultiLine"
+                    android:id="@+id/sch_contents_new"
                     android:layout_marginStart="5dp"
                     android:maxLength="50"
                     android:layout_marginTop="25dp"
@@ -189,7 +190,7 @@
                     android:layout_height="20dp"
                     android:scaleType="fitCenter"
                     android:id="@+id/set_alarm_true"
-                    android:background="null"
+                    android:background="@null"
                     android:src="@drawable/promise_checked"
                     android:layout_marginStart="20dp"
                     android:layout_below="@+id/sch_alarm_icon"/>
@@ -198,7 +199,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:scaleType="fitCenter"
-                    android:background="null"
+                    android:background="@null"
                     android:id="@+id/set_alarm_false"
                     android:src="@drawable/promise_unchecked"
                     android:visibility="visible"

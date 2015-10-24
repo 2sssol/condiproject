@@ -32,7 +32,7 @@
                 android:id="@+id/slideProfile"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
                 android:scaleType="centerCrop"
                 android:focusable="false"/>
 
@@ -74,6 +74,7 @@
             android:id="@+id/btn_about_courses_list"
             android:background="#00c6c1"
             android:clickable="true" />
+
     </LinearLayout>
 
 
