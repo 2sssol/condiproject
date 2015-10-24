@@ -2,6 +2,7 @@ package condi.kr.ac.swu.condiproject.view.adapter;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
+import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.view.CircularNetworkImageView;
 import condi.kr.ac.swu.condiproject.view.CustomCircularRingView;
 
@@ -28,6 +30,10 @@ import condi.kr.ac.swu.condiproject.view.CustomCircularRingView;
 public class GroupListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<HashMap<String, String>> data;
+    private Handler mHandler = new Handler();
+
+    int step = 0;
+    float km = 0;
 
     public GroupListAdapter(Context context, List<Properties> data) {
         this.context = context;
@@ -77,7 +83,8 @@ public class GroupListAdapter extends BaseAdapter {
         // 리소스와 연결
         CircularNetworkImageView group_picture = (CircularNetworkImageView) convertView.findViewById(R.id.group_picture);
         TextView group_name = (TextView) convertView.findViewById(R.id.group_name);
-        TextView group_current = (TextView) convertView.findViewById(R.id.group_current);
+        TextView group_current_km = (TextView) convertView.findViewById(R.id.group_current_km);
+        TextView group_current_step = (TextView) convertView.findViewById(R.id.group_current_step);
         TextView group_course = (TextView) convertView.findViewById(R.id.group_course);
         TextView group_km = (TextView) convertView.findViewById(R.id.group_km);
         ImageView groups_cock = (ImageView) convertView.findViewById(R.id.groups_cock);
@@ -86,6 +93,8 @@ public class GroupListAdapter extends BaseAdapter {
         group_name.setText(data.get(position).get("mname"));
         group_course.setText(data.get(position).get("cname"));
         group_km.setText(data.get(position).get("ckm"));
+
+        setCurrent(group_current_step, group_current_km, data.get(position).get("mid"));
 
         //이미지세팅
         setProfileURL(group_picture, data.get(position).get("mprofile"));
@@ -113,7 +122,34 @@ public class GroupListAdapter extends BaseAdapter {
 
     }
 
-    private void setCurrent(TextView step, TextView km, String id) {
+    private void setCurrent(final TextView step_tv, final TextView km_tv, final String id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                String dml = "select sum(currentwalk) as step from walk where user='"+id+"'";
+                String result = NetworkAction.sendDataToServer("step.php", dml);
+                if(result.equals(""))
+                    step = 0;
+                else
+                    step = Integer.parseInt(result);
+
+                km = Math.round(step * 0.011559 * 100)/100;
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        step_tv.setText(Integer.toString(step));
+                        km_tv.setText(Float.toString(km));
+                    }
+                });
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

@@ -294,7 +294,7 @@ public class GroupActivity extends BaseActivity {
                 String dml = "select m.id as mid, m.nickname as mname, m.profile as mprofile, " +
                         "c.id as cid, c.name as cname, c.km as ckm " +
                         "from member m, course c " +
-                        "where m.course = c.id";
+                        "where m.course = c.id and m.groups="+Session.GROUPS;
                 return NetworkAction.sendDataToServer("coursemember.php",dml);
             }
 
