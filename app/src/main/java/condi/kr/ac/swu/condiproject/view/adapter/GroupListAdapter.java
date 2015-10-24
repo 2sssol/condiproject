@@ -88,7 +88,7 @@ public class GroupListAdapter extends BaseAdapter {
         group_km.setText(data.get(position).get("ckm"));
 
         //이미지세팅
-        setProfileURL(group_picture, data.get(position).get("profile"));
+        setProfileURL(group_picture, data.get(position).get("mprofile"));
 
         return convertView;
     }

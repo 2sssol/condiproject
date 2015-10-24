@@ -100,6 +100,7 @@ public class GroupActivity extends BaseActivity {
         pcourse1 = (TextView) findViewById(R.id.pcourse1);
         pkm1 = (TextView) findViewById(R.id.pkm1);
         setMy();
+        setOther();
 
         setMyView();
     }
@@ -284,6 +285,49 @@ public class GroupActivity extends BaseActivity {
                 }
             }
         }).start();
+    }
+
+    private void setOther() {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                String dml = "select m.id as mid, m.nickname as mname, m.profile as mprofile, " +
+                        "c.id as cid, c.name as cname, c.km as ckm " +
+                        "from member m, course c " +
+                        "where m.course = c.id";
+                return NetworkAction.sendDataToServer("coursemember.php",dml);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if(o.equals("success")) {
+                    new AsyncTask() {
+                        List<Properties> friends;
+                        @Override
+                        protected Object doInBackground(Object[] objects) {
+                            try {
+                                friends = NetworkAction.parse("coursemember.xml", "coursemember");
+                            } catch (XmlPullParserException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+
+                            grouplv = (ListView) findViewById(R.id.groups_lv);
+                            adapter = new GroupListAdapter(GroupActivity.this.getApplicationContext(), friends);
+                            grouplv.setAdapter(adapter);
+                        }
+                    }.execute();
+                }
+            }
+        }.execute();
     }
 
     /*
