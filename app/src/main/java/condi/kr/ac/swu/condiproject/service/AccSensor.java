@@ -8,13 +8,17 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 
+import condi.kr.ac.swu.condiproject.data.NetworkAction;
+import condi.kr.ac.swu.condiproject.data.Session;
+
 public class AccSensor extends Service implements SensorEventListener {
 
     private SensorManager sm;
     private Sensor accSensor;
+    private String dml;
+    private String user = Session.ID;
 
-
-    public int MY_WALK_COUNT;
+    public int MY_WALK_COUNT = 0;
 
 
 
@@ -25,7 +29,21 @@ public class AccSensor extends Service implements SensorEventListener {
         sm = (SensorManager)getSystemService(SENSOR_SERVICE);
         accSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    dml = "update walk set currentwalk="+ MY_WALK_COUNT +" where user='"+ user+"'";
+                    NetworkAction.sendDataToServer(dml);
 
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override

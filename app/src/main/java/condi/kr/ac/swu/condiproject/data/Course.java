@@ -19,7 +19,6 @@ public class Course {
         this.km = p.getProperty("km");
         this.selector = null;
 
-        System.out.println("-------------코스정보-----------------");
         System.out.println("id : "+p.getProperty("id"));
         System.out.println("name : "+p.getProperty("name"));
         System.out.println("info : "+p.getProperty("info"));

@@ -45,9 +45,6 @@ public class PushListAdapter extends BaseAdapter {
         this.data = maps;
     }
 
-    /*
-    * ¿À¹ö¶óÀÌµå
-    * */
     @Override
     public int getCount() {
         return data.size();
@@ -70,13 +67,13 @@ public class PushListAdapter extends BaseAdapter {
         if(convertView == null)
             convertView = inflater.inflate(R.layout.push_list, null);
 
-        // ¸®¼Ò½º¿Í ¿¬°á
-        TextView txtPushUserName = (TextView) convertView.findViewById(R.id.txtPushUserName);     // ÀÌ¸§
-        TextView txtPushCourseName = (TextView) convertView.findViewById(R.id.txtPushCourseName);    // ¼±ÅÃÄÚ½º
+        // ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        TextView txtPushUserName = (TextView) convertView.findViewById(R.id.txtPushUserName);
+        TextView txtPushCourseName = (TextView) convertView.findViewById(R.id.txtPushCourseName);
         TextView txtPushCourseKm = (TextView) convertView.findViewById(R.id.txtPushCourseKm);   // km
         Button btnPush = (Button) convertView.findViewById(R.id.btnPush);
 
-        //ÅØ½ºÆ® ¼¼ÆÃ
+        //ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         txtPushUserName.setText(data.get(position).get("mname"));
         txtPushCourseKm.setText(data.get(position).get("ckm"));
 
@@ -89,7 +86,7 @@ public class PushListAdapter extends BaseAdapter {
 
     public void setCourseName(final TextView courseName, final String course) {
         if(course.equals(""))
-            courseName.setText("¼±ÅÃ ÁßÀÔ´Ï´Ù.");
+            courseName.setText("ì„ íƒ ì¤‘ì…ë‹ˆë‹¤.");
         else
             courseName.setText(course);
     }
