@@ -563,6 +563,5 @@ public class MyActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(broadcastReceiver);
-        th.stop();
     }
 }
