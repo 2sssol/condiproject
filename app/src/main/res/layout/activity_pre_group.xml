@@ -172,7 +172,29 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_pre_add_friend_back"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/list_background"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:scaleType="centerCrop"
+                android:focusable="false"
+                android:id="@+id/btn_pre_add_friend"
+                android:src="@drawable/btn_add_item"
+                android:background="@null"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/inviteList"

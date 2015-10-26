@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class PreGroupActivity extends RootActivity {
     private TextView myName, myPhone;
 
     private Button btnRoomExit, btnRoomStart;
+    private ImageButton btn_pre_add_friend;
+    private RelativeLayout btn_pre_add_friend_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,16 @@ public class PreGroupActivity extends RootActivity {
 
         btnRoomExit = (Button) findViewById(R.id.btnRoomExit);
         btnRoomStart = (Button) findViewById(R.id.btnRoomStart);
+        btn_pre_add_friend = (ImageButton) findViewById(R.id.btn_pre_add_friend);
+        btn_pre_add_friend_back = (RelativeLayout) findViewById(R.id.btn_pre_add_friend_back);
+
+        if(isSender()) {
+            btn_pre_add_friend_back.setVisibility(View.VISIBLE);
+        } else {
+            btn_pre_add_friend_back.setVisibility(View.INVISIBLE);
+        }
+
+
 
         initProfile();
         initEvent();
@@ -154,6 +168,9 @@ public class PreGroupActivity extends RootActivity {
                             inviteList = (ListView) findViewById(R.id.inviteList);
                             adapter = new InviteListAdapter(PreGroupActivity.this.getApplicationContext(), list);
                             View footer = getLayoutInflater().inflate(R.layout.invited_list_footer, null, false);
+
+                            if(count > 0)
+                                btn_pre_add_friend_back.setVisibility(View.INVISIBLE);
 
                             if(count>=3) {
                                 footer.setVisibility(View.INVISIBLE);
