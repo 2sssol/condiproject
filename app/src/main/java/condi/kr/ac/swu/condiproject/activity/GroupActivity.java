@@ -396,10 +396,4 @@ public class GroupActivity extends BaseActivity {
             profile.setImageUrl("http://condi.swu.ac.kr:80/condi2/profile/thumb_story.png", ((GlobalApplication) app).getImageLoader());
         }
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        th.stop();
-    }
 }
