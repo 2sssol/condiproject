@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.activity.GroupActivity;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
@@ -106,7 +107,7 @@ public class GroupListAdapter extends BaseAdapter {
         setProfileURL(group_picture, data.get(position).get("mprofile"));
 
         // button
-        showRoomDialog(groups_cock, data.get(position).get("mid"), data.get(position).get("mname"));
+        setButton(groups_cock, data.get(position).get("mid"), data.get(position).get("mname"));
 
         setCurrent(group_current_step, group_current_km, data.get(position).get("mid"), position);
 
@@ -197,41 +198,5 @@ public class GroupListAdapter extends BaseAdapter {
                 }.execute();
             }
         });
-    }
-
-    public void showRoomDialog(final ImageView button, final String receiver, final String name) {
-
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().setLayout(850,450);
-
-        TextView dlgDefaultText_big = (TextView) dialog.findViewById(R.id.dlgDefaultText_big);
-        TextView dlgDefaultText_small = (TextView) dialog.findViewById(R.id.dlgDefaultText_small);
-        Button dlgOk = (Button) dialog.findViewById(R.id.dlgOk);
-
-        dlgDefaultText_big.setText("초대받은 메시지가 없습니다.");
-        dlgDefaultText_small.setText("친구를 초대해 보세요.");
-        dlgOk.setText("확   인");
-
-        dlgOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                isDialogShow = false;
-            }
-        });
-
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                // 보내기
-                setButton(button, receiver, name);
-            }
-        });
-
-        dialog.show();
-        isDialogShow = true;
     }
 }
