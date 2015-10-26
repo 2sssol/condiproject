@@ -64,10 +64,18 @@ public class PreGroupActivity extends RootActivity {
 
         if(isSender()) {
             btn_pre_add_friend_back.setVisibility(View.VISIBLE);
+            btn_pre_add_friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), AddFriendActivity.class);
+                    i.putExtra("count", 0);
+                    startActivity(i);
+                    finish();
+                }
+            });
         } else {
             btn_pre_add_friend_back.setVisibility(View.INVISIBLE);
         }
-
 
 
         initProfile();
@@ -80,7 +88,7 @@ public class PreGroupActivity extends RootActivity {
             public void onClick(View v) {
 
                 // 센더만 시작 가능
-                if(isSender())
+                if (isSender())
                     isAllOK();
                 else
                     toastErrorMsg("방장만 시작할 수 있습니다.");
