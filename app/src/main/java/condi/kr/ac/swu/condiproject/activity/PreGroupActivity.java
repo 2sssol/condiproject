@@ -139,16 +139,20 @@ public class PreGroupActivity extends RootActivity {
             @Override
             protected String doInBackground(Object[] params) {
                 String sender = "";
+                String dml = "";
                 if(isSender()) {
                     sender = Session.ID;
                     senderId = sender;
+                    dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, m.profile as profile, m.phone as phone " +
+                            "from invite i, member m " +
+                            "where i.sender='" + sender + "' and m.id=i.receiver and m.id!='" + Session.ID + "'";
                 }
-                else
+                else {
                     sender = senderId;
-
-                String dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, m.profile as profile, m.phone as phone " +
-                        "from invite i, member m " +
-                        "where i.sender='"+sender+"' and m.id=i.receiver and m.id!='"+Session.ID+"'";
+                    dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, i.ok as ok, m.profile as profile, m.phone as phone " +
+                            "from invite i, member m " +
+                            "where i.sender='" + sender + "' and m.id=i.receiver and m.id!='"+Session.ID+"'";
+                }
                 return NetworkAction.sendDataToServer("inviteList.php",dml);
             }
 

@@ -2,12 +2,15 @@ package condi.kr.ac.swu.condiproject.view.adapter;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -17,6 +20,8 @@ import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
+import condi.kr.ac.swu.condiproject.data.NetworkAction;
+import condi.kr.ac.swu.condiproject.data.Session;
 import condi.kr.ac.swu.condiproject.view.CircularNetworkImageView;
 
 /**
@@ -86,6 +91,14 @@ public class InviteListAdapter extends BaseAdapter {
         //이미지세팅
         setProfileURL(itemProfile, data.get(position).get("profile"));
 
+        //버튼세팅
+        if(data.get(position).get("ok").equals("1"))
+            itemButton.setVisibility(View.INVISIBLE);
+        else {
+            itemButton.setVisibility(View.VISIBLE);
+            setButton(itemButton, data.get(position).get("receiver"), data.get(position).get("receivername"));
+        }
+
         return convertView;
     }
 
@@ -106,6 +119,33 @@ public class InviteListAdapter extends BaseAdapter {
         } else  {
             profile.setImageUrl("http://condi.swu.ac.kr:80/condi2/profile/thumb_story.png", ((GlobalApplication) app).getImageLoader());
         }
+    }
+
+    private void setButton(Button button, final String receiver, final String name) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        Properties p = new Properties();
+                        p.setProperty("sender", Session.ID);
+                        p.setProperty("receiver", receiver);
+                        p.setProperty("sendername", Session.NICKNAME);
+                        p.setProperty("type", "초대취소");
+                        p.setProperty("content", "초대취소를 받았습니다.");
+                        return NetworkAction.sendDataToServer("gcm.php", p);
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+
+                        Toast.makeText(context, name + "님을 초대 취소합니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }.execute();
+            }
+        });
     }
 
 }
