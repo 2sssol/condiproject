@@ -64,7 +64,7 @@ public class PreGroupActivity extends RootActivity {
     protected void onStart() {
         super.onStart();
 
-        if(serviceIntent != null)
+        if(serviceIntent == null)
             checkStart();
     }
 
