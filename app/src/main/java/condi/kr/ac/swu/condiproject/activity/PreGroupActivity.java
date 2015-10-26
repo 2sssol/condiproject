@@ -1,7 +1,10 @@
 package condi.kr.ac.swu.condiproject.activity;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -49,6 +52,8 @@ public class PreGroupActivity extends RootActivity {
         initActionBar("어울림방 만들기");
         initView();
         start();
+
+        checkStart();
     }
 
     private void initView() {
@@ -206,6 +211,8 @@ public class PreGroupActivity extends RootActivity {
 
                             inviteList.addFooterView(footer);
                             inviteList.setAdapter(adapter);
+
+
                         }
                     }.execute();
                 }
@@ -330,5 +337,67 @@ public class PreGroupActivity extends RootActivity {
                     toastErrorMsg("모두가 초대에 응해야 시작할 수 있어요!");
             }
         }.execute();
+    }
+
+    private void checkStart() {
+        registerReceiver(sensorReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
+    }
+
+    private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            new MyPHP().execute();
+        }
+    };
+
+    /*
+    * 사용자 정보 로드
+    * */
+    private class MyPHP extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            Properties prop = new Properties();
+            prop.setProperty("id", Session.ID);
+            return NetworkAction.sendDataToServer("my.php", prop);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            new getMyInfo().execute();
+        }
+    }
+
+    private class getMyInfo extends AsyncTask<Void, Void, Void> {
+
+        List<Properties> props;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                props = NetworkAction.parse("my.xml", "member");
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Session.removeAllPreferences(getApplicationContext());
+            Session.savePreferences(getApplicationContext(), props.get(0));
+
+            startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
+            finish();
+        }
     }
 }

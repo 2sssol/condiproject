@@ -144,6 +144,12 @@
             </intent-filter>
         </service>
 
+        <service android:name=".service.StartService" >
+            <intent-filter>
+                <action android:name="condi.kr.ac.swu.condiproject.groups" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".activity.GroupActivity"
             android:label="@string/title_activity_group" >
