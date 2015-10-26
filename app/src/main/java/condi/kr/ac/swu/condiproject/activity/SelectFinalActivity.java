@@ -294,6 +294,7 @@ public class SelectFinalActivity extends RootActivity {
                                             super.onPostExecute(o);
 
                                             Properties mc;
+                                            String mid = "";
                                             String mname = "";
                                             String cname = "";
                                             String km = "";
@@ -316,8 +317,10 @@ public class SelectFinalActivity extends RootActivity {
                                                     }
                                                 }
 
+                                                mid = p.getProperty("id");
                                                 mname = p.getProperty("nickname");
 
+                                                mc.setProperty("mid", mid);
                                                 mc.setProperty("mname", mname);
                                                 mc.setProperty("cname", cname);
                                                 mc.setProperty("ckm", km);
