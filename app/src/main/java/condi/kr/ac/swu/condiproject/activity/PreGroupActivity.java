@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -82,6 +84,8 @@ public class PreGroupActivity extends RootActivity {
             });
         } else {
             btn_pre_add_friend_back.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams params = btn_pre_add_friend_back.getLayoutParams();
+            params.height = 0;
         }
 
 
@@ -188,11 +192,16 @@ public class PreGroupActivity extends RootActivity {
                             adapter = new InviteListAdapter(PreGroupActivity.this.getApplicationContext(), list);
                             View footer = getLayoutInflater().inflate(R.layout.invited_list_footer, null, false);
 
-                            if(count > 0)
+                            if(count > 0) {
                                 btn_pre_add_friend_back.setVisibility(View.INVISIBLE);
+                                ViewGroup.LayoutParams params = btn_pre_add_friend_back.getLayoutParams();
+                                params.height = 0;
+                            }
 
                             if(count>=3) {
                                 footer.setVisibility(View.INVISIBLE);
+                                ViewGroup.LayoutParams params = footer.getLayoutParams();
+                                params.height = 2;
                             } else {
                                 footer.setVisibility(View.VISIBLE);
                                 footer.setOnClickListener(new View.OnClickListener() {
