@@ -68,7 +68,9 @@ public class PreGroupActivity extends RootActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getApplicationContext(), AddFriendActivity.class);
+                    i.putExtra("sender", senderId);
                     i.putExtra("count", 0);
+                    i.putExtra("isSender", isSender());
                     startActivity(i);
                     finish();
                 }
