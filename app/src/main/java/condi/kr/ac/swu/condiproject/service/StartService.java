@@ -35,7 +35,7 @@ public class StartService extends Service {
                     String dml = "select groups from member where id='"+user+"'";
                     result = NetworkAction.sendDataToServer("groups.php", dml);
 
-                    System.out.println("result : "+result);
+                    System.out.println("result : " + result);
 
                     if(!result.equals("error")) {
                         Intent intentResponse = new Intent("condi.kr.ac.swu.condiproject.groups");
@@ -55,7 +55,14 @@ public class StartService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        th.start();
+        if(!th.isAlive())
+            th.start();
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        th.stop();
     }
 }
