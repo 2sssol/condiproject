@@ -370,11 +370,6 @@ public class PreGroupActivity extends RootActivity {
         }
     };
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(mReceiver);
-    }
 
     /*
             * 사용자 정보 로드
