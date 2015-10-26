@@ -33,7 +33,7 @@ public class StartService extends Service {
                 String result = "error";
                 while (!result.equals("error")) {
                     String dml = "select groups from member where id='"+user+"'";
-                    result = NetworkAction.sendDataToServer("groups.php");
+                    result = NetworkAction.sendDataToServer("groups.php", dml);
 
                     if(!result.equals("error")) {
                         Intent intentResponse = new Intent("condi.kr.ac.swu.condiproject.groups");
