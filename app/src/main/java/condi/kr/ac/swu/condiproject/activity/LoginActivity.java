@@ -1,13 +1,23 @@
 package condi.kr.ac.swu.condiproject.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -19,6 +29,8 @@ import java.util.Properties;
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
+import condi.kr.ac.swu.condiproject.gcm.QuickstartPreferences;
+import condi.kr.ac.swu.condiproject.gcm.RegistrationIntentService;
 
 
 public class LoginActivity extends RootActivity {
@@ -30,12 +42,61 @@ public class LoginActivity extends RootActivity {
     private String phone;
     private String password;
 
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "MainActivity";
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initActionBar("어울림 로그인");
         initView();
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    printErrorMsg(sentToken+"success");
+                } else {
+                    printErrorMsg(sentToken + "fail");
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
 
@@ -173,7 +234,27 @@ public class LoginActivity extends RootActivity {
             }
             System.out.println("================================");
             Session.savePreferences(getApplicationContext(), props.get(0));
+
+
+            if (checkPlayServices()) {
+                // Start IntentService to register this application with GCM.
+                if(!checkSession()) {
+                    Intent intent = new Intent(LoginActivity.this, RegistrationIntentService.class);
+                    startService(intent);
+                }
+            }
+
             redirectCheckInviteActivity();
         }
+    }
+
+    private boolean checkSession() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String regID = pref.getString("regID", "");
+
+        if(regID.equals("") || regID == null)
+            return false;
+        else
+            return true;
     }
 }

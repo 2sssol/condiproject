@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">어울림</string>
     <string name="findpw"><u>비밀번호 찾기 </u></string>
     <string name="joinus"><u>회원가입 하기 </u></string>
@@ -26,4 +27,5 @@
     <string name="title_activity_course_info">CourseInfoActivity</string>
     <string name="title_activity_course_etc">CourseEtcActivity</string>
     <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>
