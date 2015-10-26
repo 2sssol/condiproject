@@ -49,6 +49,8 @@ public class PreGroupActivity extends RootActivity {
     private ImageButton btn_pre_add_friend;
     private RelativeLayout btn_pre_add_friend_back;
 
+    private static Intent serviceIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +58,14 @@ public class PreGroupActivity extends RootActivity {
         initActionBar("어울림방 만들기");
         initView();
         start();
+    }
 
-        checkStart();
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(serviceIntent != null)
+            checkStart();
     }
 
     private void initView() {
@@ -349,7 +357,8 @@ public class PreGroupActivity extends RootActivity {
     }
 
     private void checkStart() {
-        startService(new Intent(getApplicationContext(), StartService.class));
+        serviceIntent = new Intent(getApplicationContext(), StartService.class);
+        startService(serviceIntent);
         registerReceiver(mReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
     }
 
