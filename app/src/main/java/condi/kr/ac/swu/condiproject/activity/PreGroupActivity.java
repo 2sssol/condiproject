@@ -340,10 +340,10 @@ public class PreGroupActivity extends RootActivity {
     }
 
     private void checkStart() {
-        registerReceiver(sensorReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
+        registerReceiver(mReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
     }
 
-    private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -351,9 +351,15 @@ public class PreGroupActivity extends RootActivity {
         }
     };
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(mReceiver);
+    }
+
     /*
-    * 사용자 정보 로드
-    * */
+            * 사용자 정보 로드
+            * */
     private class MyPHP extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
