@@ -39,8 +39,6 @@ public class GroupListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<HashMap<String, String>> data;
-    private boolean isDialogShow = false;
-    private Handler mHandler;
     private String result;
 
     public GroupListAdapter(Context context, List<Properties> data) {
@@ -61,7 +59,6 @@ public class GroupListAdapter extends BaseAdapter {
         }
 
         this.data = maps;
-        mHandler = new Handler();
     }
 
     /*
@@ -109,7 +106,7 @@ public class GroupListAdapter extends BaseAdapter {
         // button
         setButton(groups_cock, data.get(position).get("mid"), data.get(position).get("mname"));
 
-        setCurrent(group_current_step, group_current_km, data.get(position).get("mid"), position);
+        setCurrent(group_current_step, group_current_km, data.get(position).get("mid"));
 
         return convertView;
     }
@@ -130,30 +127,16 @@ public class GroupListAdapter extends BaseAdapter {
         }
     }
 
-    private void setCurrent(final TextView step, final TextView km, final String id, final int position) {
+    private void setCurrent(final TextView step, final TextView km, final String id) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String dml = "select count(currentwalk) as count from walk where user='"+id+"'";
-                String php = "";
+
                 while (true) {
+                    result = NetworkAction.sendDataToServer("memberwalk0.php", dml);
 
-
-                    switch (position) {
-                        case 0:
-                            php = "memberwalk0.php";
-                            break;
-                        case 1:
-                            php = "memberwalk1.php";
-                            break;
-                        case 2 :
-                            php = "memberwalk2.php";
-                            break;
-                    }
-
-                    result = NetworkAction.sendDataToServer(php, dml);
-
-                    mHandler.post(new Runnable() {
+                    new Handler().post(new Runnable() {
                         @Override
                         public void run() {
                             step.setText(result);
@@ -162,7 +145,7 @@ public class GroupListAdapter extends BaseAdapter {
                     });
 
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(50);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
