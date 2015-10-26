@@ -218,8 +218,8 @@ public class PreGroupActivity extends RootActivity {
 
                             inviteList.addFooterView(footer);
                             inviteList.setAdapter(adapter);
-
-
+                            if(count>=3)
+                                inviteList.removeFooterView(footer);
                         }
                     }.execute();
                 }
