@@ -30,6 +30,8 @@ import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
+import condi.kr.ac.swu.condiproject.service.AccSensor;
+import condi.kr.ac.swu.condiproject.service.StartService;
 import condi.kr.ac.swu.condiproject.view.CircularNetworkImageView;
 import condi.kr.ac.swu.condiproject.view.adapter.InviteListAdapter;
 
@@ -347,6 +349,7 @@ public class PreGroupActivity extends RootActivity {
     }
 
     private void checkStart() {
+        startService(new Intent(getApplicationContext(), StartService.class));
         registerReceiver(mReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
     }
 
