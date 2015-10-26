@@ -31,7 +31,7 @@ public class StartService extends Service {
             @Override
             public void run() {
                 String result = "error";
-                while (!result.equals("error")) {
+                while (result.equals("error")) {
                     String dml = "select groups from member where id='"+user+"'";
                     result = NetworkAction.sendDataToServer("groups.php", dml);
 
