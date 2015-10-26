@@ -200,8 +200,6 @@ public class PreGroupActivity extends RootActivity {
 
                             if(count>=3) {
                                 footer.setVisibility(View.INVISIBLE);
-                                ViewGroup.LayoutParams params = footer.getLayoutParams();
-                                params.height = 2;
                             } else {
                                 footer.setVisibility(View.VISIBLE);
                                 footer.setOnClickListener(new View.OnClickListener() {
