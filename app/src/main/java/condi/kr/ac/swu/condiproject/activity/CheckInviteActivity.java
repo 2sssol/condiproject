@@ -47,6 +47,7 @@ public class CheckInviteActivity extends RootActivity {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
+
                 senderName = o.toString();
                 if(senderName.equals("error"))
                     showRoomDialog();
@@ -68,7 +69,7 @@ public class CheckInviteActivity extends RootActivity {
         dialog.getWindow().setLayout(850,450);
 
         TextView dlgDefaultText_big = (TextView) dialog.findViewById(R.id.dlgDefaultText_big);
-        TextView dlgDefaultText_small = (TextView)findViewById(R.id.dlgDefaultText_small);
+        TextView dlgDefaultText_small = (TextView) dialog.findViewById(R.id.dlgDefaultText_small);
         Button dlgOk = (Button) dialog.findViewById(R.id.dlgOk);
 
         dlgDefaultText_big.setText("초대받은 메시지가 없습니다.");
@@ -86,8 +87,7 @@ public class CheckInviteActivity extends RootActivity {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                //System.out.println("방만들기");
-                redirectPreGroupActivity(true);
+                redirectPreGroupActivity(true, 0);
             }
         });
 
@@ -137,9 +137,9 @@ public class CheckInviteActivity extends RootActivity {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 if(isOk)
-                    redirectPreGroupActivity(false);
+                    redirectPreGroupActivity(false, 1);
                 else
-                    redirectPreGroupActivity(true);
+                    redirectPreGroupActivity(true, 2);
             }
         });
 
@@ -147,10 +147,61 @@ public class CheckInviteActivity extends RootActivity {
         isDialogShow = true;
     }
 
-    private void redirectPreGroupActivity(boolean isSender) {
-        Intent i = new Intent(CheckInviteActivity.this.getApplicationContext(), PreGroupActivity.class);
-        i.putExtra("mode", isSender);
-        startActivity(i);
-        finish();
+    private void redirectPreGroupActivity(final boolean isSender, int path) {
+        /*
+        * path :
+         *  0 : 초대안받음
+        *   1 : 초대받고 수락
+        *   2 : 초대 받고 거절
+        * */
+
+
+        switch (path) {
+            case 0 :
+                Intent i = new Intent(CheckInviteActivity.this.getApplicationContext(), PreGroupActivity.class);
+                i.putExtra("mode", isSender);
+                startActivity(i);
+                finish();
+                break;
+            case 1 :
+                new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        String dml = "update invite set ok=1 where receiver='"+Session.ID+"'";
+                        return NetworkAction.sendDataToServer(dml);
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+                        Intent i = new Intent(CheckInviteActivity.this.getApplicationContext(), PreGroupActivity.class);
+                        i.putExtra("mode", isSender);
+                        startActivity(i);
+                        finish();
+                    }
+                }.execute();
+
+                break;
+            case 2 :
+                new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        String dml = "delete from invite where receiver='"+Session.ID+"'";
+                        return NetworkAction.sendDataToServer(dml);
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+
+                        Intent i = new Intent(CheckInviteActivity.this.getApplicationContext(), PreGroupActivity.class);
+                        i.putExtra("mode", isSender);
+                        startActivity(i);
+                        finish();
+                    }
+                }.execute();
+                break;
+        }
+
     }
 }

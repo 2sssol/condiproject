@@ -64,7 +64,13 @@ public class PreGroupActivity extends RootActivity {
         btnRoomStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertGroups();
+
+                // 센더만 시작 가능
+                if(isSender())
+                    isAllOK();
+                else
+                    toastErrorMsg("방장만 시작할 수 있습니다.");
+
             }
         });
     }
@@ -90,9 +96,9 @@ public class PreGroupActivity extends RootActivity {
     }
 
     private void start() {
-        if(isSender())
+        if(isSender())  // 센더는 나면서 시작
             loadInviteList();
-        else
+        else    // 센더정보받아온다음에 리스트 뿌려주기
             new Receiver().execute();
     }
 
@@ -274,5 +280,24 @@ public class PreGroupActivity extends RootActivity {
     private void redirectSelectRegionActivity() {
         startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
         finish();
+    }
+
+    private void isAllOK() {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                String dml = "select i.*, g.* from (select count(*) as icount from invite where sender='"+senderId+"') i, (select count(*) as gcount from invite where ok=1) g";
+                return NetworkAction.sendDataToServer("checkInviting.php", dml);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if(o.equals("same"))
+                    insertGroups();
+                else
+                    toastErrorMsg("모두가 초대에 응해야 시작할 수 있어요!");
+            }
+        }.execute();
     }
 }
