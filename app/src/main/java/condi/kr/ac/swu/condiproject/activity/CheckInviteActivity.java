@@ -14,6 +14,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Properties;
+
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
@@ -167,8 +169,14 @@ public class CheckInviteActivity extends RootActivity {
                 new AsyncTask() {
                     @Override
                     protected Object doInBackground(Object[] params) {
+                        Properties prop = new Properties();
                         String dml = "update invite set ok=1 where receiver='"+Session.ID+"'";
-                        return NetworkAction.sendDataToServer(dml);
+                        prop.setProperty("dml" , dml);
+                        prop.setProperty("sender", Session.ID);
+                        prop.setProperty("sendername", Session.NICKNAME);
+                        prop.setProperty("type", "3");
+
+                        return NetworkAction.sendDataToServer("gcmToAll.php",prop);
                     }
 
                     @Override
@@ -186,8 +194,14 @@ public class CheckInviteActivity extends RootActivity {
                 new AsyncTask() {
                     @Override
                     protected Object doInBackground(Object[] params) {
+                        Properties prop = new Properties();
                         String dml = "delete from invite where receiver='"+Session.ID+"'";
-                        return NetworkAction.sendDataToServer(dml);
+                        prop.setProperty("dml" , dml);
+                        prop.setProperty("sender", Session.ID);
+                        prop.setProperty("sendername", Session.NICKNAME);
+                        prop.setProperty("type", "4");
+
+                        return NetworkAction.sendDataToServer("gcmToAll.php",prop);
                     }
 
                     @Override

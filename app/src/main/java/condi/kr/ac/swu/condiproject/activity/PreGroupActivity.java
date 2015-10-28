@@ -63,8 +63,8 @@ public class PreGroupActivity extends RootActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(serviceIntent == null)
-            checkStart();
+        /*if(serviceIntent == null)
+            checkStart();*/
     }
 
     @Override
@@ -82,6 +82,10 @@ public class PreGroupActivity extends RootActivity {
             stopService(serviceIntent);
     }
 
+
+    /*
+    * ---------------------------------------------------------------------------------
+    * */
     private void initView() {
         // 뷰
         myProfile = (CircularNetworkImageView) findViewById(R.id.myProfile);
@@ -112,7 +116,6 @@ public class PreGroupActivity extends RootActivity {
             params.height = 0;
         }
 
-
         initProfile();
         initEvent();
     }
@@ -121,12 +124,7 @@ public class PreGroupActivity extends RootActivity {
         btnRoomStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // 센더만 시작 가능
-                if (isSender())
-                    isAllOK();
-                else
-                    toastErrorMsg("방장만 시작할 수 있습니다.");
+                isAllOK();
 
             }
         });
@@ -167,7 +165,32 @@ public class PreGroupActivity extends RootActivity {
         return getIntent().getBooleanExtra("mode", true);
     }
 
-    private void loadInviteList() {
+    private void isAllOK() {
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                String dml = "select i.*, g.* from (select count(*) as icount from invite where sender='"+senderId+"') i, (select count(*) as gcount from invite where ok=1) g";
+                return NetworkAction.sendDataToServer("checkInviting.php", dml);
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if(o.equals("same"))
+                    insertGroups();
+                else
+                    toastErrorMsg("모두가 초대에 응해야 시작할 수 있어요!");
+            }
+        }.execute();
+    }
+
+    private void checkStart() {
+        serviceIntent = new Intent(getApplicationContext(), StartService.class);
+        startService(serviceIntent);
+        registerReceiver(mReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
+    }
+
+    public void loadInviteList() {
         new AsyncTask() {
             @Override
             protected String doInBackground(Object[] params) {
@@ -351,31 +374,10 @@ public class PreGroupActivity extends RootActivity {
         finish();
     }
 
-    private void isAllOK() {
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] params) {
-                String dml = "select i.*, g.* from (select count(*) as icount from invite where sender='"+senderId+"') i, (select count(*) as gcount from invite where ok=1) g";
-                return NetworkAction.sendDataToServer("checkInviting.php", dml);
-            }
 
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                if(o.equals("same"))
-                    insertGroups();
-                else
-                    toastErrorMsg("모두가 초대에 응해야 시작할 수 있어요!");
-            }
-        }.execute();
-    }
-
-    private void checkStart() {
-        serviceIntent = new Intent(getApplicationContext(), StartService.class);
-        startService(serviceIntent);
-        registerReceiver(mReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
-    }
-
+    /*
+    * -------------------------------------------------------------------------
+    * */
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -386,8 +388,8 @@ public class PreGroupActivity extends RootActivity {
 
 
     /*
-            * 사용자 정보 로드
-            * */
+    * 사용자 정보 로드
+    * */
     private class MyPHP extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {

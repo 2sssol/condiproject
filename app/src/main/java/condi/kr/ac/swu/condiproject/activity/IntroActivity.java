@@ -2,12 +2,18 @@ package condi.kr.ac.swu.condiproject.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
 
 
@@ -17,10 +23,11 @@ public class IntroActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(isLogined())
+                if(!isLogout())
                     redirectLoadingActivity();
                 else
                     redirectLoginActivity();
@@ -28,12 +35,8 @@ public class IntroActivity extends Activity {
         }, 2000);
     }
 
-    private boolean isLogined() {
-        if(Session.getPreferences(getApplicationContext(), "id").equals(""))
-            return true;
-        else
-            return false;
-
+    private boolean isLogout() {
+        return (Session.getPreferences(getApplicationContext(), "id").equals(""));
     }
 
     private void redirectLoginActivity() {
@@ -47,3 +50,5 @@ public class IntroActivity extends Activity {
     }
 
 }
+
+

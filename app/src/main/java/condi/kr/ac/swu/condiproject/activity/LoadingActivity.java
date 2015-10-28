@@ -10,6 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
+
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
@@ -37,12 +43,13 @@ public class LoadingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        branchPage();
+        new MyPHP().execute();
+
     }
 
     private void branchPage() {
-        if (hasGroup()) {
-            if (hasCourse()) {
+        if (hasGroup()) {   // 그룹?
+            if (hasCourse()) {      // 코스선택?
                 new AsyncTask() {
                     @Override
                     protected Object doInBackground(Object[] params) {
@@ -56,17 +63,16 @@ public class LoadingActivity extends Activity {
                         if (o.equals("ok"))
                             redirectMainActivity();
                         else
-                            redirectSelectCourseActivity();
+                            redirectSelectFinalActivity();
                     }
                 }.execute();
             } else {
-                redirectSelectRegionActivity();
+                redirectSelectCourseActivity();
             }
         } else {
             redirectCheckInviteActivity();
         }
     }
-
 
     private boolean hasGroup() {
         return (Session.getPreferences(getApplicationContext(), "groups").equals("") ? false : true);
@@ -85,13 +91,13 @@ public class LoadingActivity extends Activity {
         finish();
     }
 
-    private void redirectSelectRegionActivity() {
-        startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
+    private void redirectSelectCourseActivity() {
+        startActivity(new Intent(getApplicationContext(), SelectCourseActivity.class));
         finish();
     }
 
-    private void redirectSelectCourseActivity() {
-        startActivity(new Intent(getApplicationContext(), SelectCourseActivity.class));
+    private void redirectSelectFinalActivity() {
+        startActivity(new Intent(getApplicationContext(), SelectFinalActivity.class));
         finish();
     }
 
@@ -99,6 +105,50 @@ public class LoadingActivity extends Activity {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
 
+    }
+
+    /*
+    * 나의 최신 정보 로드
+    * */
+    private class MyPHP extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            Properties prop = new Properties();
+            prop.setProperty("id", Session.ID);
+            return NetworkAction.sendDataToServer("my.php", prop);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            new getMyInfo().execute();
+        }
+    }
+
+    private class getMyInfo extends AsyncTask<Void, Void, Void> {
+
+        List<Properties> props;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                props = NetworkAction.parse("my.xml", "member");
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Session.removeAllPreferences(getApplicationContext());
+            Session.savePreferences(getApplicationContext(), props.get(0));
+
+            branchPage();
+        }
     }
 }
 

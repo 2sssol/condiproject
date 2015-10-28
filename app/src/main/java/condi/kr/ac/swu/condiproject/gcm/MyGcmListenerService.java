@@ -16,7 +16,8 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import condi.kr.ac.swu.condiproject.R;
-import condi.kr.ac.swu.condiproject.activity.TestActivity;
+import condi.kr.ac.swu.condiproject.activity.IntroActivity;
+import condi.kr.ac.swu.condiproject.activity.PreGroupActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -33,7 +34,11 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
+        String type = data.getString("type");
+        String sender = data.getString("sender");
+
         Log.d(TAG, "From: " + from);
+        Log.d(TAG, "Type: " + type);
         Log.d(TAG, "Message: " + message);
 
         if (from.startsWith("/topics/")) {
@@ -49,6 +54,35 @@ public class MyGcmListenerService extends GcmListenerService {
          *     - Store message in local database.
          *     - Update UI.
          */
+        int t =  Integer.parseInt(type);
+        PreGroupActivity preGroupActivity = new PreGroupActivity();
+
+        switch (t) {
+            case 0 :
+                break;
+            case 1 :
+                break;
+            case 2 :
+                break;
+            case 3 :    // 초대 수락
+                preGroupActivity.loadInviteList();
+                break;
+            case 4 :    // 초대 거절
+                preGroupActivity.loadInviteList();
+                break;
+            case 5 :    // 초대 함
+                preGroupActivity.loadInviteList();
+                break;
+            case 6 :    // 그룹 시작
+                break;
+            case 7 :    // 코스 선택함
+                break;
+            case 8 :    // 걸음 시작
+                break;
+            case 9 :    // 목표 달성
+                break;
+        }
+
 
         /**
          * In some cases it may be useful to show a notification indicating to the user
@@ -65,7 +99,7 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, IntroActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
