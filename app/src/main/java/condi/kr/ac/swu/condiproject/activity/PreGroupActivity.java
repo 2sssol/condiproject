@@ -63,9 +63,23 @@ public class PreGroupActivity extends RootActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         if(serviceIntent == null)
             checkStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(serviceIntent != null)
+            stopService(serviceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(serviceIntent != null)
+            stopService(serviceIntent);
     }
 
     private void initView() {

@@ -28,7 +28,6 @@ public class SelectCourseActivity extends RootActivity {
     private List<Properties> list;
     private List<Properties> members;
     private Course[] courses = new Course[6];
-    private String local;
 
     private ArrayList<String> selected = new ArrayList<String>();
     private ArrayList<String> selectedMembers = new ArrayList<String>();

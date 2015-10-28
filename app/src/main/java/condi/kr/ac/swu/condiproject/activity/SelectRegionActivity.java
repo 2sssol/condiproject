@@ -49,7 +49,6 @@ public class SelectRegionActivity extends RootActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SelectCourseActivity.class);
-                intent.putExtra("local", local);
                 startActivity(intent);
                 finish();
             }

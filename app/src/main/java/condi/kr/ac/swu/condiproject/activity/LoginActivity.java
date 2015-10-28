@@ -133,11 +133,12 @@ public class LoginActivity extends RootActivity {
         finish();
     }
 
-    private void redirectCheckInviteActivity() {
-        Intent intent = new Intent(LoginActivity.this, CheckInviteActivity.class);
+    private void redirectLoadingActivity() {
+        Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
         startActivity(intent);
         finish();
     }
+
 
     private class LoginEventListener implements View.OnClickListener {
         @Override
@@ -244,7 +245,8 @@ public class LoginActivity extends RootActivity {
                 }
             }
 
-            redirectCheckInviteActivity();
+            //redirectCheckInviteActivity();
+            redirectLoadingActivity();
         }
     }
 

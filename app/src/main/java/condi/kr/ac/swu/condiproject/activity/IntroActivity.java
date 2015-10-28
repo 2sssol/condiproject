@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.Session;
 
 
 public class IntroActivity extends Activity {
@@ -19,15 +20,29 @@ public class IntroActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                redirectLoginActivity();
+                if(isLogined())
+                    redirectLoadingActivity();
+                else
+                    redirectLoginActivity();
             }
         }, 2000);
     }
 
-    private void checkSession() {}
+    private boolean isLogined() {
+        if(Session.getPreferences(getApplicationContext(), "id").equals(""))
+            return true;
+        else
+            return false;
+
+    }
 
     private void redirectLoginActivity() {
         startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+        finish();
+    }
+
+    private void redirectLoadingActivity() {
+        startActivity(new Intent(IntroActivity.this, LoadingActivity.class));
         finish();
     }
 
