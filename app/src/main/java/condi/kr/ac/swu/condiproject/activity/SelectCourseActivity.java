@@ -1,6 +1,9 @@
 package condi.kr.ac.swu.condiproject.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +39,8 @@ public class SelectCourseActivity extends RootActivity {
     private Button btnSelectFinal;
 
     private ImageButton btnCourseName1, btnCourseName2, btnCourseName3, btnCourseName4, btnCourseName5, btnCourseName6;
-    private TextView txtSpeechBox1, txtSpeechBox2, txtSpeechBox3, txtSpeechBox4, txtSpeechBox5, txtSpeechBox6,
+    private TextView
+            txtSpeechBox1, txtSpeechBox2, txtSpeechBox3, txtSpeechBox4, txtSpeechBox5, txtSpeechBox6,
             txtCourseInfoName, txtCourseInfo1, txtCourseInfo2, txtChoiceCourseKM, txtUserName;
 
     private int clickedPosition = -1;
@@ -101,8 +105,6 @@ public class SelectCourseActivity extends RootActivity {
         textViews.add(txtSpeechBox5);
         textViews.add(txtSpeechBox6);
 
-        initMySelection();
-
         btnSelectFinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,76 +129,6 @@ public class SelectCourseActivity extends RootActivity {
             }
         }.execute();
 
-    }
-
-    /*
-    * 사용자 정보 로드
-    * */
-    private class MyPHP extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... params) {
-            Properties prop = new Properties();
-            prop.setProperty("id", Session.ID);
-            return NetworkAction.sendDataToServer("my.php", prop);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            new getMyInfo().execute();
-        }
-    }
-
-    private class getMyInfo extends AsyncTask<Void, Void, Void> {
-
-        List<Properties> props;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                props = NetworkAction.parse("my.xml", "member");
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Session.removeAllPreferences(getApplicationContext());
-            Session.savePreferences(getApplicationContext(), props.get(0));
-            redirectSelectFinalActivity();
-        }
-    }
-
-    private void initMySelection(){
-        imageButtons.get(2).setImageResource(R.drawable.course_button_mint);
-
-        textViews.get(2).setVisibility(View.VISIBLE);
-        textViews.get(2).setText(Session.NICKNAME+" 님 선택");
-        txtUserName.setText(Session.NICKNAME);
-
-        txtCourseArray.clickedCourse(2);
-        txtCourseArray.invalidate();
-    }
-
-    public boolean checkSync(int position) {
-
-        for(int i=0; i<selected.size(); i++) {
-            System.out.println("==> 선택한 코스 : "+courses[position].name);
-            if(courses[position].name.equals(selected.get(i))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void SelectCourseButtonClick(View v) {
@@ -236,17 +168,9 @@ public class SelectCourseActivity extends RootActivity {
                 txtCourseInfoName.setText(courses[i].name);
                 txtChoiceCourseKM.setText(courses[i].km+"KM");
 
-                String info1, info2;
-                if(courses[i].info.length()>20) {
-                    info1 = courses[i].info.substring(0, 19);
-                    if(courses[i].info.length()>40)
-                        info2 = courses[i].info.substring(19, 40);
-                    else
-                        info2 = courses[i].info.substring(19, courses[i].info.length()-1);
-                } else {
-                    info1 = courses[i].info;
-                    info2 = "";
-                }
+                String info1 =  courses[i].info.substring(0, 19);
+                String info2 = courses[i].info.substring(19);
+
                 txtCourseInfo1.setText(info1);
                 txtCourseInfo2.setText(info2);
 
@@ -275,7 +199,6 @@ public class SelectCourseActivity extends RootActivity {
             @Override
             protected String doInBackground(Object[] params) {
                 String dml = "select * from course where local=0";
-                //String dml = "select * from course where local='"+local+"'";
                 return NetworkAction.sendDataToServer("course.php", dml);
             }
 
@@ -310,7 +233,7 @@ public class SelectCourseActivity extends RootActivity {
                             new AsyncTask() {
                                 @Override
                                 protected Object doInBackground(Object[] params) {
-                                    String dml = "select * from member where groups="+ Session.GROUPS+"";
+                                    String dml = "select * from member where groups="+ Session.GROUPS;
                                     return NetworkAction.sendDataToServer("member.php",dml);
                                 }
 
@@ -393,6 +316,68 @@ public class SelectCourseActivity extends RootActivity {
         Intent intent = new Intent(getApplicationContext(), SelectFinalActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(selectReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.course"));
+    }
+
+    private BroadcastReceiver selectReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setCourses();
+        }
+    };
+
+
+    /*
+    * 사용자 정보 로드
+    * */
+    private class MyPHP extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            Properties prop = new Properties();
+            prop.setProperty("id", Session.ID);
+            return NetworkAction.sendDataToServer("my.php", prop);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            new getMyInfo().execute();
+        }
+    }
+
+    private class getMyInfo extends AsyncTask<Void, Void, Void> {
+
+        List<Properties> props;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                props = NetworkAction.parse("my.xml", "member");
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Session.removeAllPreferences(getApplicationContext());
+            Session.savePreferences(getApplicationContext(), props.get(0));
+            redirectSelectFinalActivity();
+        }
     }
 
 }

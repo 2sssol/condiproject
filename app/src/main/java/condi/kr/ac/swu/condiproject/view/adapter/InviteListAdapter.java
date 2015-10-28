@@ -51,7 +51,6 @@ public class InviteListAdapter extends BaseAdapter {
         this.data = maps;
     }
 
-
     /*
     * 오버라이드
     * */
@@ -129,12 +128,12 @@ public class InviteListAdapter extends BaseAdapter {
                     @Override
                     protected Object doInBackground(Object[] params) {
                         Properties p = new Properties();
+                        String dml = "delete from invite where receiver = '"+receiver+"'";
+                        p.setProperty("dml", dml);
                         p.setProperty("sender", Session.ID);
-                        p.setProperty("receiver", receiver);
                         p.setProperty("sendername", Session.NICKNAME);
-                        p.setProperty("type", "초대취소");
-                        p.setProperty("content", "초대취소를 받았습니다.");
-                        return NetworkAction.sendDataToServer("gcm.php", p);
+                        p.setProperty("type", "10");
+                        return NetworkAction.sendDataToServer("gcmToAll.php", p);
                     }
 
                     @Override

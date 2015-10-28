@@ -18,6 +18,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.activity.IntroActivity;
 import condi.kr.ac.swu.condiproject.activity.PreGroupActivity;
+import condi.kr.ac.swu.condiproject.activity.SelectRegionActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -55,27 +56,36 @@ public class MyGcmListenerService extends GcmListenerService {
          *     - Update UI.
          */
         int t =  Integer.parseInt(type);
-        PreGroupActivity preGroupActivity = new PreGroupActivity();
+        Intent intentResponse;
 
         switch (t) {
             case 0 :
                 break;
             case 1 :
                 break;
-            case 2 :
+            case 2 :    // push
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.start.walk");
+                sendBroadcast(intentResponse);
                 break;
             case 3 :    // 초대 수락
-                preGroupActivity.loadInviteList();
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.invite");
+                sendBroadcast(intentResponse);
                 break;
             case 4 :    // 초대 거절
-                preGroupActivity.loadInviteList();
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.invite");
+                sendBroadcast(intentResponse);
                 break;
             case 5 :    // 초대 함
-                preGroupActivity.loadInviteList();
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.invite");
+                sendBroadcast(intentResponse);
                 break;
             case 6 :    // 그룹 시작
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.start.groups");
+                sendBroadcast(intentResponse);
                 break;
             case 7 :    // 코스 선택함
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.course");
+                sendBroadcast(intentResponse);
                 break;
             case 8 :    // 걸음 시작
                 break;

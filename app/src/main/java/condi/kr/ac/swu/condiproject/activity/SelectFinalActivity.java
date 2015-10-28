@@ -1,6 +1,9 @@
 package condi.kr.ac.swu.condiproject.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -197,6 +200,18 @@ public class SelectFinalActivity extends RootActivity {
 
     }
 
+    private void initOtherSelection(int position, String selector) {
+
+        for(Properties p: members) {
+            if(p.getProperty("course").equals(courses[position].id)) {
+                imageButtons.get(position).setImageResource(R.drawable.course_button_red);
+                textViews.get(position).setVisibility(View.VISIBLE);
+                textViews.get(position).setBackgroundResource(R.drawable.speechbubble_pink);
+                textViews.get(position).setText(String.format("%s 님", selector));
+            }
+        }
+    }
+
 
     /*
     * 코스 로드
@@ -299,22 +314,25 @@ public class SelectFinalActivity extends RootActivity {
                                             String cname = "";
                                             String km = "";
 
-
                                             /*
                                             * 선택된 코스 얻어오기 성공
                                             * 그 코스를 선택한 사람 얻어오기 성공
                                             * */
+                                            int cnt = 0;
                                             for (Properties p : members) {
                                                 mc = new Properties();
 
                                                 for (Properties ps : list) {
                                                     if (p.getProperty("course").equals(ps.getProperty("id"))) {
-                                                        selected.add(p.getProperty("course"));
+                                                        selected.add(ps.getProperty("name"));
                                                         selectedMembers.add(p.getProperty("nickname"));
+
+                                                        initOtherSelection(cnt, p.getProperty("nickname"));
 
                                                         cname = ps.getProperty("name");
                                                         km = ps.getProperty("km");
                                                     }
+                                                    cnt++;
                                                 }
 
                                                 mid = p.getProperty("id");
@@ -332,6 +350,8 @@ public class SelectFinalActivity extends RootActivity {
                                             * 말풍선이랑 뷰에 반영
                                             * */
                                             curvTextView.selectedCourse(selected);
+                                            curvTextView.invalidate();
+
 
                                             /*
                                             * 리스트에 반영
@@ -355,4 +375,24 @@ public class SelectFinalActivity extends RootActivity {
         }.execute();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(selectReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.course"));
+        registerReceiver(startReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.start.walk"));
+    }
+
+    private BroadcastReceiver selectReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setCourses();
+        }
+    };
+
+    private BroadcastReceiver startReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            redirectTutorialActivity();
+        }
+    };
 }

@@ -42,7 +42,7 @@ public class SelectRegionActivity extends RootActivity {
         txtRegionName2 = (TextView) findViewById(R.id.txtRegionName2);
         txtRegionName3 = (TextView) findViewById(R.id.txtRegionName3);
 
-        setMapURL("ourmap_before.png");
+        setMapURL("map1.png");
         setRegionName();
 
         btnSelectCourse.setOnClickListener(new View.OnClickListener() {

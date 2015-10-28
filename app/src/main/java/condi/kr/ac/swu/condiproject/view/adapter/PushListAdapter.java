@@ -105,7 +105,7 @@ public class PushListAdapter extends BaseAdapter {
                         p.setProperty("sender", Session.ID);
                         p.setProperty("receiver", receiver);
                         p.setProperty("sendername", Session.NICKNAME);
-                        p.setProperty("type", "푸시");
+                        p.setProperty("type", "2");
                         p.setProperty("content", "코스를 선택해주세요!");
                         return NetworkAction.sendDataToServer("gcm.php", p);
                     }

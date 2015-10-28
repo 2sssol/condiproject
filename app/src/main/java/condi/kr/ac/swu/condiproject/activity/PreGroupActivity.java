@@ -6,15 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,8 +26,6 @@ import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.GlobalApplication;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
-import condi.kr.ac.swu.condiproject.service.AccSensor;
-import condi.kr.ac.swu.condiproject.service.StartService;
 import condi.kr.ac.swu.condiproject.view.CircularNetworkImageView;
 import condi.kr.ac.swu.condiproject.view.adapter.InviteListAdapter;
 
@@ -63,25 +57,8 @@ public class PreGroupActivity extends RootActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        /*if(serviceIntent == null)
-            checkStart();*/
+        checkStart();
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if(serviceIntent != null)
-            stopService(serviceIntent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(serviceIntent != null)
-            stopService(serviceIntent);
-    }
-
 
     /*
     * ---------------------------------------------------------------------------------
@@ -184,11 +161,6 @@ public class PreGroupActivity extends RootActivity {
         }.execute();
     }
 
-    private void checkStart() {
-        serviceIntent = new Intent(getApplicationContext(), StartService.class);
-        startService(serviceIntent);
-        registerReceiver(mReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.groups"));
-    }
 
     public void loadInviteList() {
         new AsyncTask() {
@@ -378,11 +350,25 @@ public class PreGroupActivity extends RootActivity {
     /*
     * -------------------------------------------------------------------------
     * */
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+    private void checkStart() {
+        registerReceiver(memberReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.invite"));
+        registerReceiver(startReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.start.groups"));
+    }
+
+    private BroadcastReceiver memberReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             new MyPHP().execute();
+        }
+    };
+
+    private BroadcastReceiver startReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            redirectSelectRegionActivity();
         }
     };
 
