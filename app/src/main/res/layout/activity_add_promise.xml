@@ -218,6 +218,30 @@
 
             </RelativeLayout>
 
+            <!--버튼-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center_horizontal">
+
+                <Button
+                    android:id="@+id/cancelPromise"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/button_pink"
+                    android:text="취   소"
+                    android:textColor="#fff" />
+
+                <Button
+                    android:id="@+id/addPromise"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="60dp"
+                    android:background="@drawable/button_pink"
+                    android:text="확   인"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
