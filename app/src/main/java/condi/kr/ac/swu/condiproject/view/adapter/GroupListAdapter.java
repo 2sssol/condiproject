@@ -41,6 +41,8 @@ public class GroupListAdapter extends BaseAdapter {
     private ArrayList<HashMap<String, String>> data;
     private String result;
     private Handler handler;
+    private boolean isDialogShow = false;
+    private boolean isOk;
 
     public GroupListAdapter(Context context, List<Properties> data) {
         this.context = context;
@@ -164,25 +166,92 @@ public class GroupListAdapter extends BaseAdapter {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AsyncTask() {
-                    @Override
-                    protected Object doInBackground(Object[] params) {
-                        Properties p = new Properties();
-                        p.setProperty("sender", Session.ID);
-                        p.setProperty("receiver", receiver);
-                        p.setProperty("sendername", Session.NICKNAME);
-                        p.setProperty("type", "2");
-                        return NetworkAction.sendDataToServer("gcmp.php", p);
-                    }
-
-                    @Override
-                    protected void onPostExecute(Object o) {
-                        super.onPostExecute(o);
-
-                        Toast.makeText(context, name + "님을 '콕' 찔렀습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }.execute();
+                showInvitedDialog(receiver, name);
             }
         });
+    }
+
+    public void showInvitedDialog(final String receiver, final String receivername) {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog_cock);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(850,450);
+
+        TextView customDlgTxt_too_big_cock = (TextView) dialog.findViewById(R.id.customDlgTxt_too_big_cock);
+        TextView customDlgTxt_small_cock = (TextView) dialog.findViewById(R.id.customDlgTxt_small_cock);
+        Button customDlgBtnOk_cock = (Button) dialog.findViewById(R.id.customDlgBtnOk_cock);
+        Button customDlgBtnNo_cock = (Button) dialog.findViewById(R.id.customDlgBtnNo_cock);
+
+        customDlgTxt_too_big_cock.setText(receivername + " 님을 콕찌르기");
+        customDlgBtnOk_cock.setText("부탁하기");
+        customDlgBtnNo_cock.setText("격려하기");
+
+        customDlgBtnOk_cock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                isDialogShow = false;
+                isOk = true;
+            }
+        });
+
+        customDlgBtnNo_cock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                isDialogShow = false;
+                isOk = false;
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (isOk) { // 부탁하기
+                    new AsyncTask() {
+                        @Override
+                        protected Object doInBackground(Object[] params) {
+                            Properties p = new Properties();
+                            p.setProperty("sender", Session.ID);
+                            p.setProperty("receiver", receiver);
+                            p.setProperty("sendername", Session.NICKNAME);
+                            p.setProperty("type", "2");
+                            return NetworkAction.sendDataToServer("gcmp.php", p);
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+
+                            Toast.makeText(context, receivername + "님에게 '부탁하기'를 했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }.execute();
+                } else {    // 격려하기
+                    new AsyncTask() {
+                        @Override
+                        protected Object doInBackground(Object[] params) {
+                            Properties p = new Properties();
+                            p.setProperty("sender", Session.ID);
+                            p.setProperty("receiver", receiver);
+                            p.setProperty("sendername", Session.NICKNAME);
+                            p.setProperty("type", "2");
+                            return NetworkAction.sendDataToServer("gcmp.php", p);
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+
+                            Toast.makeText(context, receivername + "님에게 '격려하기'를 했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }.execute();
+                }
+            }
+        });
+
+        dialog.show();
+        isDialogShow = true;
     }
 }
