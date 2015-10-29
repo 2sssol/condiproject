@@ -371,7 +371,7 @@ public class PreGroupActivity extends RootActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            new MyPHP().execute();
+            loadInviteList();
         }
     };
 
