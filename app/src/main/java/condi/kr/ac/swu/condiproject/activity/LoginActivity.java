@@ -133,8 +133,8 @@ public class LoginActivity extends RootActivity {
         finish();
     }
 
-    private void redirectLoadingActivity() {
-        Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
+    private void redirectIntroTutorialActivity() {
+        Intent intent = new Intent(LoginActivity.this, IntroTutorialActivity.class);
         startActivity(intent);
         finish();
     }
@@ -244,7 +244,7 @@ public class LoginActivity extends RootActivity {
             }
 
             //redirectCheckInviteActivity();
-            redirectLoadingActivity();
+            redirectIntroTutorialActivity();
         }
     }
 
