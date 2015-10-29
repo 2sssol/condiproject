@@ -182,7 +182,7 @@ public class CheckInviteActivity extends RootActivity {
                     @Override
                     protected void onPostExecute(Object o) {
                         super.onPostExecute(o);
-                        Intent i = new Intent(CheckInviteActivity.this.getApplicationContext(), PreGroupActivity.class);
+                        Intent i = new Intent(getApplicationContext(), PreGroupActivity.class);
                         i.putExtra("mode", isSender);
                         startActivity(i);
                         finish();
@@ -208,7 +208,7 @@ public class CheckInviteActivity extends RootActivity {
                     protected void onPostExecute(Object o) {
                         super.onPostExecute(o);
 
-                        Intent i = new Intent(CheckInviteActivity.this.getApplicationContext(), PreGroupActivity.class);
+                        Intent i = new Intent(getApplicationContext(), PreGroupActivity.class);
                         i.putExtra("mode", isSender);
                         startActivity(i);
                         finish();
