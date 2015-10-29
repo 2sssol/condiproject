@@ -85,7 +85,7 @@ public class InviteListAdapter extends BaseAdapter {
 
         //텍스트 세팅
         itemPhone.setText(data.get(position).get("phone"));
-        itemName.setText(data.get(position).get("receivername"));
+        itemName.setText(data.get(position).get("nickname"));
 
         //이미지세팅
         setProfileURL(itemProfile, data.get(position).get("profile"));
@@ -95,7 +95,7 @@ public class InviteListAdapter extends BaseAdapter {
             itemButton.setVisibility(View.INVISIBLE);
         else {
             itemButton.setVisibility(View.VISIBLE);
-            setButton(itemButton, data.get(position).get("receiver"), data.get(position).get("receivername"));
+            setButton(itemButton, data.get(position).get("id"), data.get(position).get("nickname"));
         }
 
         return convertView;
@@ -133,7 +133,7 @@ public class InviteListAdapter extends BaseAdapter {
                         p.setProperty("sender", Session.ID);
                         p.setProperty("sendername", Session.NICKNAME);
                         p.setProperty("type", "10");
-                        return NetworkAction.sendDataToServer("gcmToAll.php", p);
+                        return NetworkAction.sendDataToServer("gcm.php", p);
                     }
 
                     @Override
