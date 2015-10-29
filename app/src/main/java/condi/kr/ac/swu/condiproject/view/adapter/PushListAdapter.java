@@ -77,21 +77,23 @@ public class PushListAdapter extends BaseAdapter {
         TextView txtPushCourseKm = (TextView) convertView.findViewById(R.id.txtPushCourseKm);   // km
         Button btnPush = (Button) convertView.findViewById(R.id.btnPush);
 
-
         txtPushUserName.setText(data.get(position).get("mname"));
         txtPushCourseKm.setText(data.get(position).get("ckm"));
 
-        setCourseName(txtPushCourseName, data.get(position).get("cname"));
+        setCourseName(txtPushCourseName, data.get(position).get("cname"), btnPush);
         setButton(btnPush, data.get(position).get("mid"), data.get(position).get("mname"));
 
         return convertView;
     }
 
-    public void setCourseName(final TextView courseName, final String course) {
-        if(course.equals(""))
+    public void setCourseName(final TextView courseName, final String course, final Button btnPush) {
+        if(course.equals("")) {
             courseName.setText("선택 중입니다.");
-        else
+            btnPush.setVisibility(View.VISIBLE);
+        } else {
             courseName.setText(course);
+            btnPush.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setButton(Button button, final String receiver, final String name) {
@@ -105,9 +107,9 @@ public class PushListAdapter extends BaseAdapter {
                         p.setProperty("sender", Session.ID);
                         p.setProperty("receiver", receiver);
                         p.setProperty("sendername", Session.NICKNAME);
-                        p.setProperty("type", "2");
-                        p.setProperty("content", "코스를 선택해주세요!");
-                        return NetworkAction.sendDataToServer("gcm.php", p);
+                        p.setProperty("type", "1");
+
+                        return NetworkAction.sendDataToServer("gcmp.php", p);
                     }
 
                     @Override

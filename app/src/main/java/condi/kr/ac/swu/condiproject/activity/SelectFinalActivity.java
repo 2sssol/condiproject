@@ -39,7 +39,7 @@ public class SelectFinalActivity extends RootActivity {
     private ArrayList<String> selected = new ArrayList<String>();   // 선택된 코스들 이름
     private ArrayList<String> selectedMembers = new ArrayList<String>();    //선택한 멤버들 이름
 
-    private List<Properties> memberCourse = new ArrayList<Properties>();
+    private List<Properties> memberCourse;
     private PushListAdapter adapter;
     private ListView pushList;
 
@@ -192,9 +192,10 @@ public class SelectFinalActivity extends RootActivity {
             }
         }
 
-        imageButtons.get(id).setImageResource(R.drawable.course_button_red);
+        imageButtons.get(id).setImageResource(R.drawable.course_button_mint);
 
         textViews.get(id).setVisibility(View.VISIBLE);
+        textViews.get(id).setBackgroundResource(R.drawable.speechbubble_green);
         textViews.get(id).setText(Session.NICKNAME + " 님 선택");
         curvTextView.clickedCourse(id);
         curvTextView.invalidate();
@@ -290,7 +291,6 @@ public class SelectFinalActivity extends RootActivity {
                                             }
                                             curvTextView.courseName(names);
                                             curvTextView.invalidate();
-                                            initMySelection();
 
                                         }
 
@@ -321,6 +321,7 @@ public class SelectFinalActivity extends RootActivity {
                                             * 그 코스를 선택한 사람 얻어오기 성공
                                             * */
                                             int cnt = 0;
+                                            memberCourse = new ArrayList<Properties>();
                                             for (Properties p : members) {
                                                 mc = new Properties();
 
@@ -347,6 +348,8 @@ public class SelectFinalActivity extends RootActivity {
 
                                                 memberCourse.add(mc);
                                             }
+
+                                            initMySelection();
 
                                             /*
                                             * 말풍선이랑 뷰에 반영
@@ -381,7 +384,7 @@ public class SelectFinalActivity extends RootActivity {
     protected void onStart() {
         super.onStart();
         registerReceiver(selectReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.course"));
-        registerReceiver(startReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.start.walk"));
+        registerReceiver(startReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.count.walk"));
     }
 
     private BroadcastReceiver selectReceiver = new BroadcastReceiver() {

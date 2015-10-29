@@ -4,49 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#fff8ed">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="8dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="사용자"
-            android:textSize="16sp"
-            android:id="@+id/txt_final_username"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" 님, 친구들이 코스를 선택하면 어울림 여정이 시작됩니다."
-            android:textSize="12sp"/>
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아직 선택하지 않은 친구에게"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/txt_final_username"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="친구에게 "
-            android:textSize="14sp"/>
+        android:layout_marginStart="16dp" >
 
-        <Button
-            android:layout_width="60dp"
-            android:layout_height="25dp"
-            android:background="@drawable/button_mint"
-            android:text="PUSH"
-            android:textColor="#fff"
-            android:textSize="12sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 버튼을 눌러 요청해보세요."
-            android:textSize="14sp"/>
+            android:text="@string/push"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 버튼을 눌러 코스 선택을 요청해보세요."
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <RelativeLayout

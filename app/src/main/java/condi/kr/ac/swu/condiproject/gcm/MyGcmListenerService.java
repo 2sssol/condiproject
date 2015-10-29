@@ -73,11 +73,11 @@ public class MyGcmListenerService extends GcmListenerService {
         switch (t) {
             case 0 :
                 break;
-            case 1 :
-                break;
-            case 2 :    // push
+            case 1 :  // push
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.start.walk");
                 sendBroadcast(intentResponse);
+                break;
+            case 2 :
                 break;
             case 3 :    // 초대 수락
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.invite");
@@ -100,6 +100,8 @@ public class MyGcmListenerService extends GcmListenerService {
                 sendBroadcast(intentResponse);
                 break;
             case 8 :    // 걸음 시작
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.count.walk");
+                sendBroadcast(intentResponse);
                 break;
             case 9 :    // 목표 달성
                 break;
@@ -132,7 +134,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.icon_step)
+                .setSmallIcon(R.drawable.push)
                 .setContentTitle("어울림 알림이 왔습니다!")
                 .setContentText(message)
                 .setAutoCancel(true)
