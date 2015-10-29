@@ -58,11 +58,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         initActionBar("어울림");
 
+        printErrorMsg("Main onCreate");
+
         initView();
         initVideo();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        //setSensor();
         setMy();
     }
 
@@ -88,6 +89,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Intent i = new Intent(getApplicationContext(), GroupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
+                unregisterReceiver(sensorReceiver);
             }
         });
         btnMyWalk.setOnClickListener(new View.OnClickListener() {
@@ -104,36 +106,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initVideo() {
         //videoCourseBackground.setVideoURI(Uri.parse("http://sssol2.esy.es/condi/walkinforest0609.mp4"));
 
+        imgCourseBackground.setVisibility(View.INVISIBLE);
         videoCourseBackground.setVisibility(View.VISIBLE);
         videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest1_1009));
         videoCourseBackground.requestFocus();
         videoCourseBackground.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-
-                if(videoIndex==0) {
-                    videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest1_1009));
-                    videoIndex++;
-                } else if(videoIndex==1) {
-                    videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest3_1009));
-                    videoIndex++;
-                } else if(videoIndex==2) {
-                    videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest4_1009));
-                    videoIndex = 0;
-                }
-
                 videoCourseBackground.start();
             }
         });
 
-        imgCourseBackground.setOnClickListener(new View.OnClickListener() {
-
+        videoCourseBackground.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onClick(View v) {
-                imgCourseBackground.setVisibility(View.INVISIBLE);
-                if (!videoCourseBackground.isPlaying()) {
-                    videoCourseBackground.start();
-                }
+            public void onCompletion(MediaPlayer mp) {
+                videoCourseBackground.start();
             }
         });
 
@@ -145,6 +132,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             protected Object doInBackground(Object[] objects) {
                 String dml = "select * from course where id in (select course from member where groups="+Session.GROUPS+")";
+                printErrorMsg(dml);
                 return NetworkAction.sendDataToServer("course.php", dml);
             }
 
@@ -173,12 +161,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                             int cnt = 0;
                             for(Properties p : list) {
+                                printErrorMsg(p.getProperty("name"));
                                 courseName.add(cnt,p.getProperty("name"));
                                 courseKM.add(cnt, Float.parseFloat(p.getProperty("km")));
                                 cnt++;
                             }
-
-                            setSensor();
 
                         }
                     }.execute();
@@ -190,13 +177,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    private void setSensor() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        printErrorMsg("Main onStart");
         registerReceiver(sensorReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.step"));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        printErrorMsg("Main onStop");
         unregisterReceiver(sensorReceiver);
     }
 

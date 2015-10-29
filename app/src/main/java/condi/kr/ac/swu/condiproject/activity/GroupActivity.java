@@ -252,12 +252,15 @@ public class GroupActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                String result = "";
                 while (percent < 100) {
                     String dml = "select sum(currentwalk) as count " +
                             "from walk " +
                             "where user in (select id from member where groups=" + Session.GROUPS + ")";
-                    currentStep = Integer.parseInt(NetworkAction.sendDataToServer("sum.php", dml));
+                    result = NetworkAction.sendDataToServer("sum.php", dml);
+                    if(result.equals("")||result.isEmpty())
+                        result = "0";
+                    currentStep = Integer.parseInt(result);
                     currentKM = Math.round(currentStep * 0.011559 * 100)/100;
                     percent = (int)((float) currentKM / totalKM *100);
 
@@ -354,6 +357,11 @@ public class GroupActivity extends BaseActivity {
     * */
     private void setSensor() {
         registerReceiver(broadcastReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.step"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

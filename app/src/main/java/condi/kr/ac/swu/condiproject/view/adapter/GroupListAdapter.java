@@ -40,9 +40,11 @@ public class GroupListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<HashMap<String, String>> data;
     private String result;
+    private Handler handler;
 
     public GroupListAdapter(Context context, List<Properties> data) {
         this.context = context;
+        handler = new Handler();
 
         ArrayList<HashMap<String, String>> maps = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> map;
@@ -135,8 +137,10 @@ public class GroupListAdapter extends BaseAdapter {
 
                 while (true) {
                     result = NetworkAction.sendDataToServer("memberwalk0.php", dml);
+                    if(result.equals("") || result.isEmpty())
+                        result = "0";
 
-                    new Handler().post(new Runnable() {
+                    handler.post(new Runnable() {
                         @Override
                         public void run() {
                             step.setText(result);
@@ -167,9 +171,8 @@ public class GroupListAdapter extends BaseAdapter {
                         p.setProperty("sender", Session.ID);
                         p.setProperty("receiver", receiver);
                         p.setProperty("sendername", Session.NICKNAME);
-                        p.setProperty("type", "콕");
-                        p.setProperty("content", name+"님으로 부터 '콕' 찌르기가 왔습니다!");
-                        return NetworkAction.sendDataToServer("gcm.php", p);
+                        p.setProperty("type", "2");
+                        return NetworkAction.sendDataToServer("gcmp.php", p);
                     }
 
                     @Override

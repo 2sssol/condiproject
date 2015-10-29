@@ -3,15 +3,22 @@ package condi.kr.ac.swu.condiproject.gcm;
 /**
  * Created by 8304 on 2015-10-26.
  */
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -23,6 +30,7 @@ import condi.kr.ac.swu.condiproject.activity.SelectRegionActivity;
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    private boolean isDialogShow = false;
 
     /**
      * Called when message is received.
@@ -37,6 +45,7 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("message");
         String type = data.getString("type");
         String sender = data.getString("sender");
+        String sendername = data.getString("sendername");
 
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Type: " + type);
@@ -76,8 +85,13 @@ public class MyGcmListenerService extends GcmListenerService {
             case 1 :  // push
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.start.walk");
                 sendBroadcast(intentResponse);
+                sendNotification(message);
                 break;
-            case 2 :
+            case 2 :    // 콕 찌르기
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.cock");
+                sendBroadcast(intentResponse);
+                sendNotification(message);
+                showRoomDialog(message, sendername);
                 break;
             case 3 :    // 초대 수락
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.invite");
@@ -94,6 +108,7 @@ public class MyGcmListenerService extends GcmListenerService {
             case 6 :    // 그룹 시작
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.start.groups");
                 sendBroadcast(intentResponse);
+                sendNotification(message);
                 break;
             case 7 :    // 코스 선택함
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.course");
@@ -102,6 +117,7 @@ public class MyGcmListenerService extends GcmListenerService {
             case 8 :    // 걸음 시작
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.count.walk");
                 sendBroadcast(intentResponse);
+                sendNotification(message);
                 break;
             case 9 :    // 목표 달성
                 break;
@@ -116,7 +132,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -146,4 +162,40 @@ public class MyGcmListenerService extends GcmListenerService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+    public void showRoomDialog(String message, String sendername) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setLayout(850,450);
+
+        TextView dlgDefaultText_big = (TextView) dialog.findViewById(R.id.dlgDefaultText_big);
+        TextView dlgDefaultText_small = (TextView) dialog.findViewById(R.id.dlgDefaultText_small);
+        Button dlgOk = (Button) dialog.findViewById(R.id.dlgOk);
+
+        dlgDefaultText_big.setText(sendername+"님으로 부터");
+        dlgDefaultText_small.setText(message);
+        dlgOk.setText("확   인");
+
+        dlgOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                isDialogShow = false;
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+
+            }
+        });
+
+        dialog.show();
+        isDialogShow = true;
+    }
+
 }

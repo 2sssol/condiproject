@@ -13,15 +13,6 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btnSettingBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="right"
-            android:src="@drawable/icon_sidemenu"
-			android:background="@null"
-			android:scaleType="fitCenter"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
