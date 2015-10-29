@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
+import condi.kr.ac.swu.condiproject.data.Session;
 import condi.kr.ac.swu.condiproject.view.adapter.AddFriendListAdapter;
 
 public class AddFriendActivity extends RootActivity {
@@ -71,7 +72,7 @@ public class AddFriendActivity extends RootActivity {
         new AsyncTask() {
             @Override
             protected String doInBackground(Object[] params) {
-                String dml = "select * from member where id not in (select receiver from invite)";
+                String dml = "select * from member where id not in (select receiver from invite) and id!='"+ Session.ID+"'";
                 return NetworkAction.sendDataToServer("member.php", dml);
             }
 
