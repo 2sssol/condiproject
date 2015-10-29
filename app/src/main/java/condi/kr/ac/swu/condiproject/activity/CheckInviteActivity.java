@@ -171,12 +171,11 @@ public class CheckInviteActivity extends RootActivity {
                     protected Object doInBackground(Object[] params) {
                         Properties prop = new Properties();
                         String dml = "update invite set ok=1 where receiver='"+Session.ID+"'";
-                        prop.setProperty("dml" , dml);
                         prop.setProperty("sender", Session.ID);
                         prop.setProperty("sendername", Session.NICKNAME);
                         prop.setProperty("type", "3");
 
-                        return NetworkAction.sendDataToServer("gcmToAll.php",prop);
+                        return NetworkAction.sendDataToServer("gcmAll.php",prop, dml);
                     }
 
                     @Override
@@ -196,12 +195,11 @@ public class CheckInviteActivity extends RootActivity {
                     protected Object doInBackground(Object[] params) {
                         Properties prop = new Properties();
                         String dml = "delete from invite where receiver='"+Session.ID+"'";
-                        prop.setProperty("dml" , dml);
                         prop.setProperty("sender", Session.ID);
                         prop.setProperty("sendername", Session.NICKNAME);
                         prop.setProperty("type", "4");
 
-                        return NetworkAction.sendDataToServer("gcmToAll.php",prop);
+                        return NetworkAction.sendDataToServer("gcmAll.php",prop, dml);
                     }
 
                     @Override
