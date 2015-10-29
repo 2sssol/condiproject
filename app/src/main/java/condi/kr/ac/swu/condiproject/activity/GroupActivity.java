@@ -276,18 +276,18 @@ public class GroupActivity extends BaseActivity {
                                         if(currentKM > courseKm1+courseKm2+courseKm3+courseKm4) {
                                             toastErrorMsg("목표에 도달하셨습니다.");
                                         } else {
-                                            txtCourseName1.setBackgroundResource(R.drawable.route_blank);
-                                            txtCourseName2.setBackgroundResource(R.drawable.route_blank);
-                                            txtCourseName3.setBackgroundResource(R.drawable.route_blank);
+                                            txtCourseName1.setBackgroundResource(R.drawable.route_blank_filled);
+                                            txtCourseName2.setBackgroundResource(R.drawable.route_blank_filled);
+                                            txtCourseName3.setBackgroundResource(R.drawable.route_blank_filled);
                                             txtCourseName4.setBackgroundResource(R.drawable.route_blank_filled);
                                         }
                                     } else {
-                                        txtCourseName1.setBackgroundResource(R.drawable.route_blank);
-                                        txtCourseName2.setBackgroundResource(R.drawable.route_blank);
+                                        txtCourseName1.setBackgroundResource(R.drawable.route_blank_filled);
+                                        txtCourseName2.setBackgroundResource(R.drawable.route_blank_filled);
                                         txtCourseName3.setBackgroundResource(R.drawable.route_blank_filled);
                                     }
                                 } else {
-                                    txtCourseName1.setBackgroundResource(R.drawable.route_blank);
+                                    txtCourseName1.setBackgroundResource(R.drawable.route_blank_filled);
                                     txtCourseName2.setBackgroundResource(R.drawable.route_blank_filled);
                                 }
                             } else {

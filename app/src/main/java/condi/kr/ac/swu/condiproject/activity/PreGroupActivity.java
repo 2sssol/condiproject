@@ -147,6 +147,7 @@ public class PreGroupActivity extends RootActivity {
             @Override
             protected Object doInBackground(Object[] params) {
                 String dml = "select i.*, g.* from (select count(*) as icount from invite where sender='"+senderId+"') i, (select count(*) as gcount from invite where ok=1) g";
+
                 return NetworkAction.sendDataToServer("checkInviting.php", dml);
             }
 
@@ -271,71 +272,73 @@ public class PreGroupActivity extends RootActivity {
             @Override
             protected String doInBackground(Object[] params) {
                 String dml = "insert into groups(host, region) values('"+senderId+"', '중구')";
-                return NetworkAction.sendDataToServer(dml);
+                Properties p = new Properties();
+                p.setProperty("dml", dml);
+                p.setProperty("sender", Session.ID);
+                p.setProperty("sendername", Session.NICKNAME);
+                p.setProperty("type", "6");
+                return NetworkAction.sendDataToServer("gcmToAll.php", p);
             }
 
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
 
-                if(o.equals("success")) {
-                    new AsyncTask() {
-                        @Override
-                        protected Object doInBackground(Object[] params) {
-                            String dml = "update member set groups=(select id from groups where host='"+senderId+"') where id in (select receiver from invite where sender='"+senderId+"')";
-                            System.out.println(dml);
-                            return NetworkAction.sendDataToServer(dml);
-                        }
 
-                        @Override
-                        protected void onPostExecute(Object o) {
-                            super.onPostExecute(o);
-                            if(o.equals("success")) {
-                                new AsyncTask() {
-                                    @Override
-                                    protected String doInBackground(Object[] params) {
-                                        Properties p = new Properties();
-                                        p.setProperty("id", Session.ID);
-                                        return NetworkAction.sendDataToServer("my.php", p);
-                                    }
+                new AsyncTask() {
+                    @Override
+                    protected Object doInBackground(Object[] params) {
+                        String dml = "update member set groups=(select id from groups where host='"+senderId+"') where id in (select receiver from invite where sender='"+senderId+"')";
+                        System.out.println(dml);
+                        return NetworkAction.sendDataToServer(dml);
+                    }
 
-                                    @Override
-                                    protected void onPostExecute(Object o) {
-                                        super.onPostExecute(o);
-                                        new AsyncTask() {
-                                            List<Properties> my;
-                                            @Override
-                                            protected Object doInBackground(Object[] params) {
-                                                try {
-                                                    my = NetworkAction.parse("my.xml", "member");
-                                                } catch (XmlPullParserException e) {
-                                                    e.printStackTrace();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                                return null;
+                    @Override
+                    protected void onPostExecute(Object o) {
+                        super.onPostExecute(o);
+                        if(o.equals("success")) {
+                            new AsyncTask() {
+                                @Override
+                                protected String doInBackground(Object[] params) {
+                                    Properties p = new Properties();
+                                    p.setProperty("id", Session.ID);
+                                    return NetworkAction.sendDataToServer("my.php", p);
+                                }
+
+                                @Override
+                                protected void onPostExecute(Object o) {
+                                    super.onPostExecute(o);
+                                    new AsyncTask() {
+                                        List<Properties> my;
+                                        @Override
+                                        protected Object doInBackground(Object[] params) {
+                                            try {
+                                                my = NetworkAction.parse("my.xml", "member");
+                                            } catch (XmlPullParserException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
                                             }
+                                            return null;
+                                        }
 
-                                            @Override
-                                            protected void onPostExecute(Object o) {
-                                                super.onPostExecute(o);
-                                                Session.removeAllPreferences(getApplicationContext());
-                                                Session.savePreferences(getApplicationContext(), my.get(0));
-                                                redirectSelectRegionActivity();
-                                            }
-                                        }.execute();
-                                    }
-                                }.execute();
+                                        @Override
+                                        protected void onPostExecute(Object o) {
+                                            super.onPostExecute(o);
+                                            Session.removeAllPreferences(getApplicationContext());
+                                            Session.savePreferences(getApplicationContext(), my.get(0));
+                                            redirectSelectRegionActivity();
+                                        }
+                                    }.execute();
+                                }
+                            }.execute();
 
-                            }
-                            else
-                                Toast.makeText(getApplicationContext(), "업데이트 실패", Toast.LENGTH_SHORT).show();
                         }
-                    }.execute();
+                        else
+                            Toast.makeText(getApplicationContext(), "업데이트 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }.execute();
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "그룹 삽입 실패", Toast.LENGTH_SHORT).show();
-                }
 
             }
         }.execute();

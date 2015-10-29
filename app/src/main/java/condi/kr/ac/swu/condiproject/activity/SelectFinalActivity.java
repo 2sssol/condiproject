@@ -161,18 +161,20 @@ public class SelectFinalActivity extends RootActivity {
             @Override
             protected Object doInBackground(Object[] params) {
                 String dml = "update groups set startdate=date_format(now(),'%y-%m-%d') ,currentwalk=0 where id="+Session.GROUPS;
-                return NetworkAction.sendDataToServer(dml);
+                Properties p = new Properties();
+                p.setProperty("dml", dml);
+                p.setProperty("sender", Session.ID);
+                p.setProperty("sendername", Session.NICKNAME);
+                p.setProperty("type", "8");
+                return NetworkAction.sendDataToServer("gcmToAll.php", p);
             }
 
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                if(o.equals("success")) {
-                    Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else
-                    toastErrorMsg("시작할 수 없습니다.");
+                Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                startActivity(intent);
+                finish();
             }
         }.execute();
 

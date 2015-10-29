@@ -108,7 +108,10 @@ public class SelectCourseActivity extends RootActivity {
         btnSelectFinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateCourse();
+                if(clickedPosition!=-1)
+                    updateCourse();
+                else
+                    toastErrorMsg("코스를 선택해주세요.");
             }
         });
     }
@@ -118,14 +121,19 @@ public class SelectCourseActivity extends RootActivity {
             @Override
             protected Object doInBackground(Object[] params) {
                 String dml = "update member set course='"+courses[clickedPosition].id+"' where id='"+Session.ID+"'";
-                return NetworkAction.sendDataToServer(dml);
+                Properties p = new Properties();
+                p.setProperty("dml", dml);
+                p.setProperty("sender", Session.ID);
+                p.setProperty("sendername", Session.NICKNAME);
+                p.setProperty("type", "7");
+                return NetworkAction.sendDataToServer("gcmToAll.php",p);
             }
 
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                if(o.equals("success"))
-                    new MyPHP().execute();
+
+                new MyPHP().execute();
             }
         }.execute();
 
