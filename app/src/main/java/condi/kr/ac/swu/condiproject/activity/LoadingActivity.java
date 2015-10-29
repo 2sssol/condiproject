@@ -112,9 +112,15 @@ public class LoadingActivity extends Activity {
     * */
     private class MyPHP extends AsyncTask<Void, Void, String> {
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
         protected String doInBackground(Void... params) {
             Properties prop = new Properties();
-            prop.setProperty("id", Session.ID);
+            prop.setProperty("id", Session.getPreferences(getApplicationContext(), "id"));
             return NetworkAction.sendDataToServer("my.php", prop);
         }
 

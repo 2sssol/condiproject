@@ -272,12 +272,8 @@ public class PreGroupActivity extends RootActivity {
             @Override
             protected String doInBackground(Object[] params) {
                 String dml = "insert into groups(host, region) values('"+senderId+"', '중구')";
-                Properties p = new Properties();
-                p.setProperty("dml", dml);
-                p.setProperty("sender", Session.ID);
-                p.setProperty("sendername", Session.NICKNAME);
-                p.setProperty("type", "6");
-                return NetworkAction.sendDataToServer("gcmToAll.php", p);
+
+                return NetworkAction.sendDataToServer( dml);
             }
 
             @Override
@@ -289,8 +285,12 @@ public class PreGroupActivity extends RootActivity {
                     @Override
                     protected Object doInBackground(Object[] params) {
                         String dml = "update member set groups=(select id from groups where host='"+senderId+"') where id in (select receiver from invite where sender='"+senderId+"')";
-                        System.out.println(dml);
-                        return NetworkAction.sendDataToServer(dml);
+                        Properties p = new Properties();
+                        p.setProperty("dml", dml);
+                        p.setProperty("sender", Session.ID);
+                        p.setProperty("sendername", Session.NICKNAME);
+                        p.setProperty("type", "6");
+                        return NetworkAction.sendDataToServer("gcmToAll.php",p);
                     }
 
                     @Override
@@ -346,6 +346,8 @@ public class PreGroupActivity extends RootActivity {
 
     private void redirectSelectRegionActivity() {
         startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
+        unregisterReceiver(memberReceiver);
+        unregisterReceiver(startReceiver);
         finish();
     }
 
