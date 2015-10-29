@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,7 +40,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // 비디오 재생
     private VideoView videoCourseBackground;
-    private ImageButton btnPlay;
 
     // course
     private ArrayList<Float> courseKM = new ArrayList<Float>();
@@ -47,12 +47,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private BackPressCloseHandler backPressCloseHandler;
 
+    int walk = 0;
+    float km = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initActionBar("메인");
+        initActionBar("어울림");
 
         initView();
         initVideo();
@@ -65,10 +68,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initView() {
         videoCourseBackground = (VideoView) findViewById(R.id.videoCourseBackground);
         imgCourseBackground = (ImageView) findViewById(R.id.imgCourseBackground);
-        btnPlay = (ImageButton) findViewById(R.id.btnPlay);
 
         videoCourseBackground.setVisibility(View.INVISIBLE);
-        btnPlay.setVisibility(View.INVISIBLE);
         imgCourseBackground.setVisibility(View.VISIBLE);
 
         txtCourseWalkKM = (TextView) findViewById(R.id.txtCourseWalkKM);
@@ -106,17 +107,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //videoCourseBackground.setVideoURI(Uri.parse("http://sssol2.esy.es/condi/walkinforest0609.mp4"));
         videoCourseBackground.requestFocus();
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        videoCourseBackground.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 imgCourseBackground.setVisibility(View.INVISIBLE);
                 if(!videoCourseBackground.isPlaying()) {
                     videoCourseBackground.start();
-                    btnPlay.setImageResource(R.drawable.pause_empty);
                 } else {
                     videoCourseBackground.pause();
-                    btnPlay.setImageResource(R.drawable.play_empty);
                 }
             }
         });
@@ -124,8 +123,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 videoCourseBackground.start();
-                btnPlay.setVisibility(View.VISIBLE);
-                btnPlay.setImageResource(R.drawable.pause_empty);
             }
         });
     }
@@ -185,37 +182,49 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         registerReceiver(sensorReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.step"));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(sensorReceiver);
+    }
+
     private BroadcastReceiver sensorReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            int walk = Integer.parseInt(intent.getStringExtra("walk"));
-            float km = (float) ( Math.round(walk * 0.011559 * 100)/100);
+            walk = Integer.parseInt(intent.getStringExtra("walk"));
+            km = (float) ( Math.round(walk * 0.011559 * 100)/100);
 
-            txtCourseWalkKM.setText(String.format("%s KM | ", km));
-            txtWalkCount.setText(String.format("%s 걸음",walk));
+            txtCourseWalkKM.setText(String.format("%s ", km));
+            txtWalkCount.setText(String.format("%s",walk));
 
-            if (km > courseKM.get(0)) {
-                if (km > courseKM.get(0) + courseKM.get(1)) {
-                    if (km > courseKM.get(0) + courseKM.get(1) + courseKM.get(2)) {
-                        if (km > courseKM.get(0) + courseKM.get(1) + courseKM.get(2) + courseKM.get(3)) {
-                            toastErrorMsg("목표에 도달하셨습니다.");
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (km > courseKM.get(0)) {
+                        if (km > courseKM.get(0) + courseKM.get(1)) {
+                            if (km > courseKM.get(0) + courseKM.get(1) + courseKM.get(2)) {
+                                if (km > courseKM.get(0) + courseKM.get(1) + courseKM.get(2) + courseKM.get(3)) {
+                                    toastErrorMsg("목표에 도달하셨습니다.");
+                                } else {
+                                    txtCourseName1.setText(courseName.get(3));
+                                    txtCourseKM.setText(String.format("%s",courseKM.get(3)));
+                                }
+                            } else {
+                                txtCourseName1.setText(courseName.get(2));
+                                txtCourseKM.setText(String.format("%s", courseKM.get(2)));
+                            }
                         } else {
-                            txtCourseName1.setText(courseName.get(3));
-                            txtCourseKM.setText(String.format("%s KM",courseKM.get(3)));
+                            txtCourseName1.setText(courseName.get(1));
+                            txtCourseKM.setText(String.format("%s", courseKM.get(1)));
                         }
                     } else {
-                        txtCourseName1.setText(courseName.get(2));
-                        txtCourseKM.setText(String.format("%s KM", courseKM.get(2)));
+                        txtCourseName1.setText(courseName.get(0));
+                        txtCourseKM.setText(String.format("%s", courseKM.get(0)));
                     }
-                } else {
-                    txtCourseName1.setText(courseName.get(1));
-                    txtCourseKM.setText(String.format("%s KM", courseKM.get(1)));
                 }
-            } else {
-                txtCourseName1.setText(courseName.get(0));
-                txtCourseKM.setText(String.format("%s KM", courseKM.get(0)));
-            }
+            });
 
         }
     };

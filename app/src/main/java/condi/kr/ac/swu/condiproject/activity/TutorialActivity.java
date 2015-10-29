@@ -39,11 +39,11 @@ public class TutorialActivity extends RootActivity {
     private TextView txtTutorialCourseSum, txtTutorialDaysSum, txtTutorialName1, txtTutorialName2, txtTutorialName3, txtTutorialName4;
     private Button btnMain;
 
-    private List<Properties> list;      // ��� �ڽ���
-    private List<Properties> members;   // �����
+    private List<Properties> list;
+    private List<Properties> members;
 
-    private ArrayList<String> selected = new ArrayList<String>();   // ���õ� �ڽ��� �̸�
-    private ArrayList<String> selectedMembers = new ArrayList<String>();    //������ ����� �̸�
+    private ArrayList<String> selected = new ArrayList<String>();
+    private ArrayList<String> selectedMembers = new ArrayList<String>();
 
     private ArrayList<ImageButton> imageButtons;
     private ImageButton
@@ -73,7 +73,6 @@ public class TutorialActivity extends RootActivity {
     private void initView() {
         curvTextView = (CurvTextView) findViewById(R.id.txtTutorialCourseArray);
 
-        // ��ǳ��
         txtTutorialSpeechBox1 = (TextView) findViewById(R.id.txtTutorialSpeechBox1);
         txtTutorialSpeechBox2 = (TextView) findViewById(R.id.txtTutorialSpeechBox2);
         txtTutorialSpeechBox3 = (TextView) findViewById(R.id.txtTutorialSpeechBox3);
@@ -96,7 +95,6 @@ public class TutorialActivity extends RootActivity {
         textViews.add(txtTutorialSpeechBox5);
         textViews.add(txtTutorialSpeechBox6);
 
-        // �̹��� ��ư
         btnTutorialCourseName1 = (ImageButton) findViewById(R.id.btnTutorialCourseName1);
         btnTutorialCourseName2 = (ImageButton) findViewById(R.id.btnTutorialCourseName2);
         btnTutorialCourseName3 = (ImageButton) findViewById(R.id.btnTutorialCourseName3);
@@ -129,25 +127,22 @@ public class TutorialActivity extends RootActivity {
 
     }
 
-    public void setSelectedCourse(Properties prop) {
+    private void initSelection(int position, String selector) {
 
-        int id = 0;
-        for(int i=0; i<courses.length; i++) {
-            if(prop.getProperty("cid").equals(courses[i].id))
-                id = i;
+        textViews.get(position).setVisibility(View.VISIBLE);
+
+        if(selector.equals(Session.NICKNAME)) {
+            imageButtons.get(position).setImageResource(R.drawable.course_button_mint);
+            textViews.get(position).setBackgroundResource(R.drawable.speechbubble_green);
+        } else {
+            imageButtons.get(position).setImageResource(R.drawable.course_button_red);
+            textViews.get(position).setBackgroundResource(R.drawable.speechbubble_pink);
         }
 
-        imageButtons.get(id).setImageResource(R.drawable.course_button_red);
-        imageButtons.get(id).setClickable(false);
+        textViews.get(position).setText(String.format("%s 님", selector));
 
-        textViews.get(id).setVisibility(View.VISIBLE);
-        textViews.get(id).setBackgroundResource(R.drawable.speechbubble_pink);
-        textViews.get(id).setText(prop.getProperty("mname") + "�� ����");
     }
 
-    /*
-    * �ڽ� �ε�
-    * */
     private void setCourses() {
         new AsyncTask() {
             @Override
@@ -165,9 +160,6 @@ public class TutorialActivity extends RootActivity {
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                /*
-                * ��� �ڽ� �ε�
-                * */
                 if (!o.equals("error")) {
 
                     new AsyncTask() {
@@ -187,9 +179,6 @@ public class TutorialActivity extends RootActivity {
                         protected void onPostExecute(Object o) {
                             super.onPostExecute(o);
 
-                            /*
-                            * ���õ� �ڽ����� Ȯ���ϰ� ����
-                            * */
                             new AsyncTask() {
                                 @Override
                                 protected Object doInBackground(Object[] params) {
@@ -235,28 +224,18 @@ public class TutorialActivity extends RootActivity {
                                         protected void onPostExecute(Object o) {
                                             super.onPostExecute(o);
 
-                                            Properties mc;
-                                            String mname = "";
-                                            String cname = "";
-                                            String ckm = "";
-                                            String cid = "";
-
                                             int cnt = 0;
 
                                             for (Properties p : members) {
-                                                mc = new Properties();
 
                                                 for (Properties ps : list) {
                                                     if (p.getProperty("course").equals(ps.getProperty("id"))) {
-                                                        selected.add(p.getProperty("course"));
+                                                        selected.add(ps.getProperty("name"));
                                                         selectedMembers.add(p.getProperty("nickname"));
+                                                        initSelection(list.indexOf(ps), p.getProperty("nickname"));
 
                                                         km += Double.parseDouble(ps.getProperty("km"));
                                                         days += (int) Math.ceil(Double.parseDouble(ps.getProperty("km"))/3.5);
-
-                                                        cname = ps.getProperty("name");
-                                                        ckm = ps.getProperty("km");
-                                                        cid = ps.getProperty("id");
 
                                                         switch (cnt) {
                                                             case 0 :
@@ -275,20 +254,10 @@ public class TutorialActivity extends RootActivity {
                                                         cnt++;
                                                     }
                                                 }
-
-                                                mname = p.getProperty("nickname");
-
-                                                mc.setProperty("mname", mname);
-                                                mc.setProperty("cname", cname);
-                                                mc.setProperty("ckm", ckm);
-                                                mc.setProperty("cid", cid);
-
-                                                printErrorMsg(String.format("mname : %s, cname : %s, ckm : %s", mname, cname, ckm));
-
-                                                setSelectedCourse(mc);
                                             }
 
                                             curvTextView.selectedCourse(selected);
+                                            curvTextView.invalidate();
 
                                             txtTutorialDaysSum.setText(Integer.toString(days));
                                             txtTutorialCourseSum.setText(String.format("%.1f KM" , km));
@@ -308,6 +277,10 @@ public class TutorialActivity extends RootActivity {
         }.execute();
     }
 
+
+    /*
+    * redirect
+    * */
     private void redirectMainActivity() {
         new AsyncTask() {
             @Override
@@ -332,12 +305,15 @@ public class TutorialActivity extends RootActivity {
 
     }
 
-
+    /*
+    * sensor
+    * */
     private void startSensor() {
         new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                String dml = String.format("insert into walk values('%s',%s, date_add(now(), interval -9 hour))", Session.ID, 0);
+                String dml = String.format("insert into walk values('%s',%s, date_add(now(), interval -9 hour), %s)", Session.ID, 0, Session.GROUPS);
+
                 return NetworkAction.sendDataToServer(dml);
             }
 

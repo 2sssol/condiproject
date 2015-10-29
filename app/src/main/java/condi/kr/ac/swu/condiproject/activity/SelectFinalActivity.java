@@ -382,6 +382,13 @@ public class SelectFinalActivity extends RootActivity {
         registerReceiver(startReceiver, new IntentFilter("condi.kr.ac.swu.condiproject.count.walk"));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(selectReceiver);
+        unregisterReceiver(startReceiver);
+    }
+
     private BroadcastReceiver selectReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -392,7 +399,8 @@ public class SelectFinalActivity extends RootActivity {
     private BroadcastReceiver startReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            redirectTutorialActivity();
+            startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
+            finish();
         }
     };
 }
