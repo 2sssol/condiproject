@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // 비디오 재생
     private VideoView videoCourseBackground;
+    private int videoIndex = 0;
 
     // course
     private ArrayList<Float> courseKM = new ArrayList<Float>();
@@ -101,30 +102,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initVideo() {
-        videoCourseBackground.setVisibility(View.VISIBLE);
-        //.gew
-        videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest_0606));
         //videoCourseBackground.setVideoURI(Uri.parse("http://sssol2.esy.es/condi/walkinforest0609.mp4"));
-        videoCourseBackground.requestFocus();
 
-        videoCourseBackground.setOnClickListener(new View.OnClickListener() {
+        videoCourseBackground.setVisibility(View.VISIBLE);
+        videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest1_1009));
+        videoCourseBackground.requestFocus();
+        videoCourseBackground.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+
+                if(videoIndex==0) {
+                    videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest1_1009));
+                    videoIndex++;
+                } else if(videoIndex==1) {
+                    videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest3_1009));
+                    videoIndex++;
+                } else if(videoIndex==2) {
+                    videoCourseBackground.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.walkinforest4_1009));
+                    videoIndex = 0;
+                }
+
+                videoCourseBackground.start();
+            }
+        });
+
+        imgCourseBackground.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 imgCourseBackground.setVisibility(View.INVISIBLE);
-                if(!videoCourseBackground.isPlaying()) {
+                if (!videoCourseBackground.isPlaying()) {
                     videoCourseBackground.start();
-                } else {
-                    videoCourseBackground.pause();
                 }
             }
         });
-        videoCourseBackground.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                videoCourseBackground.start();
-            }
-        });
+
     }
 
     private void setMy() {
