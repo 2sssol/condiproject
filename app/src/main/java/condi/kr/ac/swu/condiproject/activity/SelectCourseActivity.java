@@ -10,13 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -28,7 +26,7 @@ import condi.kr.ac.swu.condiproject.view.CurvTextView;
 
 public class SelectCourseActivity extends RootActivity {
 
-    private List<Properties> list;
+    private List<Properties> courseList;
     private List<Properties> members;
     private Course[] courses = new Course[6];
 
@@ -41,7 +39,7 @@ public class SelectCourseActivity extends RootActivity {
     private ImageButton btnCourseName1, btnCourseName2, btnCourseName3, btnCourseName4, btnCourseName5, btnCourseName6;
     private TextView
             txtSpeechBox1, txtSpeechBox2, txtSpeechBox3, txtSpeechBox4, txtSpeechBox5, txtSpeechBox6,
-            txtCourseInfoName, txtCourseInfo1, txtCourseInfo2, txtChoiceCourseKM, txtUserName;
+            txtCourseInfoName, txtCourseInfo1, txtCourseInfo2, txtChoiceCourseKM, txtUserName, txtRegionName;
 
     private int clickedPosition = -1;
 
@@ -61,6 +59,10 @@ public class SelectCourseActivity extends RootActivity {
     private void initView() {
         txtCourseArray = (CurvTextView) findViewById(R.id.txtCourseArray);
         btnSelectFinal = (Button) findViewById(R.id.btnSelectFinal);
+        txtUserName = (TextView) findViewById(R.id.txtUserName);
+        txtRegionName = (TextView) findViewById(R.id.txtRegionName);
+        txtUserName.setText(Session.NICKNAME);
+        txtRegionName.setText("중구");
 
         txtCourseInfoName = (TextView) findViewById(R.id.txtCourseInfoName);
         txtCourseInfo1 = (TextView) findViewById(R.id.txtCourseInfo1);
@@ -122,11 +124,10 @@ public class SelectCourseActivity extends RootActivity {
             protected Object doInBackground(Object[] params) {
                 String dml = "update member set course='"+courses[clickedPosition].id+"' where id='"+Session.ID+"'";
                 Properties p = new Properties();
-                p.setProperty("dml", dml);
                 p.setProperty("sender", Session.ID);
                 p.setProperty("sendername", Session.NICKNAME);
                 p.setProperty("type", "7");
-                return NetworkAction.sendDataToServer("gcmToAll.php",p);
+                return NetworkAction.sendDataToServer("gcm.php",p, dml);
             }
 
             @Override
@@ -222,7 +223,7 @@ public class SelectCourseActivity extends RootActivity {
                         @Override
                         protected Object doInBackground(Object[] params) {
                             try {
-                                list = NetworkAction.parse("course.xml","course");
+                                courseList = NetworkAction.parse("course.xml","course");
                             } catch (XmlPullParserException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -260,7 +261,7 @@ public class SelectCourseActivity extends RootActivity {
                                             String[] names = new String[6];
 
                                             int i=0;
-                                            for(Properties p : list) {
+                                            for(Properties p : courseList) {
                                                 courses[i] = new Course(p);
                                                 names[i] = courses[i].name;
                                                 i++;
@@ -292,7 +293,7 @@ public class SelectCourseActivity extends RootActivity {
                                             * 그 코스를 선택한 사람 얻어오기 성공
                                             * */
                                             for(Properties p : members) {
-                                                for(Properties ps : list) {
+                                                for(Properties ps : courseList) {
                                                     if(p.getProperty("course").equals(ps.getProperty("id"))) {
                                                         selected.add(p.getProperty("course"));
                                                         selectedMembers.add(p.getProperty("nickname"));
