@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="150dp">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/txtUserName"
@@ -24,20 +24,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="님"
+            android:text="님, 친구들과 걷고 싶은 길을 선택하세요!"
             android:textSize="16sp" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" 친구들과 걷고 싶은 길을 선택하세요!"
-        android:layout_gravity="center"
-        android:textSize="16sp" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="345dp"
         android:layout_gravity="center">
 
         <ImageView
@@ -197,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-10dp"
-                    android:text="노원구"
+                    android:text="지역구"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -211,24 +204,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="100dp"
                 android:layout_alignParentTop="true"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/txtSpeechBox6"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/speechbubble_green"
                     android:gravity="center_horizontal"
                     android:rotation="-30"
+                    android:text="유호정 님 선택"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/txtSpeechBox1"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/speechbubble_green"
@@ -236,37 +230,37 @@
                     android:rotation="30"
                     android:text="유호정 님 선택"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/txtSpeechBox5"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="35dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="-15dp"
+                android:layout_marginStart="-12dp"
                 android:background="@drawable/speechbubble_green"
                 android:gravity="center_horizontal"
                 android:rotation="-90"
                 android:text="유호정 님 선택"
                 android:textColor="#ffffff"
-                android:textSize="14sp" />
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/txtSpeechBox2"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="-15dp"
+                android:layout_marginEnd="-12dp"
                 android:background="@drawable/speechbubble_green"
                 android:gravity="center_horizontal"
                 android:rotation="90"
                 android:text="유호정 님 선택"
                 android:textColor="#ffffff"
-                android:textSize="14sp" />
+                android:textSize="11sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -276,7 +270,7 @@
 
                 <TextView
                     android:id="@+id/txtSpeechBox4"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/speechbubble_green"
@@ -284,11 +278,11 @@
                     android:rotation="-150"
                     android:text="유호정 님 선택"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/txtSpeechBox3"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/speechbubble_green"
@@ -296,7 +290,7 @@
                     android:rotation="150"
                     android:text="유호정 님 선택"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
 
             </LinearLayout>
@@ -330,7 +324,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="50dp"
                 android:layout_height="4dp"
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/course_km_line_black" />
@@ -345,7 +339,7 @@
                 android:textSize="14sp" />
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="50dp"
                 android:layout_height="4dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/course_km_line_black" />
@@ -375,11 +369,11 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/button_mint"
             android:text="선  택"
             android:textColor="#ffffff"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
 
     </LinearLayout>
