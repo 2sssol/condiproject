@@ -87,7 +87,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 sendBroadcast(intentResponse);
                 sendNotification(message);
                 break;
-            case 2 :    // 콕 찌르기
+            case 2 :    // 부탁 받음
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.cock");
                 sendBroadcast(intentResponse);
                 sendNotification(message);
@@ -124,6 +124,12 @@ public class MyGcmListenerService extends GcmListenerService {
             case 10 :    // 초대 취소
                 intentResponse = new Intent("condi.kr.ac.swu.condiproject.invite");
                 sendBroadcast(intentResponse);
+                break;
+            case 11 :    // 격려 받음
+                intentResponse = new Intent("condi.kr.ac.swu.condiproject.cock");
+                sendBroadcast(intentResponse);
+                sendNotification(message);
+                showRoomDialog(message, sendername);
                 break;
         }
 
