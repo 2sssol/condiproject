@@ -181,7 +181,7 @@ public class PreGroupActivity extends RootActivity {
                     senderId = sender;
                     dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, m.profile as profile, m.phone as phone " +
                             "from invite i, member m " +
-                            "where i.sender='" + sender + "' and m.id=i.receiver and m.id!='" + Session.ID + "'";
+                            "where m.id in (select receiver from invite where sender='"+senderId+"' and receiver!='"+Session.ID+"')";     //i.sender='" + sender + "' and m.id=i.receiver and m.id!='" + Session.ID + "'";
                 }
                 else {
                     sender = senderId;
