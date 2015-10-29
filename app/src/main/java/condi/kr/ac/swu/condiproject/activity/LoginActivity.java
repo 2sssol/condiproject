@@ -239,10 +239,8 @@ public class LoginActivity extends RootActivity {
 
             if (checkPlayServices()) {
                 // Start IntentService to register this application with GCM.
-                if(!checkSession()) {
-                    Intent intent = new Intent(LoginActivity.this, RegistrationIntentService.class);
-                    startService(intent);
-                }
+                Intent intent = new Intent(LoginActivity.this, RegistrationIntentService.class);
+                startService(intent);
             }
 
             //redirectCheckInviteActivity();
@@ -250,13 +248,4 @@ public class LoginActivity extends RootActivity {
         }
     }
 
-    private boolean checkSession() {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String regID = pref.getString("regID", "");
-
-        if(regID.equals("") || regID == null)
-            return false;
-        else
-            return true;
-    }
 }

@@ -30,7 +30,7 @@ import condi.kr.ac.swu.condiproject.view.CircularNetworkImageView;
 import condi.kr.ac.swu.condiproject.view.adapter.MsgListAdapter;
 
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<Properties> lists;
     private ListView lv;
@@ -46,7 +46,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initMenu();
-
         backPressCloseHandler = new BackPressCloseHandler(this);
     }
 

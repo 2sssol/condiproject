@@ -26,10 +26,11 @@ import java.util.List;
 import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.BackPressCloseHandler;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView imgCourseBackground;
     private TextView txtCourseWalkKM, txtWalkCount,
@@ -44,6 +45,8 @@ public class MainActivity extends BaseActivity {
     private ArrayList<Float> courseKM = new ArrayList<Float>();
     private ArrayList<String> courseName = new ArrayList<String>();
 
+    private BackPressCloseHandler backPressCloseHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class MainActivity extends BaseActivity {
         initView();
         initVideo();
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
         //setSensor();
         setMy();
     }
@@ -215,6 +219,12 @@ public class MainActivity extends BaseActivity {
 
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
 
 
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Properties;
 
 import condi.kr.ac.swu.condiproject.R;
+import condi.kr.ac.swu.condiproject.data.BackPressCloseHandler;
 import condi.kr.ac.swu.condiproject.data.NetworkAction;
 import condi.kr.ac.swu.condiproject.data.Session;
 
@@ -35,14 +37,15 @@ import condi.kr.ac.swu.condiproject.data.Session;
 *          초대 체크
 *
 * */
-public class LoadingActivity extends Activity {
+public class LoadingActivity extends Activity implements View.OnClickListener {
 
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-
+        backPressCloseHandler = new BackPressCloseHandler(this);
         new MyPHP().execute();
 
     }
@@ -107,6 +110,11 @@ public class LoadingActivity extends Activity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
+
     /*
     * 나의 최신 정보 로드
     * */
@@ -155,6 +163,12 @@ public class LoadingActivity extends Activity {
 
             branchPage();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }
 

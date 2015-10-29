@@ -12,7 +12,6 @@ public class BackPressCloseHandler {
 
     private Activity activity;
 
-
     public BackPressCloseHandler(Activity context) {
         this.activity = context;
     }

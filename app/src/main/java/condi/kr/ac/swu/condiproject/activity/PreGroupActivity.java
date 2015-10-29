@@ -60,9 +60,16 @@ public class PreGroupActivity extends RootActivity {
         checkStart();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(memberReceiver);
+        unregisterReceiver(startReceiver);
+    }
+
     /*
-    * ---------------------------------------------------------------------------------
-    * */
+        * ---------------------------------------------------------------------------------
+        * */
     private void initView() {
         // 뷰
         myProfile = (CircularNetworkImageView) findViewById(R.id.myProfile);
@@ -346,8 +353,7 @@ public class PreGroupActivity extends RootActivity {
 
     private void redirectSelectRegionActivity() {
         startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
-        unregisterReceiver(memberReceiver);
-        unregisterReceiver(startReceiver);
+
         finish();
     }
 
