@@ -107,7 +107,7 @@
         android:gravity="bottom|center_horizontal">
 
         <Button
-            android:id="@+id/cancelPromise"
+            android:id="@+id/btn_delete_promise"
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:background="@drawable/button_pink"
