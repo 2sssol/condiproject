@@ -183,13 +183,13 @@
 
                 <ImageView
                     android:id="@+id/imgSelectedLandmark"
-                    android:src="@drawable/landmark_nowon"
+                    android:src="@drawable/landmark1"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"/>
                 <TextView
                     android:id="@+id/txtSelectedRegionName"
-                    android:text="지역구"
+                    android:text="중구"
                     android:textSize="24sp"
                     android:layout_marginTop="-10dp"
                     android:layout_width="wrap_content"

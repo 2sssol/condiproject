@@ -199,16 +199,16 @@ public class SelectCourseActivity extends RootActivity {
             else {
                 imageButtons.get(i).setImageResource(R.drawable.course_button_grey);
                 textViews.get(i).setVisibility(View.INVISIBLE);
-                int j=0;
+
                 for(Properties p: members) {
-                    j = Integer.parseInt(p.getProperty("course"));
-                    if(i==j) {
+                    if(courses[i].id.equals(p.getProperty("course"))) {
                         imageButtons.get(i).setImageResource(R.drawable.course_button_red);
                         textViews.get(i).setVisibility(View.VISIBLE);
                         textViews.get(i).setBackgroundResource(R.drawable.speechbubble_pink);
                         textViews.get(i).setText(p.getProperty("nickname")+"님");
                     }
                 }
+
             }
         }
     }
@@ -252,7 +252,7 @@ public class SelectCourseActivity extends RootActivity {
                             new AsyncTask() {
                                 @Override
                                 protected Object doInBackground(Object[] params) {
-                                    String dml = "select * from member where groups="+ Session.GROUPS;
+                                    String dml = "select * from member where groups="+ Session.GROUPS+" and id!='"+Session.ID+"'";
                                     return NetworkAction.sendDataToServer("member.php",dml);
                                 }
 
@@ -308,7 +308,6 @@ public class SelectCourseActivity extends RootActivity {
                                                         selected.add(ps.getProperty("name"));                 // 선택된 course's 이름
                                                         selectedMembers.add(p.getProperty("nickname"));     // 선택한 멤버 이름
                                                         initOtherSelection(courseList.indexOf(ps),p.getProperty("nickname"));
-
                                                     }
                                                 }
                                             }

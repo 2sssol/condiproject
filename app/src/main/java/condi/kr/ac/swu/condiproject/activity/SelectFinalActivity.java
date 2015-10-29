@@ -205,14 +205,11 @@ public class SelectFinalActivity extends RootActivity {
 
     private void initOtherSelection(int position, String selector) {
 
-        for(Properties p: members) {
-            if(p.getProperty("course").equals(courses[position].id)) {
-                imageButtons.get(position).setImageResource(R.drawable.course_button_red);
-                textViews.get(position).setVisibility(View.VISIBLE);
-                textViews.get(position).setBackgroundResource(R.drawable.speechbubble_pink);
-                textViews.get(position).setText(String.format("%s 님", selector));
-            }
-        }
+        imageButtons.get(position).setImageResource(R.drawable.course_button_red);
+        textViews.get(position).setVisibility(View.VISIBLE);
+        textViews.get(position).setBackgroundResource(R.drawable.speechbubble_pink);
+        textViews.get(position).setText(String.format("%s 님", selector));
+
     }
 
 
