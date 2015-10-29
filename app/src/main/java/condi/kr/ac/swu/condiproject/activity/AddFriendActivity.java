@@ -107,7 +107,6 @@ public class AddFriendActivity extends RootActivity {
                         inviteFriendsList.setAdapter(adapter);
                         inviteFriendsList.setOnItemClickListener(new MemberListItemClickListener());
 
-                        printSelects();
                     }
                 }.execute();
                 else
@@ -128,7 +127,6 @@ public class AddFriendActivity extends RootActivity {
                 * */
                 selects.remove(list.get(position).getProperty("id"));
                 index--;
-                printSelects();
 
                 all[position] = false;
                 view.setBackgroundResource(R.drawable.list_background);
@@ -146,8 +144,6 @@ public class AddFriendActivity extends RootActivity {
                     // 선택 가능
                     selects.add(list.get(position).getProperty("id"));
                     index++;
-                    printSelects();
-
 
                     all[position] = true;
                     view.setBackgroundResource(R.drawable.list_background_hover);
@@ -180,15 +176,10 @@ public class AddFriendActivity extends RootActivity {
     }
 
     private void redirectPreGroupActivity() {
-        Intent i = new Intent(AddFriendActivity.this.getApplicationContext(), PreGroupActivity.class);
+        Intent i = new Intent(getApplicationContext(), PreGroupActivity.class);
         i.putExtra("mode", isSender());
         startActivity(i);
         finish();
     }
 
-    private void printSelects() {
-        System.out.println("초대된 사람 수 : "+ index );
-        for(String s : selects)
-            System.out.println("        초대된 사람 : "+ s );
-    }
 }

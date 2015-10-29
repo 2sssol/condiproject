@@ -134,6 +134,10 @@ public class NetworkAction {
         return setDataByPost(postData(url, prop));
     }
 
+    public static String sendDataToServer(String url, Properties prop, String dml) {
+        return setDataByPost(postData(url, prop, dml));
+    }
+
     public static String sendDataToServer(String url, String dml) {
         return setDataByPost(postData(url, dml));
     }
@@ -160,6 +164,22 @@ public class NetworkAction {
             String value = prop.getProperty(key);
             nameValuePairs.add(new BasicNameValuePair(key, value));
         }
+
+        request.setEntity(setEntity(nameValuePairs));
+        return request;
+    }
+
+    public static HttpPost postData(String url, Properties prop, String dml) {
+        HttpPost request = new HttpPost(SERVER_ADDRESS+url);
+        Vector<NameValuePair> nameValuePairs = new Vector<NameValuePair>();
+
+        Enumeration keys = prop.propertyNames();
+        while(keys.hasMoreElements()) {
+            String key = keys.nextElement().toString();
+            String value = prop.getProperty(key);
+            nameValuePairs.add(new BasicNameValuePair(key, value));
+        }
+        nameValuePairs.add(new BasicNameValuePair("dml", dml));
 
         request.setEntity(setEntity(nameValuePairs));
         return request;
