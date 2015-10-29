@@ -162,11 +162,11 @@ public class SelectFinalActivity extends RootActivity {
             protected Object doInBackground(Object[] params) {
                 String dml = "update groups set startdate=date_format(now(),'%y-%m-%d') ,currentwalk=0 where id="+Session.GROUPS;
                 Properties p = new Properties();
-                p.setProperty("dml", dml);
                 p.setProperty("sender", Session.ID);
                 p.setProperty("sendername", Session.NICKNAME);
                 p.setProperty("type", "8");
-                return NetworkAction.sendDataToServer("gcmToAll.php", p);
+
+                return NetworkAction.sendDataToServer("gcm.php", p, dml);
             }
 
             @Override
@@ -317,24 +317,22 @@ public class SelectFinalActivity extends RootActivity {
                                             * 선택된 코스 얻어오기 성공
                                             * 그 코스를 선택한 사람 얻어오기 성공
                                             * */
-                                            int cnt = 0;
                                             memberCourse = new ArrayList<Properties>();
                                             for (Properties p : members) {
                                                 mc = new Properties();
-
+                                                cname = "";
+                                                km = "";
                                                 for (Properties ps : list) {
                                                     if (p.getProperty("course").equals(ps.getProperty("id"))) {
                                                         selected.add(ps.getProperty("name"));
                                                         selectedMembers.add(p.getProperty("nickname"));
-
-                                                        initOtherSelection(cnt, p.getProperty("nickname"));
+                                                        initOtherSelection(list.indexOf(ps), p.getProperty("nickname"));
 
                                                         cname = ps.getProperty("name");
                                                         km = ps.getProperty("km");
                                                     }
 
                                                 }
-                                                cnt++;
                                                 mid = p.getProperty("id");
                                                 mname = p.getProperty("nickname");
 
