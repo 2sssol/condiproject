@@ -28,10 +28,10 @@ public class SelectCourseActivity extends RootActivity {
 
     private List<Properties> courseList;
     private List<Properties> members;
-    private Course[] courses = new Course[6];
+    private Course[] courses = new Course[6];   // index = position , id = course's id
 
-    private ArrayList<String> selected = new ArrayList<String>();
-    private ArrayList<String> selectedMembers = new ArrayList<String>();
+    private ArrayList<String> selected = new ArrayList<String>();           // 선택된 course's id
+    private ArrayList<String> selectedMembers = new ArrayList<String>();    // 선택한 course's name
 
     private CurvTextView txtCourseArray;
     private Button btnSelectFinal;
@@ -140,6 +140,16 @@ public class SelectCourseActivity extends RootActivity {
 
     }
 
+    private void initOtherSelection(int position, String selector) {
+
+        imageButtons.get(position).setImageResource(R.drawable.course_button_red);
+        imageButtons.get(position).setClickable(false);
+        textViews.get(position).setVisibility(View.VISIBLE);
+        textViews.get(position).setBackgroundResource(R.drawable.speechbubble_pink);
+        textViews.get(position).setText(String.format("%s 님", selector));
+
+    }
+
     public void SelectCourseButtonClick(View v) {
 
         switch (v.getId()) {
@@ -189,7 +199,7 @@ public class SelectCourseActivity extends RootActivity {
             else {
                 imageButtons.get(i).setImageResource(R.drawable.course_button_grey);
                 textViews.get(i).setVisibility(View.INVISIBLE);
-                int j=0;
+                /*int j=0;
                 for(Properties p: members) {
                     j = Integer.parseInt(p.getProperty("course"));
                     if(i==j) {
@@ -198,7 +208,7 @@ public class SelectCourseActivity extends RootActivity {
                         textViews.get(i).setBackgroundResource(R.drawable.speechbubble_pink);
                         textViews.get(i).setText(p.getProperty("nickname")+"님");
                     }
-                }
+                }*/
             }
         }
     }
@@ -295,8 +305,9 @@ public class SelectCourseActivity extends RootActivity {
                                             for(Properties p : members) {
                                                 for(Properties ps : courseList) {
                                                     if(p.getProperty("course").equals(ps.getProperty("id"))) {
-                                                        selected.add(p.getProperty("course"));
-                                                        selectedMembers.add(p.getProperty("nickname"));
+                                                        selected.add(ps.getProperty("name"));                 // 선택된 course's 이름
+                                                        selectedMembers.add(p.getProperty("nickname"));     // 선택한 멤버 이름
+                                                        initOtherSelection(courseList.indexOf(ps),p.getProperty("nickname"));
                                                     }
                                                 }
                                             }
@@ -305,6 +316,7 @@ public class SelectCourseActivity extends RootActivity {
                                             * 말풍선이랑 뷰에 반영
                                             * */
                                             txtCourseArray.selectedCourse(selected);
+                                            txtCourseArray.invalidate();
                                         }
                                     }.execute();
                                 }
