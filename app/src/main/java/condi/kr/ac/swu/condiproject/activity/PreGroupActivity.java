@@ -174,9 +174,11 @@ public class PreGroupActivity extends RootActivity {
         new AsyncTask() {
             @Override
             protected String doInBackground(Object[] params) {
-                String sender = "";
-                String dml = "";
-                if(isSender()) {
+                //String sender = "";
+                String dml =  "select id, nickname, profile, phone " +
+                        "from member  " +
+                        "where id in (select receiver from invite where sender='"+senderId+"' and receiver != '"+Session.ID+"')";
+               /* if(isSender()) {
                     sender = Session.ID;
                     senderId = sender;
                     dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, m.profile as profile, m.phone as phone " +
@@ -188,7 +190,7 @@ public class PreGroupActivity extends RootActivity {
                     dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, i.ok as ok, m.profile as profile, m.phone as phone " +
                             "from invite i, member m " +
                             "where i.sender='" + sender + "' and m.id=i.receiver and m.id!='"+Session.ID+"'";
-                }
+                }*/
                 return NetworkAction.sendDataToServer("inviteList.php",dml);
             }
 
@@ -293,11 +295,10 @@ public class PreGroupActivity extends RootActivity {
                     protected Object doInBackground(Object[] params) {
                         String dml = "update member set groups=(select id from groups where host='"+senderId+"') where id in (select receiver from invite where sender='"+senderId+"')";
                         Properties p = new Properties();
-                        p.setProperty("dml", dml);
                         p.setProperty("sender", Session.ID);
                         p.setProperty("sendername", Session.NICKNAME);
                         p.setProperty("type", "6");
-                        return NetworkAction.sendDataToServer("gcmToAll.php",p);
+                        return NetworkAction.sendDataToServer("gcm.php",p, dml);
                     }
 
                     @Override
@@ -371,7 +372,10 @@ public class PreGroupActivity extends RootActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            loadInviteList();
+            if(isSender())  // 센더는 나면서 시작
+                loadInviteList();
+            else    // 센더정보받아온다음에 리스트 뿌려주기
+                new Receiver().execute();
         }
     };
 

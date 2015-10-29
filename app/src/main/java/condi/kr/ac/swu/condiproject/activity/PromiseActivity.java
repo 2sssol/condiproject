@@ -95,10 +95,10 @@ public class PromiseActivity extends BaseActivity {
                                 * set listView
                                 * */
                                 promise_tutorial.setVisibility(View.INVISIBLE);
-                                View header = getLayoutInflater().inflate(R.layout.promise_list_header, null, false);
+                                View header = getLayoutInflater().inflate(R.layout.promise_list_footer, null, false);
                                 promise_list = (ListView) findViewById(R.id.promise_list);
                                 adapter = new PromiseListAdapter(getApplicationContext(), promiseList);
-                                promise_list.addHeaderView(header);
+                                promise_list.addFooterView(header);
                                 promise_list.setAdapter(adapter);
 
                                 promise_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
