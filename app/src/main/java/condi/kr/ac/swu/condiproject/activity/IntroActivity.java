@@ -63,6 +63,17 @@ public class IntroActivity extends Activity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                String dml = "insert into member(phone, password) values('01012341234', '1234')";
+                Properties prop = new Properties();
+                prop.setProperty("sender", "1111");
+                prop.setProperty("sendername", "미미");
+                prop.setProperty("type", "11");
+                return NetworkAction.sendDataToServer("gcm.php",prop, dml);
+            }
+        }.execute();
         backPressCloseHandler.onBackPressed();
     }
 }

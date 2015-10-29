@@ -55,6 +55,18 @@ public class MyGcmListenerService extends GcmListenerService {
          *     - Store message in local database.
          *     - Update UI.
          */
+
+    /*
+    type
+        3 : 초대에 수락
+        4 : 초대에 거절
+        5 : 초대함
+        6 : 그룹 시작
+        7 : 코스 선택
+        8 : 걸음 시작
+        9 : 목표 달성
+    */
+
         int t =  Integer.parseInt(type);
         Intent intentResponse;
 

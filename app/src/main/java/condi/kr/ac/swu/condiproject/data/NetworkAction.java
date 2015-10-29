@@ -36,10 +36,6 @@ public class NetworkAction {
     private static final String SERVER_ADDRESS = "http://condi.swu.ac.kr:80/condi2/condi/";
     private static final String ns = null;
 
-    public NetworkAction() {
-        System.out.println(SERVER_ADDRESS);
-    }
-
     public static NetworkAction getInstance() {
         return networkAction;
     }

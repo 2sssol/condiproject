@@ -63,9 +63,8 @@ public class AddPromiseActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_promise);
-        initActionBar();
-
         mode = getIntent().getIntExtra("mode", -1);
+        initActionBar();
         initView();
     }
 
@@ -90,7 +89,10 @@ public class AddPromiseActivity extends AppCompatActivity
     protected void initActionBar() {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
-        ((TextView)findViewById(R.id.titleText)).setText("약속 수정하기");
+        if(mode==1)
+            ((TextView)findViewById(R.id.titleText)).setText("새로운 약속잡기");
+        else
+            ((TextView)findViewById(R.id.titleText)).setText("약속 수정하기");
 
         addPromise = (ImageButton) findViewById(R.id.sidemenu);
         cancelPromise = (ImageButton) findViewById(R.id.icon_home);

@@ -175,7 +175,7 @@ public class CheckInviteActivity extends RootActivity {
                         prop.setProperty("sendername", Session.NICKNAME);
                         prop.setProperty("type", "3");
 
-                        return NetworkAction.sendDataToServer("gcmAll.php",prop, dml);
+                        return NetworkAction.sendDataToServer("gcm.php",prop, dml);
                     }
 
                     @Override
@@ -199,7 +199,7 @@ public class CheckInviteActivity extends RootActivity {
                         prop.setProperty("sendername", Session.NICKNAME);
                         prop.setProperty("type", "4");
 
-                        return NetworkAction.sendDataToServer("gcmAll.php",prop, dml);
+                        return NetworkAction.sendDataToServer("gcm.php",prop, dml);
                     }
 
                     @Override
