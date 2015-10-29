@@ -70,6 +70,7 @@ public class SelectRegionActivity extends RootActivity {
             @Override
             protected String doInBackground(Object[] params) {
                 String dml = "select region from groups where id= "+ Session.GROUPS+"";
+                printErrorMsg(dml);
                 return NetworkAction.sendDataToServer("selectRegion.php", dml);
             }
 

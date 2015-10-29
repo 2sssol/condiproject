@@ -184,20 +184,7 @@ public class PreGroupActivity extends RootActivity {
                 String dml =  "select m.id, m.nickname, m.profile, m.phone, i.ok " +
                     "from member m, invite i " +
                     "where m.id in (select receiver from invite where sender='"+senderId+"' and receiver != '"+Session.ID+"') and m.id=i.receiver";
-                printErrorMsg(dml);
-               /* if(isSender()) {
-                    sender = Session.ID;
-                    senderId = sender;
-                    dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, m.profile as profile, m.phone as phone " +
-                            "from invite i, member m " +
-                            "where m.id in (select receiver from invite where sender='"+senderId+"' and receiver!='"+Session.ID+"')";     //i.sender='" + sender + "' and m.id=i.receiver and m.id!='" + Session.ID + "'";
-                }
-                else {
-                    sender = senderId;
-                    dml = "select i.id as id, i.sender as sender, i.receiver as receiver, m.nickname as receivername, i.ok as ok, m.profile as profile, m.phone as phone " +
-                            "from invite i, member m " +
-                            "where i.sender='" + sender + "' and m.id=i.receiver and m.id!='"+Session.ID+"'";
-                }*/
+
                 return NetworkAction.sendDataToServer("inviteList.php",dml);
             }
 
@@ -311,46 +298,42 @@ public class PreGroupActivity extends RootActivity {
                     @Override
                     protected void onPostExecute(Object o) {
                         super.onPostExecute(o);
-                        if(o.equals("success")) {
-                            new AsyncTask() {
-                                @Override
-                                protected String doInBackground(Object[] params) {
-                                    Properties p = new Properties();
-                                    p.setProperty("id", Session.ID);
-                                    return NetworkAction.sendDataToServer("my.php", p);
-                                }
+                        new AsyncTask() {
+                            @Override
+                            protected String doInBackground(Object[] params) {
+                                Properties p = new Properties();
+                                p.setProperty("id", Session.ID);
+                                return NetworkAction.sendDataToServer("my.php", p);
+                            }
 
-                                @Override
-                                protected void onPostExecute(Object o) {
-                                    super.onPostExecute(o);
-                                    new AsyncTask() {
-                                        List<Properties> my;
-                                        @Override
-                                        protected Object doInBackground(Object[] params) {
-                                            try {
-                                                my = NetworkAction.parse("my.xml", "member");
-                                            } catch (XmlPullParserException e) {
-                                                e.printStackTrace();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            return null;
+                            @Override
+                            protected void onPostExecute(Object o) {
+                                super.onPostExecute(o);
+                                new AsyncTask() {
+                                    List<Properties> my;
+                                    @Override
+                                    protected Object doInBackground(Object[] params) {
+                                        try {
+                                            my = NetworkAction.parse("my.xml", "member");
+                                        } catch (XmlPullParserException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
                                         }
+                                        return null;
+                                    }
 
-                                        @Override
-                                        protected void onPostExecute(Object o) {
-                                            super.onPostExecute(o);
-                                            Session.removeAllPreferences(getApplicationContext());
-                                            Session.savePreferences(getApplicationContext(), my.get(0));
-                                            redirectSelectRegionActivity();
-                                        }
-                                    }.execute();
-                                }
-                            }.execute();
+                                    @Override
+                                    protected void onPostExecute(Object o) {
+                                        super.onPostExecute(o);
+                                        Session.removeAllPreferences(getApplicationContext());
+                                        Session.savePreferences(getApplicationContext(), my.get(0));
+                                        redirectSelectRegionActivity();
+                                    }
+                                }.execute();
+                            }
+                        }.execute();
 
-                        }
-                        else
-                            Toast.makeText(getApplicationContext(), "업데이트 실패", Toast.LENGTH_SHORT).show();
                     }
                 }.execute();
 
@@ -361,7 +344,6 @@ public class PreGroupActivity extends RootActivity {
 
     private void redirectSelectRegionActivity() {
         startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
-
         finish();
     }
 

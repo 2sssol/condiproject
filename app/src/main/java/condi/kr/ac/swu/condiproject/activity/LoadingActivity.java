@@ -70,7 +70,7 @@ public class LoadingActivity extends Activity implements View.OnClickListener {
                     }
                 }.execute();
             } else {
-                redirectSelectCourseActivity();
+                redirectSelectRegionActivity();
             }
         } else {
             redirectCheckInviteActivity();
@@ -82,7 +82,7 @@ public class LoadingActivity extends Activity implements View.OnClickListener {
     }
 
     private boolean hasCourse() {
-        return (Session.getPreferences(getApplicationContext(), "course").equals("") ? false : true);
+        return (Session.getPreferences(getApplicationContext(), "course").equals("0") ? false : true);
     }
 
     /*
@@ -96,6 +96,11 @@ public class LoadingActivity extends Activity implements View.OnClickListener {
 
     private void redirectSelectCourseActivity() {
         startActivity(new Intent(getApplicationContext(), SelectCourseActivity.class));
+        finish();
+    }
+
+    private void redirectSelectRegionActivity() {
+        startActivity(new Intent(getApplicationContext(), SelectRegionActivity.class));
         finish();
     }
 
