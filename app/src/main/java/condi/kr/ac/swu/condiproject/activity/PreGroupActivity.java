@@ -175,9 +175,9 @@ public class PreGroupActivity extends RootActivity {
             @Override
             protected String doInBackground(Object[] params) {
                 //String sender = "";
-                String dml =  "select id, nickname, profile, phone " +
-                        "from member  " +
-                        "where id in (select receiver from invite where sender='"+senderId+"' and receiver != '"+Session.ID+"')";
+                String dml =  "select m.id, m.nickname, m.profile, m.phone, i.ok " +
+                        "from member m, invite i " +
+                        "where m.id in (select receiver from invite where sender='"+senderId+"' and receiver != '"+Session.ID+"') and m.id=i.receiver";
                /* if(isSender()) {
                     sender = Session.ID;
                     senderId = sender;
