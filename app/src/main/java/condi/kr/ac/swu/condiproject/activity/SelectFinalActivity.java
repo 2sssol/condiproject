@@ -334,9 +334,9 @@ public class SelectFinalActivity extends RootActivity {
                                                         cname = ps.getProperty("name");
                                                         km = ps.getProperty("km");
                                                     }
-                                                    cnt++;
-                                                }
 
+                                                }
+                                                cnt++;
                                                 mid = p.getProperty("id");
                                                 mname = p.getProperty("nickname");
 
