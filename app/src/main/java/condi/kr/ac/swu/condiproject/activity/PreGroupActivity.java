@@ -174,10 +174,17 @@ public class PreGroupActivity extends RootActivity {
         new AsyncTask() {
             @Override
             protected String doInBackground(Object[] params) {
-                //String sender = "";
+                String sender = "";
+                if(isSender()) {
+                    sender = Session.ID;
+                    senderId = sender;
+                } else {
+                    sender = senderId;
+                }
                 String dml =  "select m.id, m.nickname, m.profile, m.phone, i.ok " +
-                        "from member m, invite i " +
-                        "where m.id in (select receiver from invite where sender='"+senderId+"' and receiver != '"+Session.ID+"') and m.id=i.receiver";
+                    "from member m, invite i " +
+                    "where m.id in (select receiver from invite where sender='"+senderId+"' and receiver != '"+Session.ID+"') and m.id=i.receiver";
+                printErrorMsg(dml);
                /* if(isSender()) {
                     sender = Session.ID;
                     senderId = sender;
