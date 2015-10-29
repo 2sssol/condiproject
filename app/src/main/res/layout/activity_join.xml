@@ -9,10 +9,11 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="142dp"
+            android:layout_height="142dp"
             android:src="@drawable/thumb_story"
             android:id="@+id/img_join_local"
             android:layout_gravity="center"
@@ -21,21 +22,21 @@
 
         <condi.kr.ac.swu.condiproject.view.CircularNetworkImageView
             android:id="@+id/imgJoinProfile"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="142dp"
+            android:layout_height="142dp"
             android:scaleType="centerCrop"
             android:focusable="false"
             android:visibility="invisible"
             android:layout_alignBottom="@id/img_join_local"
-            android:layout_alignRight="@id/img_join_local"/>
+            android:layout_alignEnd="@id/img_join_local"/>
 
         <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
             android:src="@drawable/icon_camera"
             android:id="@+id/btnJoinProfile"
             android:layout_alignBottom="@id/img_join_local"
-            android:layout_alignRight="@id/img_join_local"
+            android:layout_alignEnd="@id/img_join_local"
             android:scaleType="centerCrop"
             android:background="@android:color/transparent"/>
     </RelativeLayout>
@@ -51,8 +52,9 @@
             android:layout_height="24dp"
             android:src="@drawable/icon_join_phone"
             android:id="@+id/icon_join_phone"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginTop="45dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,18 +63,18 @@
             android:textSize="18sp"
             android:layout_alignBottom="@id/icon_join_phone"
             android:layout_toEndOf="@id/icon_join_phone"
-            android:id="@+id/txt_join_phone"
-            android:layout_marginRight="20dp"/>
+            android:id="@+id/txt_join_phone"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:textSize="18sp"
+            android:layout_marginStart="20dp"
             android:id="@+id/editJoinPhone"
             android:layout_alignBottom="@id/icon_join_phone"
             android:layout_toEndOf="@id/txt_join_phone"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentEnd="true"/>
 
         <!--비밀번호-->
         <ImageView
@@ -81,8 +83,9 @@
             android:src="@drawable/icon_join_pw"
             android:id="@+id/icon_join_pw"
             android:layout_below="@id/icon_join_phone"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginTop="22dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,17 +94,17 @@
             android:textSize="18sp"
             android:layout_alignBottom="@id/icon_join_pw"
             android:layout_toEndOf="@id/icon_join_pw"
-            android:id="@+id/txt_join_pw"
-            android:layout_marginRight="20dp"/>
+            android:id="@+id/txt_join_pw"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="numberPassword"
+            android:layout_marginStart="20dp"
             android:id="@+id/editJoinPassword1"
             android:layout_alignBottom="@id/icon_join_pw"
             android:layout_toEndOf="@id/txt_join_pw"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentEnd="true"/>
 
         <!--재입력-->
         <TextView
@@ -110,10 +113,9 @@
             android:text="재입력"
             android:textSize="18sp"
             android:id="@+id/txt_join_pw_re"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="25dp"
             android:layout_below="@id/txt_join_pw"
-            android:layout_alignEnd="@id/txt_join_pw" />
+            android:layout_alignStart="@id/txt_join_pw" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -122,7 +124,7 @@
             android:id="@+id/editJoinPassword2"
             android:layout_alignBottom="@id/txt_join_pw_re"
             android:layout_toEndOf="@id/txt_join_pw_re"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignStart="@id/editJoinPassword1" />
 
         <!--별명-->
@@ -132,8 +134,9 @@
             android:src="@drawable/icon_join_nick"
             android:id="@+id/icon_join_nick"
             android:layout_below="@+id/txt_join_pw_re"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginTop="22dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -143,7 +146,7 @@
             android:layout_alignBottom="@+id/icon_join_nick"
             android:layout_toEndOf="@+id/icon_join_nick"
             android:id="@+id/txt_join_nick"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginEnd="20dp"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -152,7 +155,7 @@
             android:id="@+id/editJoinName"
             android:layout_alignBottom="@id/icon_join_nick"
             android:layout_toEndOf="@id/txt_join_nick"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignStart="@id/editJoinPassword2" />
 
         <!--키-->
@@ -162,8 +165,9 @@
             android:src="@drawable/icon_join_height"
             android:id="@+id/icon_join_height"
             android:layout_below="@+id/txt_join_nick"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginTop="22dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -173,23 +177,17 @@
             android:layout_alignBottom="@+id/icon_join_height"
             android:layout_toEndOf="@+id/icon_join_height"
             android:id="@+id/txt_join_height"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginEnd="20dp"/>
 
         <EditText
-            android:layout_width="155dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:layout_alignParentEnd="true"
             android:id="@+id/editJoinHeight"
             android:layout_alignBottom="@id/icon_join_height"
             android:layout_alignStart="@id/editJoinName" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="cm"
-            android:layout_alignBottom="@+id/txt_join_height"
-            android:layout_toEndOf="@+id/editJoinHeight"
-            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -197,21 +195,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp">
 
         <Button
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:background="@drawable/button_mint"
-            android:text="가입"
+            android:text="가   입"
+            android:textSize="18sp"
             android:id="@+id/btnJoin"
             android:textColor="#fff"/>
 
         <Button
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:background="@drawable/button_mint"
-            android:text="취소"
+            android:text="취   소"
+            android:textSize="18sp"
             android:id="@+id/btn_join_no"
             android:textColor="#fff"
             android:layout_marginLeft="40dp"/>

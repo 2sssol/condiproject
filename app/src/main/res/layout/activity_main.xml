@@ -92,7 +92,6 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="5dp"
                 android:layout_gravity="center_vertical"
-                android:visibility="invisible"
                 android:background="@null"/>
 
             <!-- 코스 정보-->
@@ -164,7 +163,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_gravity="center_vertical"
-                android:visibility="invisible"
                 android:background="@null"/>
         </LinearLayout>
 
